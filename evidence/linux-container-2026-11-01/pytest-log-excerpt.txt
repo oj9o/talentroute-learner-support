@@ -1,0 +1,4 @@
+Source: https://github.com/oj9o/talentroute-learner-support/actions/runs/41237286645/job/124643616200
+Observed log: uv run pytest -q
+........................ [100%]
+24 passed in 2.15s

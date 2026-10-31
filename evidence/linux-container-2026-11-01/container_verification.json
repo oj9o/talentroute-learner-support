@@ -1,0 +1,21 @@
+{
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.41",
+  "python": "3.14.10",
+  "container": "python:3.14-slim",
+  "test_design": "Fixed algorithm reproduction; no test-driven retuning",
+  "checks": {
+    "report_body_words": 1346,
+    "report_sections": 10,
+    "same_budget_policies": 5,
+    "decision_assumptions_varied": 3,
+    "detector_seeds": 3,
+    "frozen_hashes_verified": true,
+    "recorded_test_metrics_reconciled": true,
+    "linux_container_execution": "not verified for this release",
+    "component_acceptance": false
+  },
+  "runtime": {
+    "elapsed_seconds": 143.81701086799998,
+    "note": "Full current-host run; platform certification separate."
+  }
+}

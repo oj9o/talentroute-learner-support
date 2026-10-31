@@ -27,7 +27,7 @@ The final candidate averages forest and boosting probabilities and blends an Iso
 
 An unsuccessful acceptance result is retained. The held-out comparison cannot be used to tune another candidate in this release. Validation sensitivity and deeper analyses are labelled development evidence. A cluster bootstrap reflects sampling uncertainty, not causal effectiveness or external validity.
 
-Current-host verification is recorded separately from historical platform evidence. Linux-container execution must not be claimed without a current run. `just test` may skip evidence-dependent checks before the pipeline produces their inputs; the full run should supply those inputs. `just clean` removes generated data, reports' underlying outputs and review pages; it is for technical reproduction of the fixed release, not restarting scientific selection after seeing the test.
+Current-host verification is recorded separately from historical platform evidence. The analytical source and configuration also passed a clean Python 3.14 Linux-container reproduction: [verification run](https://github.com/oj9o/talentroute-learner-support/actions/runs/41237286645). The exact tested commit and platform differences are recorded under evidence/linux-container-2026-11-01; later report-only changes are distinguished from that run. `just test` may skip evidence-dependent checks before the pipeline produces their inputs; the full run should supply those inputs. `just clean` removes generated data, reports' underlying outputs and review pages; it is for technical reproduction of the fixed release, not restarting scientific selection after seeing the test.
 
 ## Data and packaging
 

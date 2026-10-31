@@ -1,0 +1,7 @@
+value,policy,adverse_coverage
+150,classifier_only,0.3235908141962422
+150,proposed_connected,0.3274182324286708
+300,classifier_only,0.4578983994432846
+300,proposed_connected,0.4599860821155184
+600,classifier_only,0.5782881002087683
+600,proposed_connected,0.5748086290883786

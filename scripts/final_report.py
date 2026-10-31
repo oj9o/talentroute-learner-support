@@ -12,8 +12,19 @@ def table(path,columns=None):
 
 def main():
     out=ROOT/'outputs/final';gate=json.loads((out/'acceptance.json').read_text());freeze=json.loads((out/'freeze.json').read_text())
+    receipt=json.loads((ROOT/'evidence/linux-container-2026-11-01/attestation.json').read_text()) if (ROOT/'evidence/linux-container-2026-11-01/attestation.json').exists() else None
+    if receipt:
+        (out/'platform_evidence.json').write_text(json.dumps(receipt,indent=2))
+        pd.DataFrame([{'platform':'Recorded Linux container','python':receipt['python'],'tests_passed':receipt['tests_passed'],'pipeline_seconds':receipt['pipeline_seconds']}]).to_csv(out/'platform_verification.csv',index=False)
+        local=pd.read_csv(out/'test_metrics.csv');local['platform']='Canonical local run'
+        remote=pd.read_csv(ROOT/'evidence/linux-container-2026-11-01/test_metrics.csv');remote['platform']='Recorded Linux container'
+        pd.concat([local,remote]).to_csv(out/'platform_policy_comparison.csv',index=False)
     profiles=pd.read_csv(ROOT/'outputs/revision/warning_outcome_profiles.csv')
     profiles.loc[(profiles.flagged==True)&profiles.feature.isin(['log_clicks','inactive_days'])].to_csv(out/'warning_profile_summary.csv',index=False)
+    segments=pd.read_csv(out/'test_segments.csv')
+    segments.loc[(segments.segment=='no_early_assessment')&(segments.policy=='proposed_connected'),['group','n','adverse_coverage','flag_precision','missed_adverse_n']].to_csv(out/'assessment_availability_summary.csv',index=False)
+    sensitivity=pd.read_csv(out/'development_sensitivity.csv')
+    sensitivity.loc[sensitivity.assumption=='staff_minutes_per_100',['value','policy','adverse_coverage']].to_csv(out/'budget_condition_summary.csv',index=False)
     metrics=pd.read_csv(out/'test_metrics.csv').set_index('policy')
     gain=int(metrics.loc['business_rule','missed_adverse_n']-metrics.loc['proposed_connected','missed_adverse_n'])
     params={k:freeze['policy'][k] for k in ['staff_minutes_per_100','human_minutes','alert_minutes','alert_budget_fraction','max_alert_fraction','score_delay_days']}
@@ -103,12 +114,22 @@ These mappings make explicit how the committed analyses relate to the proposal's
 ## 8. Insights and recommendations
 The recorded acceptance check does not support endorsing the additional component. Retain the simpler reference pending new independent evidence; the connected system remains an evaluated experimental candidate. The experimental second technique remains implemented and evaluated; the evaluated final candidate connects both techniques, while its operational fallback is explicitly simpler. This distinction is disclosed rather than presenting experimental inclusion as deployment approval.
 
-Review Fail and Withdrawn separately because a pooled improvement may hide a loss for one outcome. See `test_metrics.csv`. Inspect course and missing-assessment segments before deployment; `test_segments.csv` marks when sample sizes permit interpretation. Budget changes alter contact volume and missed cases, not demonstrated prevented failures. A human reviewer should confirm context before contacting a learner.
+The development advantage is budget-dependent: the connected candidate's coverage advantage over the original classifier reverses at the largest tested budget. Do not promise the same benefit at every staffing level; a new client must validate its own declared budget before adoption, without revising this release after test inspection.
+
+{table(out/'budget_condition_summary.csv')}
+
+Assessment availability also exposes a hard segment. In the following held-out table, group 0 has early scores and group 1 lacks them. Lower coverage among learners with scores identifies an important missed-case audit; it does not prove that missing scores cause risk or justify forcing equal contact rates across groups. Investigate additional observable signals and reviewer context prospectively rather than inventing labels or treating missing scores as zero.
+
+{table(out/'assessment_availability_summary.csv')}
+
+Historical warning-positive profiles also differ by outcome: withdrawn learners need not exhibit the same inactivity pattern as failed learners. Keep the outcomes separate and avoid a universal inactivity story. Review Fail and Withdrawn separately because a pooled improvement may hide a loss for one outcome. See `test_metrics.csv`. Inspect course and missing-assessment segments before deployment; `test_segments.csv` marks when sample sizes permit interpretation. Budget changes alter contact volume and missed cases, not demonstrated prevented failures. A human reviewer should confirm context before contacting a learner.
 
 ## 9. Limitations and risks
 The dataset is old and institution-specific. Course shift, repeat-student exclusions, unobserved grading availability and missing assessments limit generalisation. Activity anomalies lack verified labels. Neither assumed effort nor contact effectiveness is measured. Low-count segments are not evidence of fairness. Contact policies can create feedback loops; future monitoring should record workload, complaints, drift and subgroup errors. Public-data identifiers are excluded from released worklists; the demonstration uses synthetic case references, not synthetic research outcomes.
 
-A current Mac run does not certify Linux-container compatibility. Runtime and operating-system verification must be supplied for this release before claiming portability. Any unmet criterion remains a limitation, not a passed checkbox.
+A separate Linux-container reproduction succeeded for the same analytical source and configuration; its source commit and checksummed artifact are recorded in `outputs/final/platform_evidence.json`. Later report-only changes are separate from that run. The archived requirements file was generated before external attestation and retains its original static label. Local and container metrics are kept separate because numerical tree-model differences occur across platforms; bit-identical outputs are not claimed.
+
+{table(out/'platform_verification.csv') if receipt else 'External platform verification is unavailable in this checkout.'}
 
 ## 10. Connection to the original problem and next steps
 The project delivers an auditable learner-support targeting experiment that an educational consulting team could use when advising a university. It does not evaluate a complete learning-plan or assessment-management platform, nor establish validity for other providers or corporate L&D. It retains the original goal of supporting resource-constrained decisions while rejecting unsupported uplift. The next useful data are actual contact times, grading-availability timestamps, and ethically collected intervention outcomes. A prospective human-reviewed pilot would be needed to estimate whether acting improves outcomes. The viva and presentation are separate assessments; explanations here must remain defensible in both.

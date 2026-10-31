@@ -69,3 +69,6 @@ final-review:
 
 verify-final:
     uv run python scripts/verify_final.py
+
+platform-evidence archive repository:
+    uv run python scripts/import_platform_evidence.py "{{archive}}" "{{repository}}"

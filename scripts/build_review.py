@@ -59,3 +59,11 @@ def readable_report(text):
 report=readable_report((ROOT/'docs/baseline_report.md').read_text(encoding='utf-8'))
 (DEST/'report.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TalentRoute · Intermediate report</title><link rel="stylesheet" href="review.css"><body><main class="report-body"><a href="index.html">← Back to TalentRoute</a>'+report+'<p><a href="../docs/baseline_report.md" download>Download canonical Markdown report</a></p></main></body></html>',encoding='utf-8')
 print('Built offline TalentRoute interface and readable report from aggregate evidence.')
+
+# Label the retained development view and link the separate final evidence page.
+if (ROOT/'docs/final_report.md').exists():
+    path=DEST/'index.html'
+    text=path.read_text()
+    banner='<aside style="padding:14px 24px;background:#eef4f5;color:#173b43">Intermediate development evidence · <a href="final.html">Open Final evaluation</a></aside>'
+    text=text.replace('<body>','<body>'+banner,1)
+    path.write_text(text)

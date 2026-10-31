@@ -1,11 +1,11 @@
 {
-  "report_body_words": 1346,
+  "report_body_words": 1523,
   "report_sections": 10,
   "same_budget_policies": 5,
   "decision_assumptions_varied": 3,
   "detector_seeds": 3,
   "frozen_hashes_verified": true,
   "recorded_test_metrics_reconciled": true,
-  "linux_container_execution": "not verified for this release",
+  "linux_container_execution": "verified analytical core at dfa1b8eec395708b6ee22a8e26ac7ea3fd6f9e89",
   "component_acceptance": false
 }

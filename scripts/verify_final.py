@@ -20,5 +20,8 @@ assert np.allclose(m.adverse_coverage,1-m.missed_adverse_n/bad)
 s=pd.read_csv(out/'development_sensitivity.csv');assert s.assumption.nunique()>=3
 assert pd.read_csv(out/'development_seed_stability.csv').seed.nunique()>=3
 assert all((out/name).is_file() for name in ['ablation.png','sensitivity.png','test_primary_intervals.csv','test_paired_intervals.csv'])
-result={'report_body_words':words,'report_sections':len(headings),'same_budget_policies':len(m),'decision_assumptions_varied':int(s.assumption.nunique()),'detector_seeds':3,'frozen_hashes_verified':True,'recorded_test_metrics_reconciled':True,'linux_container_execution':'not verified for this release','component_acceptance':json.loads((out/'acceptance.json').read_text())['accepted']}
+receipt_path=ROOT/'evidence/linux-container-2026-11-01/attestation.json'
+receipt=json.loads(receipt_path.read_text()) if receipt_path.exists() else None
+platform_status=('verified analytical core at '+receipt['tested_commit']) if receipt and receipt['status']=='success' and receipt['implementation_sha256']==manifest['implementation_sha256'] else 'not verified for this analytical core'
+result={'report_body_words':words,'report_sections':len(headings),'same_budget_policies':len(m),'decision_assumptions_varied':int(s.assumption.nunique()),'detector_seeds':3,'frozen_hashes_verified':True,'recorded_test_metrics_reconciled':True,'linux_container_execution':platform_status,'component_acceptance':json.loads((out/'acceptance.json').read_text())['accepted']}
 (out/'requirements_check.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))

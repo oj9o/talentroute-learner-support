@@ -1,0 +1,15 @@
+{
+  "run_url": "https://github.com/oj9o/talentroute-learner-support/actions/runs/41237286645",
+  "tested_commit": "dfa1b8eec395708b6ee22a8e26ac7ea3fd6f9e89",
+  "status": "success",
+  "artifact_sha256": "4e57af7a11c96a92fe663510fe04faab6d08f68a66dda141f3cb4264b6bf15ca",
+  "implementation_sha256": "d41922adea8c3e72e4c005e85977b70d5de406b542acb71a4c4012e08094373f",
+  "container": "python:3.14-slim",
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.41",
+  "python": "3.14.10",
+  "tests_passed": 24,
+  "tests_skipped": 0,
+  "pipeline_seconds": 143.81701086799998,
+  "scope": "Same analytical src/config as canonical Mac freeze. Later report/presentation changes are separate.",
+  "raw_checks_note": "The archived requirements file predates external CI attestation; its static unverified label is retained verbatim."
+}
