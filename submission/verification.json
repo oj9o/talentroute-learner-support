@@ -1,0 +1,24 @@
+{
+  "repository": "https://github.com/oj9o/talentroute-learner-support",
+  "reviewed_code_and_report_commit": "8df8c3d",
+  "report_body_words": 1523,
+  "report_sections": 10,
+  "local_tests_passed": 24,
+  "clean_current_package_tests_passed": 24,
+  "clean_current_package_runtime_seconds": 79.86054470899398,
+  "linux_container_tests_passed": 24,
+  "linux_verification": "https://github.com/oj9o/talentroute-learner-support/actions/runs/41237286645",
+  "analytical_implementation_sha256": "d41922adea8c3e72e4c005e85977b70d5de406b542acb71a4c4012e08094373f",
+  "candidate_acceptance": false,
+  "language": "English publication; private discussion and Arabic study materials excluded",
+  "files": {
+    "Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Full.zip": {
+      "bytes": 51493660,
+      "sha256": "b876d414bfb706149baee501b5b6fc98452001823b01966a160c88f256910220"
+    },
+    "Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Main_Code.zip": {
+      "bytes": 134771,
+      "sha256": "a6021f56fc10146f7dc96925de0a4e9c0667e5e54d051682dd61ee67321dd7cc"
+    }
+  }
+}
