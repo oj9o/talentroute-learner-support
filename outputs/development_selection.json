@@ -1,0 +1,9 @@
+{
+  "selected_model": "hgb_15_10",
+  "selected_weight": 0.2,
+  "selection_split": "validation",
+  "test_evaluated": false,
+  "primary_model_metric": "adverse_pr_auc",
+  "primary_decision_metric": "adverse_coverage",
+  "selection_rule": "maximize validation PR-AUC; weight maximizes validation coverage, simpler tie break"
+}

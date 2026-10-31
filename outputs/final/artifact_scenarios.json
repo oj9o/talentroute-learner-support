@@ -1,0 +1,29 @@
+[
+  {
+    "scenario": "Validation-cohort illustration using frozen experimental final system; not prevented failures",
+    "budget_per_100": 150.0,
+    "human_reviews": 237,
+    "alerts": 895,
+    "no_action": 4802,
+    "staff_minutes": 8900.0,
+    "available_minutes": 8901.0
+  },
+  {
+    "scenario": "Validation-cohort illustration using frozen experimental final system; not prevented failures",
+    "budget_per_100": 300.0,
+    "human_reviews": 514,
+    "alerts": 1186,
+    "no_action": 4234,
+    "staff_minutes": 17792.0,
+    "available_minutes": 17802.0
+  },
+  {
+    "scenario": "Validation-cohort illustration using frozen experimental final system; not prevented failures",
+    "budget_per_100": 600.0,
+    "human_reviews": 1107,
+    "alerts": 1186,
+    "no_action": 3641,
+    "staff_minutes": 35582.0,
+    "available_minutes": 35604.0
+  }
+]

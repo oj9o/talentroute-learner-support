@@ -1,0 +1,6 @@
+{
+  "test_scored": false,
+  "status": "exploratory post-original-validation revision; not confirmatory",
+  "specialist_design": "module logistic; train n>=300 and each class>=30; global fallback",
+  "action_values": "hypothetical relative effectiveness; not measured causal benefit"
+}

@@ -1,0 +1,4 @@
+comparison,low,high
+proposed_connected minus business_rule,0.021174106380057255,0.04753385444017378
+proposed_connected minus classifier_only,0.002983314045206904,0.020776679445742754
+proposed_connected minus ensemble_without_detector,-0.0010905572096220014,0.01602146879600151

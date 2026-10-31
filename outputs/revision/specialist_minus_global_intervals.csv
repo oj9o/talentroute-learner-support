@@ -1,0 +1,4 @@
+metric,difference_mean,ci95_lower,ci95_upper,valid_repeats,contains_zero,interpretation
+adverse_pr_auc,0.009105081790950556,0.0018645710375407576,0.01573448005584972,2000,False,"exploratory, conditional on fitted models and original validation selection"
+fail_pr_auc,1.331542631150981e-05,-0.00864225925091151,0.00856390835098669,2000,True,"exploratory, conditional on fitted models and original validation selection"
+withdrawn_pr_auc,-0.0020215451746318056,-0.014033985210941737,0.010171367075936508,2000,True,"exploratory, conditional on fitted models and original validation selection"

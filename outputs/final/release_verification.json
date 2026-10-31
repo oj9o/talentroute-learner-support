@@ -1,0 +1,15 @@
+{
+  "python": "3.14.7",
+  "platform": "Mac arm64",
+  "tests_passed": 24,
+  "tests_skipped": 0,
+  "final_report_body_words_approx": 1309,
+  "full_pipeline_last_run": {
+    "elapsed_seconds": 54.276906458995654,
+    "note": "Full current-host run; platform certification separate."
+  },
+  "linux_container_current_release_verified": false,
+  "test_result_frozen": true,
+  "candidate_accepted": false,
+  "privacy": "No private instructor comments, real-ID prediction worklists or environment files in release."
+}

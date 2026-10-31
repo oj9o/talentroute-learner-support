@@ -1,0 +1,3 @@
+metric,ci95_low,ci95_high,status
+adverse_pr_auc,0.7320693843794384,0.7643696944204067,exploratory validation; selection optimism not removed
+adverse_coverage,0.446981671225048,0.480793725220199,exploratory validation; selection optimism not removed

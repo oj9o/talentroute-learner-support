@@ -1,0 +1,15 @@
+[project]
+name = "talentroute"
+version = "0.1.0"
+description = "Budget-constrained learner-support evidence using OULAD"
+requires-python = ">=3.14,<3.15"
+dependencies = ["numpy>=2.3,<3", "pandas>=2.3,<3", "scikit-learn>=1.7,<2", "matplotlib>=3.10,<4", "seaborn>=0.13,<0.14", "joblib>=1.5,<2"]
+[dependency-groups]
+dev = ["pytest>=8.4,<10"]
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+[tool.hatch.build.targets.wheel]
+packages = ["src/talentroute"]

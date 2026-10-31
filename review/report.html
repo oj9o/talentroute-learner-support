@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TalentRoute · Intermediate report</title><link rel="stylesheet" href="review.css"><body><main class="report-body"><a href="index.html">← Back to TalentRoute</a><h1>Intermediate baseline and first-pass report</h1>
+<h2>Decision and changed framing</h2>
+<p>TalentRoute supports early learner-support triage under a finite staff-time budget. The observed population is distance-learning students. Corporate employee claims and score-derived causal uplift have been removed. Classification and outlier detection feed the same action policy. See project_definition.md for the current scope; later revisions are explicitly labeled.</p>
+<h2>Data and partitions</h2>
+<p>Source: OULAD, Kuzilek, Hlosta &amp; Zdrahal (2015), UCI doi:10.24432/C5KK69, CC BY 4.0. Download URL/checksum is recorded in data/raw/manifest.json. Decision time is day 28. Seven-day score availability is an assumption requiring sensitivity analysis, not observed marking time. No protected demographics are model inputs.</p>
+<p>Data audit (outputs/data_audit.json): 32593 raw enrolments, 27515 eligible before group purging, 1959 earlier repeated-student enrolments removed. Retained partitions: training 10412, validation 5934, reserved test 9210. Training uses 2013, validation 2014B and reserved final test 2014J. No final test performance was computed. Outcome counts and assessment availability are in development_target_counts.csv and development_coverage.csv.</p>
+<h2>Models and tuning</h2>
+<p>Logistic regression is the supervised baseline. Histogram boosting candidates use a small search specified in the original development code. Model selection maximizes validation adverse-outcome PR-AUC. Selected model: hgb_15_10. Isolation Forest uses engagement features plus module context, fitted on training data; its score is mapped through the training score distribution. The rule baseline combines poor early scores and inactivity.</p>
+<p>Settings: logistic C=1, max_iter=1500; boosting max_iter=140, learning_rate=0.07, leaf/L2 candidates (7,2), (15,2), (15,10); Isolation Forest 150 trees, max_samples=512. Seed: 7101. Numeric preprocessing uses training medians with missing indicators and scaling; module uses one-hot encoding. Revision tree/forest/hybrid settings are recorded in src/talentroute/revision.py.</p>
+<p>Validation model metrics (outputs/validation_model_search.csv):</p>
+<div class="scroll"><table><thead><tr><th scope="col">model</th><th scope="col">adverse_pr_auc</th><th scope="col">fail_pr_auc</th><th scope="col">withdrawn_pr_auc</th><th scope="col">macro_f1</th><th scope="col">adverse_brier</th></tr></thead><tbody>
+<tr><td>logistic</td><td>0.7280</td><td>0.4870</td><td>0.2829</td><td>0.4001</td><td>0.2076</td></tr>
+<tr><td>hgb_7_2</td><td>0.7442</td><td>0.4997</td><td>0.3034</td><td>0.4450</td><td>0.2025</td></tr>
+<tr><td>hgb_15_2</td><td>0.7456</td><td>0.4887</td><td>0.3015</td><td>0.4515</td><td>0.2028</td></tr>
+<tr><td>hgb_15_10</td><td>0.7472</td><td>0.4891</td><td>0.3072</td><td>0.4552</td><td>0.2023</td></tr>
+</tbody></table></div>
+<h2>Decision results and ablation</h2>
+<p>All policies use the same eligible validation cohort, actions, effort budget and alert cap. Coverage measures later adverse outcomes flagged, not intervention effectiveness. Human and alert effort are explicit scenario assumptions in configs/policy.json. The validation-search candidate has anomaly weight 0.2; it remains an experimental comparison, not the recommended operating policy. The provisional operating reference uses weight zero (classifier-only) pending final specification; candidate evidence and uncertainty are reported below. The action mix is a declared workload rule: reviews go to the highest-ranked cases and alerts to the next cases. It does not learn treatment choice; either action counts equally toward coverage.</p>
+<p>Validation decisions (outputs/validation_decision_metrics.csv):</p>
+<div class="scroll"><table><thead><tr><th scope="col">policy</th><th scope="col">adverse_coverage</th><th scope="col">fail_coverage</th><th scope="col">withdrawn_coverage</th><th scope="col">flag_precision</th><th scope="col">human_n</th><th scope="col">alert_n</th><th scope="col">staff_minutes</th></tr></thead><tbody>
+<tr><td>business_rule</td><td>0.4137</td><td>0.4336</td><td>0.3801</td><td>0.6994</td><td>514</td><td>1186</td><td>17792.0000</td></tr>
+<tr><td>logistic</td><td>0.4283</td><td>0.4269</td><td>0.4307</td><td>0.7241</td><td>514</td><td>1186</td><td>17792.0000</td></tr>
+<tr><td>classifier_only</td><td>0.4579</td><td>0.4491</td><td>0.4728</td><td>0.7741</td><td>514</td><td>1186</td><td>17792.0000</td></tr>
+<tr><td>anomaly_rule</td><td>0.3876</td><td>0.4241</td><td>0.3258</td><td>0.6553</td><td>514</td><td>1186</td><td>17792.0000</td></tr>
+<tr><td>anomaly_only</td><td>0.3553</td><td>0.4042</td><td>0.2725</td><td>0.6006</td><td>514</td><td>1186</td><td>17792.0000</td></tr>
+<tr><td>coupled_selected</td><td>0.4624</td><td>0.4679</td><td>0.4532</td><td>0.7818</td><td>514</td><td>1186</td><td>17792.0000</td></tr>
+<tr><td>coupled_fixed_020</td><td>0.4624</td><td>0.4679</td><td>0.4532</td><td>0.7818</td><td>514</td><td>1186</td><td>17792.0000</td></tr>
+</tbody></table></div>
+<p>Paired fixed-action student-cluster bootstrap 95% interval for selected coupled minus classifier-only coverage: [-0.0055, 0.0160] (outputs/validation_paired_interval.json). These validation-selected intervals are exploratory and not independent confirmation. The final added-component gate has not been evaluated on the reserved test.</p>
+<h2>Does the second component earn its complexity?</h2>
+<div class="scroll"><table><thead><tr><th scope="col">detector</th><th scope="col">proxy_adverse_pr_auc</th><th scope="col">adverse_coverage</th><th scope="col">flag_precision</th></tr></thead><tbody>
+<tr><td>isolation_forest</td><td>0.5899</td><td>0.3553</td><td>0.6006</td></tr>
+<tr><td>inactivity_rule</td><td>0.6300</td><td>0.3876</td><td>0.6553</td></tr>
+</tbody></table></div>
+<p>These are outcome-relevance proxies, not verified anomaly labels. Proxy adverse PR-AUC: inactivity 0.6300, Isolation Forest 0.5899. The interval includes zero: improvement is inconclusive. Separate Fail/Withdrawn changes are reported in development_findings.md. Keep the simpler classifier as provisional operational reference; report the second component and negative evidence rather than forcing deployment.</p>
+<h2>EDA and interpretation</h2>
+<p>Nine development EDA/model figures cover outcomes, missingness, engagement, scores, modules and detector disagreement; one frontier covers the decision. eda_feature_types.csv, eda_numeric_summary.csv, eda_missing_counts.csv and eda_sample_records.csv supply overview tables and five illustrative records without IDs. Missing scores are not zero; module differences are not individual ability.</p>
+<figure><img src="../outputs/eda_01_outcomes.png" alt="Development outcome balance"></figure>
+<figure><img src="../outputs/eda_07_observability.png" alt="Observable assessment coverage"></figure>
+<figure><img src="../outputs/eda_05_change.png" alt="Engagement patterns"></figure>
+<h2>Sensitivity and deeper analyses</h2>
+<p>Executed development analyses write validation_sensitivity.csv, validation_uncertainty_analysis.csv, validation_challenge_segments.csv and validation_seed_stability.csv. The frontier plot shows coverage under changing staff budgets. These support sensitivity/ablation; the three committed deeper analyses are layer escape, warning-positive outcome profiles and general-versus-specialist models, as defined in project_definition.md. Numerical findings and operational recommendations are recorded in development_findings.md. Their hypotheses need independent final-test confirmation.</p>
+<h2>Portability and limitations</h2>
+<p>Tables and figures in this generated report come from Darwin / Python 3.14.7. Historical platform comparisons are retained in evidence/platform-validation-2026-10-31/platform_comparison.csv; they concern an earlier code snapshot, not the current regeneration. Neither platform is claimed bit-identical to the other. Comparisons within this report use one platform consistently.</p>
+<p>OULAD contains no randomized interventions or measured staff effort. We cannot claim prevented failures, retained students, ROI or transfer to employees. Anomaly relevance uses outcome proxies, not verified anomaly labels. Seven-day marking availability, day-28 cutoff, module shift and missing early assessment coverage require scrutiny. Bootstrap intervals do not capture all temporal drift. Seed stability covers the outlier layer only. Mac execution is tested separately. A historical Ubuntu VM run is saved under evidence/platform-validation-2026-10-31; it does not verify later code changes or container execution.</p>
+<p>Final plan: freeze candidate/settings, execute reserved test once, retain negative evidence and verify clean Mac/Linux operation. Three analytical commitments and sensitivity designs are in project_definition.md. This Intermediate is not the final report.</p>
+<h2>Exploratory revision after instructor feedback</h2>
+<p>These candidates and checks were added after viewing original validation results; they are exploratory, not confirmatory. Original model/policy files remain the historical reference. Final-test metrics remain unused.</p>
+<div class="scroll"><table><thead><tr><th scope="col">model</th><th scope="col">adverse_pr_auc</th><th scope="col">fail_pr_auc</th><th scope="col">withdrawn_pr_auc</th><th scope="col">adverse_coverage</th></tr></thead><tbody>
+<tr><td>logistic</td><td>0.7280</td><td>0.4870</td><td>0.2829</td><td>0.4283</td></tr>
+<tr><td>tree</td><td>0.7099</td><td>0.4650</td><td>0.2560</td><td>0.4489</td></tr>
+<tr><td>forest</td><td>0.7478</td><td>0.5022</td><td>0.2861</td><td>0.4555</td></tr>
+<tr><td>hgb_15_10</td><td>0.7472</td><td>0.4891</td><td>0.3072</td><td>0.4579</td></tr>
+<tr><td>module_logistic_hybrid</td><td>0.7369</td><td>0.4871</td><td>0.2807</td><td>0.4475</td></tr>
+</tbody></table></div>
+<p>Paired student-cluster bootstrap, forest minus historical hgb, conditional on the fitted models and validation selection:</p>
+<div class="scroll"><table><thead><tr><th scope="col">metric</th><th scope="col">ci95_lower</th><th scope="col">ci95_upper</th><th scope="col">valid_repeats</th></tr></thead><tbody>
+<tr><td>adverse_pr_auc</td><td>-0.0032</td><td>0.0041</td><td>2000</td></tr>
+<tr><td>fail_pr_auc</td><td>0.0025</td><td>0.0231</td><td>2000</td></tr>
+<tr><td>withdrawn_pr_auc</td><td>-0.0372</td><td>-0.0070</td><td>2000</td></tr>
+</tbody></table></div>
+<p>Three unadjusted exploratory intervals do not establish confirmatory superiority or equivalence. PR-AUC remains the selection metric; historical hgb is retained pending final specification. Specialists are also compared with flexible global models.</p>
+<p>Same-total-quota layer diagnostics across all 24 orders and three tie seeds:</p>
+<div class="scroll"><table><thead><tr><th scope="col">classifier_first_share</th><th scope="col">min</th><th scope="col">max</th></tr></thead><tbody>
+<tr><td>0.0000</td><td>0.4151</td><td>0.4179</td></tr>
+<tr><td>0.5000</td><td>0.4388</td><td>0.4405</td></tr>
+<tr><td>0.7500</td><td>0.4478</td><td>0.4499</td></tr>
+<tr><td>0.9000</td><td>0.4530</td><td>0.4541</td></tr>
+<tr><td>1.0000</td><td>0.4579</td><td>0.4579</td></tr>
+</tbody></table></div>
+<p>Quota conclusions apply only to tested designs. outputs/revision/ contains ties, overlap, outcome-specific escape and historical profiles; selection-related profiles do not identify resilience mechanisms.</p>
+<p>Action allocation remains a scenario, not measured benefit: action_break_even.csv uses observed adverse cases for evaluation after ranking without labels, varying alert caps with near-full budget expenditure and a reference operating mix. Comparing caps changes an operational constraint. Hypothetical effectiveness multipliers do not establish causal intervention effects or optimal allocation.</p>
+<p>Uncertainty/frontier are sensitivity analyses; project_definition.md contains the single current list of three deeper analyses. Current-run verification is reported in outputs/current_pipeline_verification.json; historical VM evidence is separate under evidence/; the reserved final test is unused.</p>
+<h2>Three analytical findings and limits</h2>
+<p>Layer quotas: tested mixed-design pooled coverage ranged 0.4151–0.4541, versus classifier-only 0.4579. These are exploratory quota-specific results, not a conclusion about layered detection generally.</p>
+<p>Within the historical four-signal flagged set: Success: median inactivity 12 days, median score 62 from 277 observed scores; Fail: median inactivity 16 days, median score 48 from 262 observed scores; Withdrawn: median inactivity 9.5 days, median score 40 from 208 observed scores. Selection uses these features; these are descriptive profiles, not resilience causes or treatment effects.</p>
+<p>Pooled PR-AUC: global logistic 0.7280, specialist hybrid 0.7369, forest 0.7478, historical boosting 0.7472. Training eligibility and pooled probability comparability constrain interpretation.</p>
+<h2>Model diagnostics</h2>
+<p>Classifier-only reaches 127 additional adverse cases of 2874 versus the rule at the same workload; coverage difference 0.0442, exploratory paired interval [0.0257, 0.0633]. Historical rule ties remain unchanged; seeded tie checks gave 0.4116–0.4130 coverage versus historical 0.4137.</p>
+<div class="scroll"><table><thead><tr><th scope="col">model</th><th scope="col">split</th><th scope="col">adverse_pr_auc</th><th scope="col">log_loss</th></tr></thead><tbody>
+<tr><td>logistic</td><td>train_resubstitution</td><td>0.7208</td><td>0.8474</td></tr>
+<tr><td>logistic</td><td>validation_selection</td><td>0.7280</td><td>0.9145</td></tr>
+<tr><td>hgb_15_10</td><td>train_resubstitution</td><td>0.7636</td><td>0.7946</td></tr>
+<tr><td>hgb_15_10</td><td>validation_selection</td><td>0.7472</td><td>0.9021</td></tr>
+</tbody></table></div>
+<p>Ten shuffled-training-label controls produced validation ROC-AUC 0.412–0.514 (random-ranking reference 0.5). Randomly fitted scores can rank validation cases inversely, so a value below 0.5 alone is not evidence of leakage. This limited negative control cannot certify absence of leakage. Grouped permutation diagnostics and a code/config/data fingerprint are in outputs/diagnostics/. Correlated feature groups move together; predictive reliance is not causality. No expert ceiling, production performance or manually verified label-error rate is available. Performance remains limited: many later adverse outcomes are missed and missing assessments restrict early information.</p>
+<h2>What the observed errors imply</h2>
+<div class="scroll"><table><thead><tr><th scope="col">group</th><th scope="col">n</th><th scope="col">adverse_n</th><th scope="col">flagged_adverse_n</th><th scope="col">missed_adverse_n</th><th scope="col">coverage</th></tr></thead><tbody>
+<tr><td>0</td><td>2737</td><td>1099</td><td>380</td><td>719</td><td>0.3458</td></tr>
+<tr><td>1</td><td>3197</td><td>1775</td><td>936</td><td>839</td><td>0.5273</td></tr>
+</tbody></table></div>
+<p>Group 1 lacks an observable early assessment; group 0 has one. Compare counts and coverage together: differences are descriptive, not proof that missing scores cause an error. Missingness motivates checking the engagement-only pathway, not assigning a zero score. Module slices in missed_case_profile.csv locate uneven targeting; interpret only rows passing the minimum-n guard. These slices do not establish discrimination or a correct intervention.</p>
+<p>The historical classifier improves targeting over the rule at identical effort, yet many adverse cases remain missed. Added detector complexity has no confirmed benefit in the paired interval. The detector/risk scatter illustrates disagreement; disagreement alone does not establish useful complementarity. Specialist comparisons test course heterogeneity without establishing specialist deployment superiority.</p>
+<h2>Final execution plan (not completed test results)</h2>
+<p>1. Before opening 2014J, record a dated final specification: predictor availability, one candidate, action mix/costs, tie rule, primary metrics and acceptance criteria. Retain the current model-free and classifier-only references.</p>
+<p>2. Complete the three commitments on the frozen design: layer escape at equal quota, warning-positive outcome profiles with observed-score denominators, and global-versus-specialist comparison with training-only eligibility. Retain budget/cost/cutoff sensitivities as separate scenario analyses. Report negative findings and outcome tradeoffs.</p>
+<p>3. Only after freezing, evaluate reserved 2014J once using the same metrics and student-cluster intervals. Do not tune or repair the acceptance rule using that test. Report cohort shift and errors, verify an extracted release in the grading environment, and explain each conclusion using saved evidence.</p><p><a href="../docs/baseline_report.md" download>Download canonical Markdown report</a></p></main></body></html>

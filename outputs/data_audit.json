@@ -1,0 +1,13 @@
+{
+  "raw_enrolments": 32593,
+  "eligible_enrolments": 27515,
+  "cutoff_day": 28,
+  "score_delay_days_assumed": 7,
+  "missing_registration_excluded": 45,
+  "purged_earlier_repeat_enrolments": 1959,
+  "split_counts": {
+    "test": 9210,
+    "train": 10412,
+    "validation": 5934
+  }
+}

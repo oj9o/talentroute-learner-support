@@ -1,0 +1,45 @@
+{
+  "frozen_at_utc": "2026-10-31T19:20:21.075875+00:00",
+  "candidate": "equal forest/HGB probability ensemble + 0.2 engagement IF blend",
+  "rationale": "Fixed model-family reconciliation; IF retained as an experimental component, not a claimed improvement.",
+  "scope": "New design after extensive validation exploration; final test not used for design.",
+  "implementation_sha256": "d41922adea8c3e72e4c005e85977b70d5de406b542acb71a4c4012e08094373f",
+  "model_sha256": "f6c4c26421e7f3b7878ae99a780061f53c5d6db088c51f81d6127f6b9b87cdf4",
+  "processed_sha256": "257371db908214032ae5b38e2068c45c0a60af2d9427de3847b5fab2a557fcb5",
+  "policy": {
+    "seed": 7101,
+    "cutoff_day": 28,
+    "score_delay_days": 7,
+    "human_minutes": 30,
+    "alert_minutes": 2,
+    "staff_minutes_per_100": 300,
+    "max_alert_fraction": 0.2,
+    "anomaly_weight": 0.2,
+    "bootstrap_repeats": 300,
+    "data_url": "https://archive.ics.uci.edu/static/public/349/open%2Buniversity%2Blearning%2Banalytics%2Bdataset.zip",
+    "alert_budget_fraction": 0.2,
+    "archive_sha256": "f2ed1902616c1fe8d2824d872c0b7d2d72be435bf0124d077044fe4be2c6d3e4",
+    "uncertainty_bonus": 0.1,
+    "raw_csv_sha256": {
+      "studentInfo.csv": "815fbc3e2de29f79900bc63f0345a35db62c9146afaa1d86e7107b8b3beffc60",
+      "studentRegistration.csv": "bbc87a0de1fe2a9ec6decce1ca6c1a02cf17b54ad3bdcc673fc6413b41c61d47",
+      "studentAssessment.csv": "b1839e17618a5de36b6d189a242d3123f7939a56c8c9ccef0c17b9199c614a6b",
+      "assessments.csv": "9ce92381e4a0ac457f8e251b2eb2c179ed51e023ab30d1d671a0268bd62316ba",
+      "studentVle.csv": "52668253d876c5becbcb72185977152700cecab2942aca807fecc3dd54b937f0",
+      "courses.csv": "4f16eee7454b15e109b0a21a0e43be820e6846ed6f9301bb7feb5ab5ad737a75",
+      "vle.csv": "d7a146497edd0e47ef536144b58796c07b554002d3753e848b8e4cd8a56f4c38"
+    }
+  },
+  "classes": [
+    "Fail",
+    "Success",
+    "Withdrawn"
+  ],
+  "forest_weight": 0.5,
+  "anomaly_weight": 0.2,
+  "acceptance": {
+    "coverage_difference_lower_bound_gt": 0,
+    "max_flag_precision_loss": 0.02
+  },
+  "final_test_scored_at_freeze": false
+}

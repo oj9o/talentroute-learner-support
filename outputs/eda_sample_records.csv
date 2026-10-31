@@ -1,0 +1,6 @@
+split,code_module,target,score_mean,submitted_count,log_clicks,inactive_days
+train,AAA,Success,78.0,1.0,5.717027701406222,10.0
+train,AAA,Success,,0.0,6.0014148779611505,0.0
+train,AAA,Success,72.0,1.0,5.786897381366708,0.0
+train,AAA,Success,,0.0,5.60947179518496,2.0
+train,AAA,Success,79.0,1.0,6.111467339502679,3.0
