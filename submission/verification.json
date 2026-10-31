@@ -10,7 +10,6 @@
   "linux_verification": "https://github.com/oj9o/talentroute-learner-support/actions/runs/41237286645",
   "analytical_implementation_sha256": "d41922adea8c3e72e4c005e85977b70d5de406b542acb71a4c4012e08094373f",
   "candidate_acceptance": false,
-  "language": "English publication; private discussion and Arabic study materials excluded",
   "files": {
     "Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Full.zip": {
       "bytes": 51493660,
@@ -20,5 +19,6 @@
       "bytes": 134771,
       "sha256": "a6021f56fc10146f7dc96925de0a4e9c0667e5e54d051682dd61ee67321dd7cc"
     }
-  }
+  },
+  "publication_language": "English"
 }
