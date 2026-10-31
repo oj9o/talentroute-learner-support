@@ -1,3 +1,5 @@
+> Intermediate development record. Final held-out evidence and conclusions are in `final_report.md`.
+
 # Intermediate baseline and first-pass report
 
 ## Decision and changed framing

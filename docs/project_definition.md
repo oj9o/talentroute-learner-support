@@ -1,3 +1,5 @@
+> Intermediate development record. Final held-out evidence and conclusions are in `final_report.md`.
+
 # TalentRoute: early learner-support triage
 
 ## Problem, decision and scope change

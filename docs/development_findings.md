@@ -1,3 +1,5 @@
+> Intermediate development record. Final held-out evidence and conclusions are in `final_report.md`.
+
 # Development findings — not final-test claims
 
 - business_rule: adverse coverage 0.4137; flag precision 0.6994. Source: validation_decision_metrics.csv.

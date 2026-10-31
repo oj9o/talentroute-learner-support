@@ -66,3 +66,6 @@ final-report:
 
 final-review:
     uv run python scripts/build_final_review.py
+
+verify-final:
+    uv run python scripts/verify_final.py

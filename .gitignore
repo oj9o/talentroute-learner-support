@@ -8,3 +8,4 @@ outputs/validation_predictions.csv
 outputs/**/demo_worklist.csv
 outputs/development_models.joblib
 .DS_Store
+.github/workflows/

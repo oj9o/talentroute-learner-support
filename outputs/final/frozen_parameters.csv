@@ -1,0 +1,10 @@
+parameter,value
+staff_minutes_per_100,300.0
+human_minutes,30.0
+alert_minutes,2.0
+alert_budget_fraction,0.2
+max_alert_fraction,0.2
+score_delay_days,7.0
+forest_weight,0.5
+anomaly_weight,0.2
+max_flag_precision_loss,0.02

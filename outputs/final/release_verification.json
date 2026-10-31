@@ -3,7 +3,12 @@
   "platform": "Mac arm64",
   "tests_passed": 24,
   "tests_skipped": 0,
-  "final_report_body_words_approx": 1309,
+  "final_report_body_words_approx": 1349,
+  "clean_extracted_package_run": {
+    "elapsed_seconds": 124.15445904100488,
+    "note": "Full current-host run; platform certification separate."
+  },
+  "test_evaluation_reused_without_retuning": true,
   "full_pipeline_last_run": {
     "elapsed_seconds": 54.276906458995654,
     "note": "Full current-host run; platform certification separate."

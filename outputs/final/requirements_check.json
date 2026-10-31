@@ -1,0 +1,11 @@
+{
+  "report_body_words": 1349,
+  "report_sections": 10,
+  "same_budget_policies": 5,
+  "decision_assumptions_varied": 3,
+  "detector_seeds": 3,
+  "frozen_hashes_verified": true,
+  "recorded_test_metrics_reconciled": true,
+  "linux_container_execution": "not verified for this release",
+  "component_acceptance": false
+}

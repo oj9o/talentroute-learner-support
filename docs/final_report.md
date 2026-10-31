@@ -33,6 +33,19 @@ flowchart LR
 
 The classifier retains distinct outcome probabilities. The detector learns unusual engagement without outcome labels; its training-reference percentile is not a failure probability. Shared engagement inputs mean these components are not statistically independent. Both feed the experimental ranking. Reviews take priority positions; alerts use the subsequent positions in that same ranking. The artifact does not claim a separate anomaly-only intervention pathway.
 
+| parameter | value |
+| --- | --- |
+| staff_minutes_per_100 | 300.0000 |
+| human_minutes | 30.0000 |
+| alert_minutes | 2.0000 |
+| alert_budget_fraction | 0.2000 |
+| max_alert_fraction | 0.2000 |
+| score_delay_days | 7.0000 |
+| forest_weight | 0.5000 |
+| anomaly_weight | 0.2000 |
+| max_flag_precision_loss | 0.0200 |
+
+
 The frozen configuration, weights and acceptance thresholds are recorded in `outputs/final/freeze.json`. Effort costs, budget and alert limits are configurable planning assumptions. Coverage counts either contact equally; it is not treatment-effect optimisation. The grading-availability lag is assumed because actual grading timestamps are absent.
 
 ## 4. Evaluation setup, results and tuning
@@ -68,6 +81,8 @@ Primary-metric uncertainty and paired coverage differences use student-cluster r
 | proposed_connected minus classifier_only | 0.0030 | 0.0208 |
 | proposed_connected minus ensemble_without_detector | -0.0011 | 0.0160 |
 
+
+The proposed ensemble has adverse PR-AUC 0.6500, compared with 0.6534 for the original boosting model. A better fixed-budget contact list does not imply universally better ranking or classification. The lower macro-F1 also limits claims about assigning the three outcome labels.
 
 The acceptance JSON records whether the lower paired bounds beat the references and whether precision loss stays within the frozen tolerance. A zero-crossing interval is inconclusive. No post-test tuning or positive-result substitution is permitted.
 

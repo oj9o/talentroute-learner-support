@@ -16,6 +16,9 @@ def main():
     profiles.loc[(profiles.flagged==True)&profiles.feature.isin(['log_clicks','inactive_days'])].to_csv(out/'warning_profile_summary.csv',index=False)
     metrics=pd.read_csv(out/'test_metrics.csv').set_index('policy')
     gain=int(metrics.loc['business_rule','missed_adverse_n']-metrics.loc['proposed_connected','missed_adverse_n'])
+    params={k:freeze['policy'][k] for k in ['staff_minutes_per_100','human_minutes','alert_minutes','alert_budget_fraction','max_alert_fraction','score_delay_days']}
+    params.update({'forest_weight':freeze['forest_weight'],'anomaly_weight':freeze['anomaly_weight'],'max_flag_precision_loss':freeze['acceptance']['max_flag_precision_loss']})
+    pd.DataFrame([{'parameter':k,'value':v} for k,v in params.items()]).to_csv(out/'frozen_parameters.csv',index=False)
     text=f'''# TalentRoute final evaluation
 
 ## 1. Executive summary
@@ -44,6 +47,8 @@ flowchart LR
 
 The classifier retains distinct outcome probabilities. The detector learns unusual engagement without outcome labels; its training-reference percentile is not a failure probability. Shared engagement inputs mean these components are not statistically independent. Both feed the experimental ranking. Reviews take priority positions; alerts use the subsequent positions in that same ranking. The artifact does not claim a separate anomaly-only intervention pathway.
 
+{table(out/'frozen_parameters.csv')}
+
 The frozen configuration, weights and acceptance thresholds are recorded in `outputs/final/freeze.json`. Effort costs, budget and alert limits are configurable planning assumptions. Coverage counts either contact equally; it is not treatment-effect optimisation. The grading-availability lag is assumed because actual grading timestamps are absent.
 
 ## 4. Evaluation setup, results and tuning
@@ -59,6 +64,8 @@ Primary-metric uncertainty and paired coverage differences use student-cluster r
 
 {table(out/'test_primary_intervals.csv')}
 {table(out/'test_paired_intervals.csv')}
+
+The proposed ensemble has adverse PR-AUC {float(pd.read_csv(out/'test_ml_metrics.csv').set_index('model').loc['proposed_ensemble','adverse_pr_auc']):.4f}, compared with {float(pd.read_csv(out/'test_ml_metrics.csv').set_index('model').loc['hgb_15_10','adverse_pr_auc']):.4f} for the original boosting model. A better fixed-budget contact list does not imply universally better ranking or classification. The lower macro-F1 also limits claims about assigning the three outcome labels.
 
 The acceptance JSON records whether the lower paired bounds beat the references and whether precision loss stays within the frozen tolerance. A zero-crossing interval is inconclusive. No post-test tuning or positive-result substitution is permitted.
 
@@ -109,5 +116,10 @@ The project delivers an auditable learner-support targeting experiment that an e
 Data: Kuzilek, Hlosta and Zdrahal, OULAD, UCI DOI 10.24432/C5KK69, CC BY 4.0. Further schema and preparation details: `data_dictionary.md` and `project_definition.md`.
 '''
     (ROOT/'docs/final_report.md').write_text(text)
+    historical='> Intermediate development record. Final held-out evidence and conclusions are in `final_report.md`.\n\n'
+    for name in ['baseline_report.md','EXPERIMENT_REGISTER.md','development_findings.md','project_definition.md','system_diagram.md']:
+        path=ROOT/'docs'/name
+        value=path.read_text()
+        if not value.startswith(historical):path.write_text(historical+value)
     print('Final report generated; acceptance:',gate['accepted'])
 if __name__=='__main__':main()

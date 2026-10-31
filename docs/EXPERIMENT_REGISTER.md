@@ -1,3 +1,5 @@
+> Intermediate development record. Final held-out evidence and conclusions are in `final_report.md`.
+
 # Exploratory experiment register
 
 All entries below were introduced after the original validation evidence was visible. None is confirmatory; final-test metrics remain unused. No best subgroup, layer order or seed may be selectively reported.
