@@ -37,6 +37,10 @@ The release should include code, dataset access, aggregate results and the Markd
 
 `docs/project_definition.md` preserves Intermediate commitments; `docs/EVIDENCE_BOUNDARIES.md` separates observed facts, assumptions and unsupported claims. The separate Arabic viva guide is a study aid rather than added report body.
 
+## Download submission packages
+
+[Full package with public data](https://github.com/oj9o/talentroute-learner-support/raw/refs/heads/main/submission/Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Full.zip) · [Main-code audit package](https://github.com/oj9o/talentroute-learner-support/raw/refs/heads/main/submission/Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Main_Code.zip)
+
 ## Submission versions
 
 The repository root is the Final evaluation release. `submission/` contains the preserved Intermediate main-code ZIP. The Final report is separate from the Intermediate baseline report; validation findings and held-out results are labelled separately.

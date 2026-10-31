@@ -142,7 +142,7 @@ The Intermediate committed to layer escape, warning-positive outcome profiles an
 These mappings make explicit how the committed analyses relate to the proposal's deeper-analysis categories. Each sharpens a recommendation; none establishes a causal support mechanism.
 
 ## 8. Insights and recommendations
-Use the recorded acceptance outcome in the executive summary. If the connected candidate fails, retain the simpler reference pending new independent evidence rather than force the second technique into operations. The experimental second technique remains implemented and evaluated; the evaluated final candidate connects both techniques, while its operational fallback is explicitly simpler. This distinction is disclosed rather than presenting experimental inclusion as deployment approval.
+The recorded acceptance check does not support endorsing the additional component. Retain the simpler reference pending new independent evidence; the connected system remains an evaluated experimental candidate. The experimental second technique remains implemented and evaluated; the evaluated final candidate connects both techniques, while its operational fallback is explicitly simpler. This distinction is disclosed rather than presenting experimental inclusion as deployment approval.
 
 Review Fail and Withdrawn separately because a pooled improvement may hide a loss for one outcome. See `test_metrics.csv`. Inspect course and missing-assessment segments before deployment; `test_segments.csv` marks when sample sizes permit interpretation. Budget changes alter contact volume and missed cases, not demonstrated prevented failures. A human reviewer should confirm context before contacting a learner.
 
