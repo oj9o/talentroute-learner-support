@@ -1,0 +1,56 @@
+name: Final container verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-container:
+    runs-on: ubuntu-latest
+    container: python:3.14-slim
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.14'
+      - uses: extractions/setup-just@v3
+      - name: Restore public data from the submitted archive
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          archive = Path('submission/Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Full.zip')
+          target = Path('data/raw')
+          target.mkdir(parents=True, exist_ok=True)
+          with zipfile.ZipFile(archive) as z:
+              for name in z.namelist():
+                  if name.startswith('TalentRoute_Final/data/raw/') and name.endswith('.csv'):
+                      (target / Path(name).name).write_bytes(z.read(name))
+          PY
+      - name: Install locked dependencies
+        run: just install
+      - name: Reproduce the fixed release in a clean container
+        run: |
+          just clean
+          just pipeline
+      - name: Save verification metadata
+        run: |
+          uv run python - <<'PY'
+          import json, platform, sys
+          from pathlib import Path
+          out = Path('outputs/final')
+          record = {'platform': platform.platform(), 'python': sys.version.split()[0],
+                    'container': 'python:3.14-slim', 'test_design': 'Fixed algorithm reproduction; no test-driven retuning',
+                    'checks': json.loads((out/'requirements_check.json').read_text()),
+                    'runtime': json.loads((out/'runtime.json').read_text())}
+          (out/'container_verification.json').write_text(json.dumps(record, indent=2))
+          print(json.dumps(record, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-container-evidence
+          path: |
+            outputs/final/container_verification.json
+            outputs/final/test_metrics.csv
+            outputs/final/requirements_check.json
+            outputs/final/runtime.json
