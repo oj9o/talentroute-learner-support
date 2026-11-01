@@ -1,0 +1,58 @@
+name: Intermediate container verification
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  linux-intermediate:
+    runs-on: ubuntu-latest
+    container: python:3.14-slim
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: intermediate
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.14'
+      - uses: extractions/setup-just@v3
+      - name: Restore checksum-pinned public data
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+          target = Path('data/raw')
+          target.mkdir(parents=True, exist_ok=True)
+          archive = Path('../submission/Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-01_Full.zip')
+          with zipfile.ZipFile(archive) as z:
+              for name in z.namelist():
+                  if name.startswith('TalentRoute_Intermediate/data/raw/') and name.endswith('.csv'):
+                      (target / Path(name).name).write_bytes(z.read(name))
+          PY
+      - name: Install locked environment
+        run: just install
+      - name: Reproduce Intermediate from clean generated state
+        run: |
+          just clean
+          just pipeline
+      - name: Save container evidence
+        run: |
+          uv run python - <<'PY'
+          from pathlib import Path
+          import hashlib, json, os, platform
+          root = Path('.')
+          files = sorted([*Path('src').rglob('*.py'), *Path('scripts').rglob('*.py'), *Path('scripts/review_ui').glob('*'), Path('Justfile'), Path('uv.lock'), Path('pyproject.toml')])
+          hashes = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files if p.is_file()}
+          record = {'commit': os.environ['GITHUB_SHA'], 'platform': platform.platform(), 'python': platform.python_version(), 'container': 'python:3.14-slim', 'source_sha256': hashes, 'runtime': json.loads(Path('outputs/current_pipeline_verification.json').read_text()), 'readiness': json.loads(Path('outputs/intermediate_readiness.json').read_text()), 'scope': 'Current Intermediate pipeline; development evaluation only. Canonical local results are preserved separately.'}
+          Path('outputs/intermediate_container.json').write_text(json.dumps(record, indent=2))
+          print(json.dumps(record['runtime'], indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: intermediate-linux-evidence
+          path: |
+            intermediate/outputs/intermediate_container.json
+            intermediate/outputs/validation_decision_metrics.csv
+            intermediate/outputs/validation_primary_intervals.csv
+            intermediate/outputs/intermediate_readiness.json
