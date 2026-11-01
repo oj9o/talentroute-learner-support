@@ -1,5 +1,3 @@
-# Mouza Al Darmaki · MAAI7101
-
 # TalentRoute — Final evaluation release
 
 An educational consulting team serving universities or learning providers uses this experiment to prioritise learner-support reviews and alerts within staff time. OULAD supplies actual learner outcomes; this is not a full learning-plan platform or evidence that contacting a learner prevents failure.
@@ -41,6 +39,6 @@ The release should include code, dataset access, aggregate results and the Markd
 
 [Full package with public data](https://github.com/oj9o/talentroute-learner-support/raw/refs/heads/main/submission/Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Full.zip) · [Main-code audit package](https://github.com/oj9o/talentroute-learner-support/raw/refs/heads/main/submission/Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Main_Code.zip)
 
-## Submission versions
+## Model investigation workspace
 
-The repository root is the Final evaluation release. `submission/` contains the preserved Intermediate main-code ZIP. The Final report is separate from the Intermediate baseline report; validation findings and held-out results are labelled separately.
+Open `review/investigations.html` for the development learning curves, single-feature audit and period-difference analysis. Run `just investigations` to reproduce them. See `docs/model_investigations.md` for scope and limitations. These exploratory additions follow the recorded final evaluation and do not change the frozen final model or its acceptance decision.

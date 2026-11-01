@@ -72,3 +72,8 @@ verify-final:
 
 platform-evidence archive repository:
     uv run python scripts/import_platform_evidence.py "{{archive}}" "{{repository}}"
+
+# Post-freeze exploratory diagnostics; no final-test scoring.
+investigations:
+    uv run python scripts/debug_investigations.py
+    uv run python scripts/build_investigations.py

@@ -1,0 +1,20 @@
+{
+  "update": "Development investigation workspace",
+  "date": "2026-11-01",
+  "local_tests_passed": 25,
+  "linux_scope": "Prior frozen analytical core: 24 tests; new diagnostic additions not yet rerun on Linux",
+  "frozen_final_results_unchanged": true,
+  "new_diagnostics_test_rows": 0,
+  "report_body_words": 1523,
+  "publication_language": "English",
+  "archives": [
+    {
+      "file": "Mouza_Aldarmaki_MAAI7101_Final_2026-11-01_Main_Code.zip",
+      "sha256": "4224582fdcc9a16a75af73cfda3c1a1dcf966749745a1b4f5217cc86319f91e0"
+    },
+    {
+      "file": "Mouza_Aldarmaki_MAAI7101_Final_2026-11-01_Full.zip",
+      "sha256": "c4f82baa55ccd0d1d726c83aa056440eb61a1a56c7bdf9453d24136a55343d24"
+    }
+  ]
+}
