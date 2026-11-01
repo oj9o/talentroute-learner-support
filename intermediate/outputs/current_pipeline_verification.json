@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-01T06:18:15.899094+00:00",
+  "checked_at": "2026-11-01T17:55:22.574946+00:00",
   "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
   "python": "3.14.7",
   "pipeline_exit_code": 0,
@@ -12,7 +12,7 @@
         "download-data"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 0.54
+      "elapsed_seconds": 0.55
     },
     {
       "command": [
@@ -20,7 +20,7 @@
         "prepare-data"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 1.75
+      "elapsed_seconds": 1.71
     },
     {
       "command": [
@@ -28,7 +28,7 @@
         "eda"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 1.97
+      "elapsed_seconds": 1.65
     },
     {
       "command": [
@@ -36,7 +36,7 @@
         "run-baseline"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 3.01
+      "elapsed_seconds": 2.75
     },
     {
       "command": [
@@ -48,7 +48,7 @@
         "stability"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 1.17
+      "elapsed_seconds": 1.13
     },
     {
       "command": [
@@ -60,7 +60,7 @@
         "data-sensitivity"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 9.74
+      "elapsed_seconds": 9.88
     },
     {
       "command": [
@@ -68,7 +68,7 @@
         "revision"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 8.78
+      "elapsed_seconds": 8.99
     },
     {
       "command": [
@@ -76,7 +76,7 @@
         "diagnostics"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 1.9
+      "elapsed_seconds": 1.86
     },
     {
       "command": [
@@ -84,7 +84,7 @@
         "investigations"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 5.28
+      "elapsed_seconds": 5.23
     },
     {
       "command": [
@@ -92,7 +92,7 @@
         "eda"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 1.5
+      "elapsed_seconds": 1.55
     },
     {
       "command": [
@@ -102,7 +102,7 @@
         "scripts/verify_submission.py"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 0.67
+      "elapsed_seconds": 0.71
     },
     {
       "command": [
@@ -118,7 +118,15 @@
         "review"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 0.2
+      "elapsed_seconds": 0.21
+    },
+    {
+      "command": [
+        "just",
+        "readiness"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.17
     },
     {
       "command": [
@@ -126,7 +134,7 @@
         "test"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 1.13
+      "elapsed_seconds": 1.12
     },
     {
       "command": [
@@ -142,7 +150,7 @@
         "review"
       ],
       "exit_code": 0,
-      "elapsed_seconds": 0.19
+      "elapsed_seconds": 0.21
     },
     {
       "command": [
@@ -154,7 +162,7 @@
     }
   ],
   "scope": "Current local pipeline execution; operating system measured, VM/container type not inferred",
-  "tests_passed": 23,
+  "tests_passed": 25,
   "data_access": "bundled CSVs; hashes pinned from verified official archive",
-  "elapsed_seconds": 39.25
+  "elapsed_seconds": 39.13
 }

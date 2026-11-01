@@ -14,7 +14,7 @@ start=time.monotonic();stages=[]
 commands=[['just','download-data'],['just','prepare-data'],['just','eda'],['just','run-baseline'],
     ['uv','run','python','-m','talentroute','stability'],
     ['uv','run','python','-m','talentroute','data-sensitivity'],['just','revision'],
-    ['just','diagnostics'],['just','investigations'],['just','eda'],['uv','run','python','scripts/verify_submission.py'],['just','report'],['just','review'],['just','test']]
+    ['just','diagnostics'],['just','investigations'],['just','eda'],['uv','run','python','scripts/verify_submission.py'],['just','report'],['just','review'],['just','readiness'],['just','test']]
 record={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),
     'platform':platform.platform(),'python':platform.python_version(),
     'pipeline_exit_code':None,'final_test_scored_by_this_pipeline':False,'separate_final_evaluation_already_observed':True,'stages':stages,

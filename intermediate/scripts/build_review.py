@@ -59,3 +59,6 @@ def readable_report(text):
 report=readable_report((ROOT/'docs/baseline_report.md').read_text(encoding='utf-8'))
 (DEST/'report.html').write_text('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TalentRoute · Intermediate report</title><link rel="stylesheet" href="review.css"><body><main class="report-body"><a href="index.html">← Back to TalentRoute</a>'+report+'<p><a href="../docs/baseline_report.md" download>Download canonical Markdown report</a></p></main></body></html>',encoding='utf-8')
 print('Built offline TalentRoute interface and readable report from aggregate evidence.')
+
+from build_decision_room import build as build_decision_room
+build_decision_room()

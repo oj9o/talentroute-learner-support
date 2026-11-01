@@ -1,48 +1,31 @@
-# TalentRoute — Final evaluation release
+# TalentRoute — learner-support decision support
+
+Mouza Al Darmaki · MAAI7101
 
 ## Current Intermediate submission
 
-The updated Intermediate deliverable is in [`intermediate/`](intermediate/README.md). Its source, concise report and offline interface are separate from the Final implementation at the repository root. Download the **Intermediate_2026-11-01** Full and Main_Code ZIPs from [`submission/`](submission/README.md). The Final artifacts remain available as a separately documented development milestone.
+The current deliverable is in [`intermediate/`](intermediate/README.md). It combines learner-outcome classification and engagement outlier detection in a staff-time-constrained support queue, evaluated on real OULAD outcomes.
 
-An educational consulting team serving universities or learning providers uses this experiment to prioritise learner-support reviews and alerts within staff time. OULAD supplies actual learner outcomes; this is not a full learning-plan platform or evidence that contacting a learner prevents failure.
+- [Intermediate report](intermediate/docs/baseline_report.md)
+- [Project definition and final commitments](intermediate/docs/project_definition.md)
+- [Data dictionary](intermediate/docs/data_dictionary.md)
+- [Submission packages and verification](submission/README.md)
 
-## Run
-
-Requirements: `uv`, `just`, Python 3.14, Mac/Linux CPU. No GPU, account, API key or external model-service call is needed. Initial dependency installation requires network unless cached. Bundled raw data support offline subsequent execution.
+Use the packages named **Intermediate_2026-11-01** for this submission. The Full ZIP includes public data, aggregate results, the report and offline interactive pages. The Main_Code ZIP supplies source/configuration/documentation for audit; download data and regenerate outputs before viewing the artifact.
 
 ```sh
+cd intermediate
 just install
 just pipeline
-just app 150
-just app 600
+just app 300
 ```
 
-`just pipeline` verifies/downloads data, prepares features, runs Intermediate baselines, EDA and committed development analyses, trains the fixed final candidate, freezes hashes before held-out scoring, evaluates, produces ablation/sensitivity evidence, generates the final report and tests. Runtime is recorded in `outputs/final/runtime.json`; installation and first network download are separate. Target: under 30 minutes excluding network transfer.
+Open `review/decision_room.html` for the guided prediction/evidence/recommendation experience, `review/index.html` for the project dashboard, and `review/report.html` for the readable report. All run offline after dependencies and data are available. The decision room uses saved development evidence; illustrative questions are labelled.
 
-Final report: `docs/final_report.md`, ten required sections. `just final-report` regenerates it from saved outputs. `just deep-dives` runs the three committed development analyses; `just ablation` produces held-out component comparisons and plots; `just sensitivity` includes the frozen candidate's validation scenarios and seed checks plus data-availability assumptions. `just evaluate` reuses completed frozen test results. `just run-model` trains before evaluation and deliberately refuses retraining after test scoring. This refusal protects the release from silent retuning. Do not delete a completed freeze to search for a better test result.
+Python 3.14, `uv`, `just`, CPU only. Data: OULAD, Kuzilek, Hlosta & Zdrahal (2015), https://doi.org/10.24432/C5KK69, CC BY 4.0. A slower upstream download is avoided by the public CSVs bundled in the Full ZIP.
 
-The offline artifact is a CLI ranked list. `just app <budget>` changes staff minutes per 100 learners, shows reviews/alerts/no action and actual effort, and saves `outputs/final/demo_worklist.csv` with synthetic references. Its cohort is validation, clearly labelled. It demonstrates the frozen experimental candidate, not an approved production policy. Acceptance is recorded separately in `outputs/final/acceptance.json`.
+## Separate Final milestone
 
-## Reproduction and limits
+The repository root code and `docs/final_report.md` preserve a separately implemented, frozen Final milestone. Its held-out evaluation has already been observed. New investigations use development data only; they do not reopen that test or select a replacement candidate. The updated Intermediate report discloses this chronology.
 
-The final candidate averages forest and boosting probabilities and blends an Isolation Forest percentile into the ranking. Both technique families feed one constrained policy. All weights and acceptance criteria are recorded before test scoring in `outputs/final/freeze.json`. Frozen code, model and processed-data hashes are verified before evaluation. Later contextual-detector checks were exploratory development experiments, not independent anomaly truth.
-
-An unsuccessful acceptance result is retained. The held-out comparison cannot be used to tune another candidate in this release. Validation sensitivity and deeper analyses are labelled development evidence. A cluster bootstrap reflects sampling uncertainty, not causal effectiveness or external validity.
-
-Current-host verification is recorded separately from historical platform evidence. The analytical source and configuration also passed a clean Python 3.14 Linux-container reproduction: [verification run](https://github.com/oj9o/talentroute-learner-support/actions/runs/41237286645). The exact tested commit and platform differences are recorded under evidence/linux-container-2026-11-01; later report-only changes are distinguished from that run. `just test` may skip evidence-dependent checks before the pipeline produces their inputs; the full run should supply those inputs. `just clean` removes generated data, reports' underlying outputs and review pages; it is for technical reproduction of the fixed release, not restarting scientific selection after seeing the test.
-
-## Data and packaging
-
-Kuzilek, Hlosta and Zdrahal, OULAD, UCI DOI [10.24432/C5KK69](https://doi.org/10.24432/C5KK69), CC BY 4.0. Source CSV/archive hashes are pinned in `configs/policy.json`. Raw data can be bundled under that licence; absent files are retrieved by `just download-data`. A slow first upstream transfer may exceed the analytical runtime target.
-
-The release should include code, dataset access, aggregate results and the Markdown report. Exclude `.venv`, caches, private feedback, real-ID worklists and row-level predictions. Keep a main-code ZIP as requested for audit. No upload, public repository availability or LMS submission is implied by local packaging.
-
-`docs/project_definition.md` preserves Intermediate commitments; `docs/EVIDENCE_BOUNDARIES.md` separates observed facts, assumptions and unsupported claims. The separate Arabic viva guide is a study aid rather than added report body.
-
-## Download submission packages
-
-[Full package with public data](https://github.com/oj9o/talentroute-learner-support/raw/refs/heads/main/submission/Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Full.zip) · [Main-code audit package](https://github.com/oj9o/talentroute-learner-support/raw/refs/heads/main/submission/Mouza_Aldarmaki_MAAI7101_Final_2026-10-31_Main_Code.zip)
-
-## Model investigation workspace
-
-Open `review/investigations.html` for the development learning curves, single-feature audit and period-difference analysis. Run `just investigations` to reproduce them. See `docs/model_investigations.md` for scope and limitations. These exploratory additions follow the recorded final evaluation and do not change the frozen final model or its acceptance decision.
+Final packages and historical snapshots are separately named in `submission/`. Final scientific acceptance remains unmet because the detector's incremental value is uncertain. No intervention-effect or production-approval claim is made. The presentation and viva are separate deliverables. No LMS upload has been performed by this repository.

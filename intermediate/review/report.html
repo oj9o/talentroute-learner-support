@@ -13,12 +13,12 @@
 <h2>Metrics and results</h2>
 <p>Primary ML metric is adverse PR-AUC, measuring how well risk ranks later Fail/Withdrawn cases. Outcome-specific PR-AUC, macro-F1, log loss and Brier score describe discrimination and probability quality. Detector PR-AUC, flag precision and coverage measure relevance to recorded outcomes, not accuracy against nonexistent anomaly labels. Primary decision metric is adverse coverage at a fixed effort budget; precision and missed cases expose contact burden and omissions.</p>
 <p>Classification comparison, outputs/revision/model_comparison.csv:</p>
-<div class="scroll"><table><thead><tr><th scope="col">model</th><th scope="col">adverse_pr_auc</th><th scope="col">fail_pr_auc</th><th scope="col">withdrawn_pr_auc</th><th scope="col">adverse_coverage</th></tr></thead><tbody>
-<tr><td>logistic</td><td>0.7280</td><td>0.4870</td><td>0.2829</td><td>0.4283</td></tr>
-<tr><td>tree</td><td>0.7099</td><td>0.4650</td><td>0.2560</td><td>0.4489</td></tr>
-<tr><td>forest</td><td>0.7478</td><td>0.5022</td><td>0.2861</td><td>0.4555</td></tr>
-<tr><td>hgb_15_10</td><td>0.7472</td><td>0.4891</td><td>0.3072</td><td>0.4579</td></tr>
-<tr><td>module_logistic_hybrid</td><td>0.7369</td><td>0.4871</td><td>0.2807</td><td>0.4475</td></tr>
+<div class="scroll"><table><thead><tr><th scope="col">model</th><th scope="col">adverse_pr_auc</th><th scope="col">fail_pr_auc</th><th scope="col">withdrawn_pr_auc</th><th scope="col">macro_f1</th><th scope="col">log_loss</th><th scope="col">adverse_brier</th><th scope="col">adverse_coverage</th></tr></thead><tbody>
+<tr><td>logistic</td><td>0.7280</td><td>0.4870</td><td>0.2829</td><td>0.4001</td><td>0.9145</td><td>0.2076</td><td>0.4283</td></tr>
+<tr><td>tree</td><td>0.7099</td><td>0.4650</td><td>0.2560</td><td>0.3965</td><td>0.9300</td><td>0.2114</td><td>0.4489</td></tr>
+<tr><td>forest</td><td>0.7478</td><td>0.5022</td><td>0.2861</td><td>0.4115</td><td>0.9054</td><td>0.2025</td><td>0.4555</td></tr>
+<tr><td>hgb_15_10</td><td>0.7472</td><td>0.4891</td><td>0.3072</td><td>0.4552</td><td>0.9021</td><td>0.2023</td><td>0.4579</td></tr>
+<tr><td>module_logistic_hybrid</td><td>0.7369</td><td>0.4871</td><td>0.2807</td><td>0.4224</td><td>0.9122</td><td>0.2045</td><td>0.4475</td></tr>
 </tbody></table></div>
 <p>Same-budget decisions, outputs/validation_decision_metrics.csv:</p>
 <div class="scroll"><table><thead><tr><th scope="col">policy</th><th scope="col">adverse_coverage</th><th scope="col">fail_coverage</th><th scope="col">withdrawn_coverage</th><th scope="col">flag_precision</th><th scope="col">human_n</th><th scope="col">alert_n</th><th scope="col">staff_minutes</th></tr></thead><tbody>
@@ -40,7 +40,7 @@
 <figure><img src="../outputs/eda_01_outcomes.png" alt="Development outcome balance"></figure>
 <figure><img src="../outputs/eda_07_observability.png" alt="Early assessment availability"></figure>
 <figure><img src="../outputs/eda_05_change.png" alt="Engagement patterns"></figure>
-<p>The offline investigations follow question → expected pattern → observed evidence → interpretation limit. Learning curves compare logistic/HGB at three training fractions over three seeds. HGB keeps early stopping disabled throughout this diagnostic to hold the iteration budget fixed. Its mean validation AP moves from 0.7308 to 0.7447; this does not guarantee future data gains. Individual-feature probes rank inactive_days highest at AP 0.6266; predictive strength alone cannot establish leakage. A student-grouped period classifier gives mean ROC-AUC 0.7912, suggesting detectable covariate differences, not proven concept drift. Source CSVs and fingerprints: outputs/investigations/; reproduce with just investigations.</p>
+<p>The offline decision room offers three guided predict–investigate–decide cases using these saved model, detector and budget comparisons. Stakeholder prompts are illustrative, not real communications. The diagnostic investigations follow question → expected pattern → observed evidence → interpretation limit. Learning curves compare logistic/HGB at three training fractions over three seeds. HGB keeps early stopping disabled throughout this diagnostic to hold the iteration budget fixed. Its mean validation AP moves from 0.7308 to 0.7447; this does not guarantee future data gains. Individual-feature probes rank inactive_days highest at AP 0.6266; predictive strength alone cannot establish leakage. A student-grouped period classifier gives mean ROC-AUC 0.7912, suggesting detectable covariate differences, not proven concept drift. Source CSVs and fingerprints: outputs/investigations/; reproduce with just investigations.</p>
 <p>Existing train/validation diagnostics, ten shuffled-training-label controls and grouped permutation checks remain in outputs/diagnostics/. They generate hypotheses, not proof of clean labels or absence of leakage. No outcome is relabeled because a model disagrees with it. The new studies are explicitly exploratory after the separate final evaluation.</p>
 <h2>Deeper work and final commitments</h2>
 <p>1. Layer escape at equal total quota: test whether complementary warnings reach missed adverse cases. Completed development sweeps compare all 24 orders and three tie seeds; retain negative findings rather than crediting a larger union with a larger contact budget.</p>

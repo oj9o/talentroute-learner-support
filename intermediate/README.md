@@ -15,7 +15,7 @@ just app 600
 
 Python 3.14 is pinned. No GPU, credentials or LLM API is required. `just pipeline` prepares data, runs baselines and model comparisons, EDA, deeper analyses, diagnostics, reports and tests. Exact runtime, environment and test count: outputs/current_pipeline_verification.json. Installation/network time is separate.
 
-Open review/index.html offline; review/report.html displays the canonical docs/baseline_report.md. The Week 10 workspace is review/investigations.html; regenerate with `just investigations`. Keep sibling docs/outputs files with the interface. `just clean` removes generated data/outputs/interface; raw data remain. Evidence-dependent tests require generated outputs.
+Open review/decision_room.html for the guided predict → investigate → decide experience, or review/index.html offline; review/report.html displays the canonical docs/baseline_report.md. The Week 10 workspace is review/investigations.html; regenerate with `just investigations`. Keep sibling docs/outputs files with the interface. `just clean` removes generated data/outputs/interface; raw data remain. Evidence-dependent tests require generated outputs.
 
 ## Evidence and data
 

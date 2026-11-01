@@ -1,4 +1,4 @@
-"""Development evidence only; the final test stays sealed during Intermediate work."""
+"""Development evaluation only; this pipeline does not score the separate final cohort."""
 import json
 import joblib
 import numpy as np

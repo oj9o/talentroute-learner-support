@@ -24,12 +24,12 @@ Primary ML metric is adverse PR-AUC, measuring how well risk ranks later Fail/Wi
 
 Classification comparison, outputs/revision/model_comparison.csv:
 ```csv
-model,adverse_pr_auc,fail_pr_auc,withdrawn_pr_auc,adverse_coverage
-logistic,0.7280,0.4870,0.2829,0.4283
-tree,0.7099,0.4650,0.2560,0.4489
-forest,0.7478,0.5022,0.2861,0.4555
-hgb_15_10,0.7472,0.4891,0.3072,0.4579
-module_logistic_hybrid,0.7369,0.4871,0.2807,0.4475
+model,adverse_pr_auc,fail_pr_auc,withdrawn_pr_auc,macro_f1,log_loss,adverse_brier,adverse_coverage
+logistic,0.7280,0.4870,0.2829,0.4001,0.9145,0.2076,0.4283
+tree,0.7099,0.4650,0.2560,0.3965,0.9300,0.2114,0.4489
+forest,0.7478,0.5022,0.2861,0.4115,0.9054,0.2025,0.4555
+hgb_15_10,0.7472,0.4891,0.3072,0.4552,0.9021,0.2023,0.4579
+module_logistic_hybrid,0.7369,0.4871,0.2807,0.4224,0.9122,0.2045,0.4475
 ```
 
 Same-budget decisions, outputs/validation_decision_metrics.csv:
@@ -60,7 +60,7 @@ Ten figures cover outcomes, missingness, assessments, engagement, modules, detec
 ![Early assessment availability](../outputs/eda_07_observability.png)
 ![Engagement patterns](../outputs/eda_05_change.png)
 
-The offline investigations follow question → expected pattern → observed evidence → interpretation limit. Learning curves compare logistic/HGB at three training fractions over three seeds. HGB keeps early stopping disabled throughout this diagnostic to hold the iteration budget fixed. Its mean validation AP moves from 0.7308 to 0.7447; this does not guarantee future data gains. Individual-feature probes rank inactive_days highest at AP 0.6266; predictive strength alone cannot establish leakage. A student-grouped period classifier gives mean ROC-AUC 0.7912, suggesting detectable covariate differences, not proven concept drift. Source CSVs and fingerprints: outputs/investigations/; reproduce with just investigations.
+The offline decision room offers three guided predict–investigate–decide cases using these saved model, detector and budget comparisons. Stakeholder prompts are illustrative, not real communications. The diagnostic investigations follow question → expected pattern → observed evidence → interpretation limit. Learning curves compare logistic/HGB at three training fractions over three seeds. HGB keeps early stopping disabled throughout this diagnostic to hold the iteration budget fixed. Its mean validation AP moves from 0.7308 to 0.7447; this does not guarantee future data gains. Individual-feature probes rank inactive_days highest at AP 0.6266; predictive strength alone cannot establish leakage. A student-grouped period classifier gives mean ROC-AUC 0.7912, suggesting detectable covariate differences, not proven concept drift. Source CSVs and fingerprints: outputs/investigations/; reproduce with just investigations.
 
 Existing train/validation diagnostics, ten shuffled-training-label controls and grouped permutation checks remain in outputs/diagnostics/. They generate hypotheses, not proof of clean labels or absence of leakage. No outcome is relabeled because a model disagrees with it. The new studies are explicitly exploratory after the separate final evaluation.
 
