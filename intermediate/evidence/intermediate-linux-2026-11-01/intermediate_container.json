@@ -1,0 +1,238 @@
+{
+  "commit": "c1a112cea22216cc457ee6b3340bcebe90a4267c",
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.41",
+  "python": "3.14.10",
+  "container": "python:3.14-slim",
+  "source_sha256": {
+    "Justfile": "f0ec2336ed11068e68513096d4d1dd690538294570577e9108b582466e67f974",
+    "pyproject.toml": "35e08d9f0246d9c99e1e802a2f0a3674c6e005c3b1df5d1b698ca2b4dc09a930",
+    "scripts/build_decision_room.py": "9d678c46cd5ded485b61cd8cd906d42c81af50b04e8bb572cf5dd71219f6a497",
+    "scripts/build_investigations.py": "521b36526f430983cd9168ff3c5140dc89d78e43e44bedf70cbc0b5d13d6c5de",
+    "scripts/build_review.py": "749917e586416deae6777573622e314fa334dc1c853517964b172bc9ef89bd4a",
+    "scripts/clean_generated.py": "754fd184e51c1616be71905d5cefd625ffde7093dec3a7e268728f552c973e87",
+    "scripts/debug_investigations.py": "a19bc381186de70afdf7f9098776aa0002db9480199f043eb0267c00f524f59d",
+    "scripts/eda.py": "c1b66eede6da3e6b722b3e2524cd3a4e7063bec98c10bb41f12b3116e0ce1892",
+    "scripts/review_ui/decision_room.css": "2e185eed7f2dc079ee7c0bab12c14b3dd0dcd91887b565d68386cea8791a29ae",
+    "scripts/review_ui/decision_room.html": "a6bfa9c969f9a624fa628f064bc5c00ccf696389bff0df3d091776fe92e778b2",
+    "scripts/review_ui/decision_room.js": "4c4968999609d8058c039f9a49d58a09ce9e65d33838b3618b82e35e32f5fe5e",
+    "scripts/review_ui/index.html": "af72c920c304e79e66f48975c5ec84bf5e7659588e8efee0a35636233e8b2367",
+    "scripts/review_ui/review.css": "75edde2a1a5747fb8008aaff229b260f3a57f8e8ea1f0890ecf0a32673cdc0f1",
+    "scripts/review_ui/review.js": "92ae4a018738b1623f2f88ed2ad53a7cbe188048c166c998ca2e3b51e5058194",
+    "scripts/run_pipeline.py": "b1c3a11b6c88487c719e7e78af7e240565a5c5300c192adf117b74f55f00bae7",
+    "scripts/verify_intermediate_release.py": "73fc323a5a2afc25c36d75eb01132f10999516b74bc0467ecc33ecec9c507e0d",
+    "scripts/verify_submission.py": "586666bd63d45b6748f0d6be3fb561d858796f93d09cb02f0695735b2c9bfd19",
+    "src/talentroute/__init__.py": "d0c8f30bfa6458262852d93a2d687909208b12dd784e72762ea43c2c30a39594",
+    "src/talentroute/__main__.py": "df38fef4b5d06f77d550ae45806bb69695d82a62fe131ebd30fabd598dbc83ad",
+    "src/talentroute/data.py": "e8635e1759ee9a910627d35ab61ef0e4e3561588771fb93149e346810d738bf8",
+    "src/talentroute/data_sensitivity.py": "a52e8315427cb00cebca1031ef6e9d65e20c8bdca8c8056327b9309d7401fef9",
+    "src/talentroute/decision.py": "a42348cdf956832dde88649fd1b4e1086421a9871c8adcdf01fc5ef07f6ec896",
+    "src/talentroute/demo.py": "b2233f149cb0c6e88ba411d4b8db818e270a229e7a86cccbd5a4dd67a8e5bdcd",
+    "src/talentroute/diagnostics.py": "b4f80ba4cebb03beadf8d8a777611e2474ffc62ce35d7095e97b3a9e282b9c70",
+    "src/talentroute/eda.py": "de67f1f9014bff27525d2edda619aa85345dd29b9cbec27b7c49da87eac169c5",
+    "src/talentroute/evaluation.py": "21dbf13851c1aedf102145fd9b27571d24204f7ff11b389de146808c1fc8bed2",
+    "src/talentroute/model_intervals.py": "db4a5c02c73d60e8612fc37ad106ff28f9e230f3368c899c7c786fd306e771c0",
+    "src/talentroute/models.py": "bfd8b456230fe7bf980588e9c26ed1b05be38af97faa24548871055165934c94",
+    "src/talentroute/report.py": "b951a1dcb321aa6049a2ceca44a9f7d037ee96af5c02a7f6d41cd13c75866e01",
+    "src/talentroute/revision.py": "2ef9c23d30458346116b8fe13aaf853adc72ef41c00479b63e952fc20f217960",
+    "src/talentroute/revision_checks.py": "b33c7a33e66041b9b6b4c3037e7923c9fd3d0fc05cc68b5f2ad0e5fdc797de9f",
+    "src/talentroute/stability.py": "5ea31f0afee0a8680f0731ea0ad1676710f09b54891b235fb6d42fa9e7d6df20",
+    "uv.lock": "2c88973f582d7e722ec8059ff2ff84bc2cf6930961d893f2c16c491ca706f090"
+  },
+  "runtime": {
+    "checked_at": "2026-11-01T18:04:24.870275+00:00",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.41",
+    "python": "3.14.10",
+    "pipeline_exit_code": 0,
+    "final_test_scored_by_this_pipeline": false,
+    "separate_final_evaluation_already_observed": true,
+    "stages": [
+      {
+        "command": [
+          "just",
+          "download-data"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.17
+      },
+      {
+        "command": [
+          "just",
+          "prepare-data"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 4.98
+      },
+      {
+        "command": [
+          "just",
+          "eda"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 5.93
+      },
+      {
+        "command": [
+          "just",
+          "run-baseline"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 7.21
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "talentroute",
+          "stability"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.7
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "talentroute",
+          "data-sensitivity"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 26.29
+      },
+      {
+        "command": [
+          "just",
+          "revision"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 25.17
+      },
+      {
+        "command": [
+          "just",
+          "diagnostics"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 4.16
+      },
+      {
+        "command": [
+          "just",
+          "investigations"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 11.95
+      },
+      {
+        "command": [
+          "just",
+          "eda"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 3.89
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "scripts/verify_submission.py"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.38
+      },
+      {
+        "command": [
+          "just",
+          "report"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.41
+      },
+      {
+        "command": [
+          "just",
+          "review"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.51
+      },
+      {
+        "command": [
+          "just",
+          "readiness"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.4
+      },
+      {
+        "command": [
+          "just",
+          "test"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 3.09
+      },
+      {
+        "command": [
+          "just",
+          "report"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.41
+      },
+      {
+        "command": [
+          "just",
+          "review"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.52
+      },
+      {
+        "command": [
+          "just",
+          "test"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.7
+      }
+    ],
+    "scope": "Current local pipeline execution; operating system measured, VM/container type not inferred",
+    "tests_passed": 26,
+    "data_access": "bundled CSVs; hashes pinned from verified official archive",
+    "elapsed_seconds": 103.88
+  },
+  "readiness": {
+    "scope": "Artifact and consistency checks, not a grading or deployment certificate",
+    "combined_markdown_words": 2955,
+    "word_counts": {
+      "README.md": 259,
+      "docs/development_findings.md": 68,
+      "docs/data_dictionary.md": 375,
+      "docs/project_definition.md": 834,
+      "docs/baseline_report.md": 1118,
+      "docs/EXPERIMENT_REGISTER.md": 157,
+      "docs/system_diagram.md": 102,
+      "evidence/platform-validation-2026-10-31/README.md": 42
+    },
+    "required_files_checked": 17,
+    "eda_figures": 10,
+    "interface_links_resolve": true,
+    "new_diagnostics_test_rows": 0,
+    "separate_final_evaluation_already_observed": true,
+    "rubric_evidence": {
+      "setup": "pyproject.toml, uv.lock, .python-version",
+      "automation": "Justfile; outputs/current_pipeline_verification.json",
+      "definition": "docs/project_definition.md; docs/system_diagram.md",
+      "data": "docs/data_dictionary.md; outputs/data_audit.json",
+      "evaluation": "docs/baseline_report.md; outputs/validation_*",
+      "eda": "outputs/eda_*.png and overview CSVs",
+      "first_pass_system": "src/talentroute/models.py, decision.py, evaluation.py; outputs/validation_decision_metrics.csv"
+    }
+  },
+  "scope": "Current Intermediate pipeline; development evaluation only. Canonical local results are preserved separately."
+}

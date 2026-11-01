@@ -1,0 +1,28 @@
+{
+  "scope": "Artifact and consistency checks, not a grading or deployment certificate",
+  "combined_markdown_words": 2955,
+  "word_counts": {
+    "README.md": 259,
+    "docs/development_findings.md": 68,
+    "docs/data_dictionary.md": 375,
+    "docs/project_definition.md": 834,
+    "docs/baseline_report.md": 1118,
+    "docs/EXPERIMENT_REGISTER.md": 157,
+    "docs/system_diagram.md": 102,
+    "evidence/platform-validation-2026-10-31/README.md": 42
+  },
+  "required_files_checked": 17,
+  "eda_figures": 10,
+  "interface_links_resolve": true,
+  "new_diagnostics_test_rows": 0,
+  "separate_final_evaluation_already_observed": true,
+  "rubric_evidence": {
+    "setup": "pyproject.toml, uv.lock, .python-version",
+    "automation": "Justfile; outputs/current_pipeline_verification.json",
+    "definition": "docs/project_definition.md; docs/system_diagram.md",
+    "data": "docs/data_dictionary.md; outputs/data_audit.json",
+    "evaluation": "docs/baseline_report.md; outputs/validation_*",
+    "eda": "outputs/eda_*.png and overview CSVs",
+    "first_pass_system": "src/talentroute/models.py, decision.py, evaluation.py; outputs/validation_decision_metrics.csv"
+  }
+}

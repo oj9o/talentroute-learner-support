@@ -1,6 +1,0 @@
-{
-  "verified": true,
-  "scope": "Clean temporary directory: cached official archive checksum, real extraction and all seven CSV hashes. No fresh network transfer claimed.",
-  "elapsed_seconds": 0.95,
-  "csv_count": 7
-}

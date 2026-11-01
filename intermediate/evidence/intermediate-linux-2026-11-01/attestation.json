@@ -1,0 +1,13 @@
+{
+  "run_url": "https://github.com/oj9o/talentroute-learner-support/actions/runs/41334652935",
+  "tested_commit": "c1a112cea22216cc457ee6b3340bcebe90a4267c",
+  "artifact_sha256": "4f69019000d044739d85ebdd77af0b808069b281d57ec24244293b1941640a99",
+  "verified_source_files": 33,
+  "source_hashes_match_current": true,
+  "test_files_match_tested_commit": true,
+  "tests_passed": 26,
+  "python": "3.14.10",
+  "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.41",
+  "pipeline_seconds": 103.88,
+  "scope": "Source/configuration/lock and UI code match the tested commit; later README and evidence additions are documentation only. Canonical local metric CSVs are not replaced by container outputs."
+}

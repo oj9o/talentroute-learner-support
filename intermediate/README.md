@@ -23,4 +23,4 @@ Read docs/project_definition.md for scope, commitments and acceptance; docs/data
 
 OULAD: Kuzilek, Hlosta & Zdrahal (2015), https://doi.org/10.24432/C5KK69, CC BY 4.0. The Full ZIP includes seven public CSVs. `just download-data` verifies pinned checksums or downloads the official archive when absent. Network download can exceed 30 minutes. The Main_Code ZIP needs this data step; generated figures appear after the pipeline.
 
-Only aggregate results are published. Historical platform records apply to their named snapshots. Current local verification is recorded separately; it does not certify an updated Linux run. Reported targeting coverage is not intervention effectiveness.
+Only aggregate results are published. Current Linux-container evidence and tested source hashes: evidence/intermediate-linux-2026-11-01/. Canonical report numbers use local outputs; container results are preserved separately. Historical records apply to their named snapshots. Reported targeting coverage is not intervention effectiveness.

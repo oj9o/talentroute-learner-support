@@ -1,8 +1,8 @@
 {
   "release": "Intermediate 2026-11-01",
-  "markdown_words_combined": 2955,
+  "markdown_words_combined": 2959,
   "word_counts": {
-    "README.md": 259,
+    "README.md": 263,
     "evidence/platform-validation-2026-10-31/README.md": 42,
     "docs/data_dictionary.md": 375,
     "docs/baseline_report.md": 1118,
@@ -12,7 +12,7 @@
     "docs/EXPERIMENT_REGISTER.md": 157
   },
   "current_local_pipeline": {
-    "checked_at": "2026-11-01T17:55:22.574946+00:00",
+    "checked_at": "2026-11-01T18:02:24.942923+00:00",
     "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
     "python": "3.14.7",
     "pipeline_exit_code": 0,
@@ -25,7 +25,7 @@
           "download-data"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 0.55
+        "elapsed_seconds": 0.35
       },
       {
         "command": [
@@ -33,7 +33,7 @@
           "prepare-data"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 1.71
+        "elapsed_seconds": 1.7
       },
       {
         "command": [
@@ -41,7 +41,7 @@
           "eda"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 1.65
+        "elapsed_seconds": 1.27
       },
       {
         "command": [
@@ -49,7 +49,7 @@
           "run-baseline"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 2.75
+        "elapsed_seconds": 2.64
       },
       {
         "command": [
@@ -61,7 +61,7 @@
           "stability"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 1.13
+        "elapsed_seconds": 1.15
       },
       {
         "command": [
@@ -73,7 +73,7 @@
           "data-sensitivity"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 9.88
+        "elapsed_seconds": 10.04
       },
       {
         "command": [
@@ -81,7 +81,7 @@
           "revision"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 8.99
+        "elapsed_seconds": 9.45
       },
       {
         "command": [
@@ -89,7 +89,7 @@
           "diagnostics"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 1.86
+        "elapsed_seconds": 2.15
       },
       {
         "command": [
@@ -97,7 +97,7 @@
           "investigations"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 5.23
+        "elapsed_seconds": 6.39
       },
       {
         "command": [
@@ -105,7 +105,7 @@
           "eda"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 1.55
+        "elapsed_seconds": 1.85
       },
       {
         "command": [
@@ -115,7 +115,7 @@
           "scripts/verify_submission.py"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 0.71
+        "elapsed_seconds": 0.87
       },
       {
         "command": [
@@ -123,7 +123,7 @@
           "report"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 0.18
+        "elapsed_seconds": 0.24
       },
       {
         "command": [
@@ -131,7 +131,7 @@
           "review"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 0.21
+        "elapsed_seconds": 0.26
       },
       {
         "command": [
@@ -139,7 +139,7 @@
           "readiness"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 0.17
+        "elapsed_seconds": 0.21
       },
       {
         "command": [
@@ -147,7 +147,7 @@
           "test"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 1.12
+        "elapsed_seconds": 1.45
       },
       {
         "command": [
@@ -155,12 +155,183 @@
           "report"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 0.17
+        "elapsed_seconds": 0.23
       },
       {
         "command": [
           "just",
           "review"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.25
+      },
+      {
+        "command": [
+          "just",
+          "test"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.4
+      }
+    ],
+    "scope": "Current local pipeline execution; operating system measured, VM/container type not inferred",
+    "tests_passed": 26,
+    "data_access": "bundled CSVs; hashes pinned from verified official archive",
+    "elapsed_seconds": 41.91
+  },
+  "linux_scope": "Current Intermediate source/configuration/lock and UI code verified in Python 3.14 Linux container at the recorded commit; README/evidence additions followed.",
+  "publication_language": "English",
+  "archives": [
+    {
+      "file": "Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-01_Main_Code.zip",
+      "bytes": 127900,
+      "sha256": "726c05147d3b6c83b288d21efa2ab5a8a0325af2f93f97ebdb5d27e6b0c28c7d"
+    },
+    {
+      "file": "Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-01_Full.zip",
+      "bytes": 47736966,
+      "sha256": "0a1a6d200bb9430727f2103c964e9e5300614f95caf2da6df3be4d5eb2aae38a"
+    }
+  ],
+  "linux_container": {
+    "run_url": "https://github.com/oj9o/talentroute-learner-support/actions/runs/41334652935",
+    "tested_commit": "c1a112cea22216cc457ee6b3340bcebe90a4267c",
+    "artifact_sha256": "4f69019000d044739d85ebdd77af0b808069b281d57ec24244293b1941640a99",
+    "verified_source_files": 33,
+    "source_hashes_match_current": true,
+    "test_files_match_tested_commit": true,
+    "tests_passed": 26,
+    "python": "3.14.10",
+    "platform": "Linux-7.0.0-1017-azure-x86_64-with-glibc2.41",
+    "pipeline_seconds": 103.88,
+    "scope": "Source/configuration/lock and UI code match the tested commit; later README and evidence additions are documentation only. Canonical local metric CSVs are not replaced by container outputs."
+  },
+  "clean_state_pipeline_verified": {
+    "checked_at": "2026-11-01T18:02:24.942923+00:00",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.7",
+    "pipeline_exit_code": 0,
+    "final_test_scored_by_this_pipeline": false,
+    "separate_final_evaluation_already_observed": true,
+    "stages": [
+      {
+        "command": [
+          "just",
+          "download-data"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.35
+      },
+      {
+        "command": [
+          "just",
+          "prepare-data"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.7
+      },
+      {
+        "command": [
+          "just",
+          "eda"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.27
+      },
+      {
+        "command": [
+          "just",
+          "run-baseline"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.64
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "talentroute",
+          "stability"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.15
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "talentroute",
+          "data-sensitivity"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 10.04
+      },
+      {
+        "command": [
+          "just",
+          "revision"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 9.45
+      },
+      {
+        "command": [
+          "just",
+          "diagnostics"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.15
+      },
+      {
+        "command": [
+          "just",
+          "investigations"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 6.39
+      },
+      {
+        "command": [
+          "just",
+          "eda"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.85
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "scripts/verify_submission.py"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.87
+      },
+      {
+        "command": [
+          "just",
+          "report"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.24
+      },
+      {
+        "command": [
+          "just",
+          "review"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.26
+      },
+      {
+        "command": [
+          "just",
+          "readiness"
         ],
         "exit_code": 0,
         "elapsed_seconds": 0.21
@@ -171,26 +342,37 @@
           "test"
         ],
         "exit_code": 0,
-        "elapsed_seconds": 1.06
+        "elapsed_seconds": 1.45
+      },
+      {
+        "command": [
+          "just",
+          "report"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.23
+      },
+      {
+        "command": [
+          "just",
+          "review"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.25
+      },
+      {
+        "command": [
+          "just",
+          "test"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.4
       }
     ],
     "scope": "Current local pipeline execution; operating system measured, VM/container type not inferred",
-    "tests_passed": 25,
+    "tests_passed": 26,
     "data_access": "bundled CSVs; hashes pinned from verified official archive",
-    "elapsed_seconds": 39.13
+    "elapsed_seconds": 41.91
   },
-  "linux_scope": "Historical evidence covers its named snapshot; current Intermediate revision has not been rerun in Linux container.",
-  "publication_language": "English",
-  "archives": [
-    {
-      "file": "Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-01_Main_Code.zip",
-      "bytes": 124421,
-      "sha256": "e2e13286839c68cc3e0e4c18c3a24b583a4aec4dc3207e0eb7c501ab430a73d0"
-    },
-    {
-      "file": "Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-01_Full.zip",
-      "bytes": 47738062,
-      "sha256": "15fd7aab3bf3a90f969ddd0fcf50086c71bb0756e61b85d005f95de3adf8c032"
-    }
-  ]
+  "archive_sources_match_linux_tested_code": true
 }

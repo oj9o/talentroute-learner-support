@@ -1,8 +1,8 @@
 {
   "scope": "Artifact and consistency checks, not a grading or deployment certificate",
-  "combined_markdown_words": 2955,
+  "combined_markdown_words": 2959,
   "word_counts": {
-    "README.md": 259,
+    "README.md": 263,
     "docs/data_dictionary.md": 375,
     "docs/baseline_report.md": 1118,
     "docs/project_definition.md": 834,
