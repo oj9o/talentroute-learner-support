@@ -1,0 +1,4 @@
+outcome,n,both_flag,classifier_only_flag,anomaly_only_flag,escape_both,interpretation
+Success,3060,81,303,598,2078,diagnostic union of independently quota-limited layers; NOT a feasible union policy under the original budget
+Fail,1806,375,436,355,640,diagnostic union of independently quota-limited layers; NOT a feasible union policy under the original budget
+Withdrawn,1068,179,326,112,451,diagnostic union of independently quota-limited layers; NOT a feasible union policy under the original budget

@@ -1,7 +1,16 @@
 # Submission packages
 
-The latest packages are dated **2026-11-01**. Use the Full package for offline review and the Main_Code package for the source-code audit. The October 31 packages preserve the earlier release and its verification record.
+## Current Intermediate deliverable
 
-The November 1 update adds exploratory development investigations and an offline evidence workspace. Its metadata is in `investigation_update.json`. The canonical final model, held-out results and acceptance decision are unchanged. The original Linux evidence covers the frozen analytical core; the new diagnostics were executed and tested locally.
+Use these updated November 1 packages for the Intermediate submission:
+
+- `Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-01_Full.zip`: code, public source data, report, aggregate results and offline interface.
+- `Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-01_Main_Code.zip`: clean source/configuration/documentation audit copy; regenerate outputs after acquiring the data.
+
+The Intermediate source is in `../intermediate/`. See `intermediate_verification.json` for word counts, local tests and archive checksums. Its documents disclose that a separate frozen final candidate was already evaluated; new diagnostics use development rows only.
+
+## Separate Final milestone and earlier snapshots
+
+Files named `Final_2026-11-01` contain the separately implemented Final milestone and its development investigations. They are not the Intermediate upload. October 31 archives preserve historical releases and their verification records. Original Linux evidence covers the named frozen analytical core; it does not certify all later additions.
 
 No LMS upload is implied by these repository artifacts.

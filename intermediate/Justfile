@@ -1,0 +1,63 @@
+set shell := ["bash", "-e", "-o", "pipefail", "-c"]
+install:
+    uv sync --frozen
+
+download-data:
+    uv run python -m talentroute download
+
+prepare-data:
+    uv run python -m talentroute prepare
+
+test:
+    uv run pytest -q
+
+eda:
+    uv run python scripts/eda.py
+
+run-baseline:
+    uv run python -m talentroute fit
+    uv run python -m talentroute evaluate
+
+run-model: run-baseline
+
+evaluate:
+    uv run python -m talentroute evaluate
+
+ablation: evaluate
+
+sensitivity: evaluate
+    uv run python -m talentroute data-sensitivity
+
+deep-dives: evaluate
+    uv run python -m talentroute stability
+
+app budget="300":
+    uv run python -m talentroute demo --budget {{budget}}
+
+report:
+    uv run python -m talentroute report
+
+pipeline:
+    uv run python scripts/run_pipeline.py
+
+clean:
+    uv run python scripts/clean_generated.py
+
+# Exploratory revision; original baseline results remain preserved.
+revision:
+    uv run python -m talentroute revision
+
+review:
+    uv run python scripts/build_review.py
+
+diagnostics:
+    uv run python -m talentroute diagnostics
+
+# Reconcile declared claims with current data and saved decisions.
+verify:
+    uv run python scripts/verify_submission.py
+
+# Development-only investigations inspired by Week 10.
+investigations:
+    uv run python scripts/debug_investigations.py
+    uv run python scripts/build_investigations.py

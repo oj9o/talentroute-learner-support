@@ -1,0 +1,10 @@
+{
+  "created_utc": "2026-11-01T06:18:49.766186+00:00",
+  "train_n": 10412,
+  "validation_n": 5934,
+  "validation_adverse_prevalence": 0.48432760364004046,
+  "test_rows_used": 0,
+  "script_sha256": "a19bc381186de70afdf7f9098776aa0002db9480199f043eb0267c00f524f59d",
+  "development_sha256": "212ce0f81c3e8a9b82bbc4c458e39223c8ec7289cfdc95e8fe9a985476ab69eb",
+  "scope": "Exploratory development diagnostics added after the recorded final evaluation; not an independent confirmation or pre-registered study."
+}

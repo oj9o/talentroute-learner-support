@@ -1,0 +1,142 @@
+{
+  "checked_at": "2026-10-31T12:23:52.032905+00:00",
+  "platform": "Linux-6.8.0-146-generic-aarch64-with-glibc2.39",
+  "python": "3.14.10",
+  "pipeline_exit_code": 0,
+  "final_test_scored": false,
+  "stages": [
+    {
+      "command": [
+        "just",
+        "download-data"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.88
+    },
+    {
+      "command": [
+        "just",
+        "prepare-data"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.95
+    },
+    {
+      "command": [
+        "just",
+        "run-baseline"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.72
+    },
+    {
+      "command": [
+        "just",
+        "evaluate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.11
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "talentroute",
+        "stability"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.04
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "talentroute",
+        "data-sensitivity"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 21.99
+    },
+    {
+      "command": [
+        "just",
+        "revision"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 17.85
+    },
+    {
+      "command": [
+        "just",
+        "diagnostics"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.5
+    },
+    {
+      "command": [
+        "just",
+        "eda"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.14
+    },
+    {
+      "command": [
+        "just",
+        "report"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.21
+    },
+    {
+      "command": [
+        "just",
+        "review"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.25
+    },
+    {
+      "command": [
+        "just",
+        "test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.44
+    },
+    {
+      "command": [
+        "just",
+        "report"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.25
+    },
+    {
+      "command": [
+        "just",
+        "review"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.26
+    },
+    {
+      "command": [
+        "just",
+        "test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.5
+    }
+  ],
+  "scope": "Current local pipeline execution; operating system measured, VM/container type not inferred",
+  "tests_passed": 21,
+  "data_access": "bundled CSVs; hashes pinned from verified official archive",
+  "elapsed_seconds": 61.11,
+  "verified_environment_description": "Ubuntu 24.04 aarch64 virtual machine, 3 CPUs / 4 GiB; not a container"
+}

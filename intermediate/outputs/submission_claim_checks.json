@@ -1,0 +1,76 @@
+{
+  "scope": "Checks of current prepared data and development artifacts; not a causal or deployment certificate",
+  "test_outcomes_scored": false,
+  "checks": [
+    {
+      "claim": "Partition counts match prepared data",
+      "passed": true,
+      "evidence": "data_audit.json"
+    },
+    {
+      "claim": "Enrolment keys are unique",
+      "passed": true,
+      "evidence": "prepared enrolments"
+    },
+    {
+      "claim": "Student IDs are disjoint across partitions",
+      "passed": true,
+      "evidence": "prepared grouping keys; no test outcomes evaluated"
+    },
+    {
+      "claim": "Predictors exclude protected fields, IDs and outcomes",
+      "passed": true,
+      "evidence": "models.FEATURES"
+    },
+    {
+      "claim": "Predictions align with validation rows only",
+      "passed": true,
+      "evidence": "validation_predictions.csv"
+    },
+    {
+      "claim": "Reserved test IDs have no predictions",
+      "passed": true,
+      "evidence": "validation prediction IDs"
+    },
+    {
+      "claim": "business_rule: coverage and cost reconcile",
+      "passed": true,
+      "evidence": "validation_decision_metrics.csv + saved actions"
+    },
+    {
+      "claim": "logistic: coverage and cost reconcile",
+      "passed": true,
+      "evidence": "validation_decision_metrics.csv + saved actions"
+    },
+    {
+      "claim": "classifier_only: coverage and cost reconcile",
+      "passed": true,
+      "evidence": "validation_decision_metrics.csv + saved actions"
+    },
+    {
+      "claim": "anomaly_rule: coverage and cost reconcile",
+      "passed": true,
+      "evidence": "validation_decision_metrics.csv + saved actions"
+    },
+    {
+      "claim": "anomaly_only: coverage and cost reconcile",
+      "passed": true,
+      "evidence": "validation_decision_metrics.csv + saved actions"
+    },
+    {
+      "claim": "coupled_selected: coverage and cost reconcile",
+      "passed": true,
+      "evidence": "validation_decision_metrics.csv + saved actions"
+    },
+    {
+      "claim": "coupled_fixed_020: coverage and cost reconcile",
+      "passed": true,
+      "evidence": "validation_decision_metrics.csv + saved actions"
+    },
+    {
+      "claim": "All ten figure files exist",
+      "passed": true,
+      "evidence": "outputs/*.png"
+    }
+  ]
+}

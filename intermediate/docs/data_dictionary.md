@@ -1,0 +1,24 @@
+# Data dictionary and availability
+
+Source: official OULAD CSV tables, cited in README. Keys are module, presentation, student; assessment IDs join submissions to module/presentation. Enrolment keys must be unique. No synthetic training observations are inserted.
+
+- `target`: final_result maps Pass/Distinction to Success; Fail and Withdrawn stay distinct. Label only.
+- `code_module`: course identifier, categorical model input. An unseen module is a domain-shift challenge, not an error to silently impute.
+- `code_presentation`, `split`: temporal partition metadata, not model inputs.
+- `id_student`: grouping/audit key only. Earlier records of later-partition students are purged.
+- `date_registration`: eligibility at cutoff; unknown dates exclude the record.
+- `date_unregistration`: excludes already withdrawn records at cutoff; later values never enter model features.
+- `score_mean`, `score_min`: observed non-banked/non-exam scores, submissions by cutoff minus assumed score lag. Missing scores remain missing for training-fitted median imputation with missing indicators. Submission date is not evidence of grading date.
+- `submitted_count`: count of qualifying assessment IDs, zero if none.
+- `late_rate`: fraction submitted after assessment due date among qualifying submissions. Missing when no such submission.
+- `no_early_assessment`: true when no qualifying early submission exists; used as a challenge segment and predictor.
+- `studied_credits`, `num_of_prev_attempts`: recorded enrolment load/prior study history. Assumed known at enrolment; validate deployment availability.
+- `clicks`, `early_clicks`, `late_clicks`: VLE sum_click counts over days 0–cutoff, 0–14, 15–cutoff respectively. No observed activity gives zero; this can also reflect incomplete logging.
+- `log_clicks`, `log_early_clicks`, `log_late_clicks`: log1p of those counts for stable scales.
+- `inactive_days`: cutoff minus last observed VLE day; no activity uses cutoff+1, explicitly representing inactivity rather than a future event.
+- `engagement_change`: log1p late minus log1p early clicks. When cutoff changes, the windows differ in length; comparisons are within a scenario and not an equal-duration trend claim.
+- `gender`, `disability`: audit-only aggregate slices; never model inputs. Small groups receive no inferential fairness conclusions.
+- `region`, `highest_education`, `imd_band`, `age_band`: retained raw metadata, excluded by model predictor allowlist.
+- `last_day`, `final_result`: engineering/audit metadata and source outcome, excluded from model inputs except the explicitly computed inactivity feature.
+
+The machine-readable generated CSV inventories columns/roles; this file defines semantics. Missing values use the source's '?' token. Checksums pin the downloaded archive. Train-only preprocessing prevents using validation/test distribution statistics. Chronological labels do not by themselves prevent duplicate-student leakage, hence the additional ID purge.

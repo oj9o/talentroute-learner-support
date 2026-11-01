@@ -1,0 +1,10 @@
+{
+  "checked_at": "2026-10-26T15:21:01.476584+00:00",
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "scope": "ZIP extracted into independent temporary directory; fresh uv sync --frozen; cached original raw data copied; just pipeline exit 0",
+  "tests_passed": 15,
+  "fresh_data_download_verified": false,
+  "linux_verified": false,
+  "fix": "prepare creates data/processed when absent",
+  "browser_url": "http://127.0.0.1:8794/review/index.html"
+}

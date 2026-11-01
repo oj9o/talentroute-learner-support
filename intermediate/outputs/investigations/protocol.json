@@ -1,0 +1,37 @@
+{
+  "created_utc": "2026-11-01T06:18:45.330368+00:00",
+  "scope": "Exploratory development diagnostics added after the recorded final evaluation; not an independent confirmation or pre-registered study.",
+  "test_used_by_this_analysis": false,
+  "splits": [
+    "train",
+    "validation"
+  ],
+  "learning_fractions": [
+    0.2,
+    0.5,
+    1.0
+  ],
+  "seeds": [
+    7101,
+    7102,
+    7103
+  ],
+  "models": [
+    "logistic",
+    "hgb_15_10"
+  ],
+  "hypotheses": [
+    {
+      "question": "Would more training data help?",
+      "expectation": "A shrinking training-validation gap suggests sampling limitations; a flat validation curve offers limited evidence for more data. Temporal shift remains a rival."
+    },
+    {
+      "question": "Is a single feature suspiciously predictive?",
+      "expectation": "Very high single-feature performance motivates a timestamp/provenance audit; it does not prove leakage."
+    },
+    {
+      "question": "Can features distinguish development periods?",
+      "expectation": "Out-of-student classification above chance suggests detectable covariate differences; it does not prove concept drift or explain outcome error."
+    }
+  ]
+}

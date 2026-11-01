@@ -1,5 +1,9 @@
 # TalentRoute — Final evaluation release
 
+## Current Intermediate submission
+
+The updated Intermediate deliverable is in [`intermediate/`](intermediate/README.md). Its source, concise report and offline interface are separate from the Final implementation at the repository root. Download the **Intermediate_2026-11-01** Full and Main_Code ZIPs from [`submission/`](submission/README.md). The Final artifacts remain available as a separately documented development milestone.
+
 An educational consulting team serving universities or learning providers uses this experiment to prioritise learner-support reviews and alerts within staff time. OULAD supplies actual learner outcomes; this is not a full learning-plan platform or evidence that contacting a learner prevents failure.
 
 ## Run

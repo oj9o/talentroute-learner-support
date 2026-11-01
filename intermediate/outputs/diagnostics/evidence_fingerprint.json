@@ -1,0 +1,63 @@
+{
+  "code_sha256": {
+    "src/talentroute/__init__.py": "d0c8f30bfa6458262852d93a2d687909208b12dd784e72762ea43c2c30a39594",
+    "src/talentroute/__main__.py": "df38fef4b5d06f77d550ae45806bb69695d82a62fe131ebd30fabd598dbc83ad",
+    "src/talentroute/data.py": "e8635e1759ee9a910627d35ab61ef0e4e3561588771fb93149e346810d738bf8",
+    "src/talentroute/data_sensitivity.py": "a52e8315427cb00cebca1031ef6e9d65e20c8bdca8c8056327b9309d7401fef9",
+    "src/talentroute/decision.py": "a42348cdf956832dde88649fd1b4e1086421a9871c8adcdf01fc5ef07f6ec896",
+    "src/talentroute/demo.py": "b2233f149cb0c6e88ba411d4b8db818e270a229e7a86cccbd5a4dd67a8e5bdcd",
+    "src/talentroute/diagnostics.py": "b4f80ba4cebb03beadf8d8a777611e2474ffc62ce35d7095e97b3a9e282b9c70",
+    "src/talentroute/eda.py": "de67f1f9014bff27525d2edda619aa85345dd29b9cbec27b7c49da87eac169c5",
+    "src/talentroute/evaluation.py": "5ddff077f2a88fdda950dfaf5ea7879b9d2ac21c42f8fb36981479a6019c192d",
+    "src/talentroute/model_intervals.py": "db4a5c02c73d60e8612fc37ad106ff28f9e230f3368c899c7c786fd306e771c0",
+    "src/talentroute/models.py": "bfd8b456230fe7bf980588e9c26ed1b05be38af97faa24548871055165934c94",
+    "src/talentroute/report.py": "bda21b40f3179404ee0310abf75daeb9d15b4574eaf2a11dd6b062595aa8761c",
+    "src/talentroute/revision.py": "2ef9c23d30458346116b8fe13aaf853adc72ef41c00479b63e952fc20f217960",
+    "src/talentroute/revision_checks.py": "b33c7a33e66041b9b6b4c3037e7923c9fd3d0fc05cc68b5f2ad0e5fdc797de9f",
+    "src/talentroute/stability.py": "5ea31f0afee0a8680f0731ea0ad1676710f09b54891b235fb6d42fa9e7d6df20"
+  },
+  "config": {
+    "seed": 7101,
+    "cutoff_day": 28,
+    "score_delay_days": 7,
+    "human_minutes": 30,
+    "alert_minutes": 2,
+    "staff_minutes_per_100": 300,
+    "max_alert_fraction": 0.2,
+    "anomaly_weight": 0.2,
+    "bootstrap_repeats": 300,
+    "data_url": "https://archive.ics.uci.edu/static/public/349/open%2Buniversity%2Blearning%2Banalytics%2Bdataset.zip",
+    "alert_budget_fraction": 0.2,
+    "archive_sha256": "f2ed1902616c1fe8d2824d872c0b7d2d72be435bf0124d077044fe4be2c6d3e4",
+    "uncertainty_bonus": 0.1,
+    "raw_csv_sha256": {
+      "studentInfo.csv": "815fbc3e2de29f79900bc63f0345a35db62c9146afaa1d86e7107b8b3beffc60",
+      "studentRegistration.csv": "bbc87a0de1fe2a9ec6decce1ca6c1a02cf17b54ad3bdcc673fc6413b41c61d47",
+      "studentAssessment.csv": "b1839e17618a5de36b6d189a242d3123f7939a56c8c9ccef0c17b9199c614a6b",
+      "assessments.csv": "9ce92381e4a0ac457f8e251b2eb2c179ed51e023ab30d1d671a0268bd62316ba",
+      "studentVle.csv": "52668253d876c5becbcb72185977152700cecab2942aca807fecc3dd54b937f0",
+      "courses.csv": "4f16eee7454b15e109b0a21a0e43be820e6846ed6f9301bb7feb5ab5ad737a75",
+      "vle.csv": "d7a146497edd0e47ef536144b58796c07b554002d3753e848b8e4cd8a56f4c38"
+    }
+  },
+  "data_manifest": {
+    "url": "https://archive.ics.uci.edu/static/public/349/open%2Buniversity%2Blearning%2Banalytics%2Bdataset.zip",
+    "sha256": "f2ed1902616c1fe8d2824d872c0b7d2d72be435bf0124d077044fe4be2c6d3e4",
+    "csv_sha256": {
+      "studentInfo.csv": "815fbc3e2de29f79900bc63f0345a35db62c9146afaa1d86e7107b8b3beffc60",
+      "studentRegistration.csv": "bbc87a0de1fe2a9ec6decce1ca6c1a02cf17b54ad3bdcc673fc6413b41c61d47",
+      "studentAssessment.csv": "b1839e17618a5de36b6d189a242d3123f7939a56c8c9ccef0c17b9199c614a6b",
+      "assessments.csv": "9ce92381e4a0ac457f8e251b2eb2c179ed51e023ab30d1d671a0268bd62316ba",
+      "studentVle.csv": "52668253d876c5becbcb72185977152700cecab2942aca807fecc3dd54b937f0",
+      "courses.csv": "4f16eee7454b15e109b0a21a0e43be820e6846ed6f9301bb7feb5ab5ad737a75",
+      "vle.csv": "d7a146497edd0e47ef536144b58796c07b554002d3753e848b8e4cd8a56f4c38"
+    },
+    "access": "bundled CSVs; hashes pinned from verified official archive",
+    "license": "CC BY 4.0",
+    "citation": "Kuzilek, Hlosta, Zdrahal (2015), doi:10.24432/C5KK69"
+  },
+  "development_frame_sha256": "212ce0f81c3e8a9b82bbc4c458e39223c8ec7289cfdc95e8fe9a985476ab69eb",
+  "model": "hgb_15_10",
+  "test_scored": false,
+  "scope": "validation diagnostics after original model selection; not a final-specification freeze"
+}

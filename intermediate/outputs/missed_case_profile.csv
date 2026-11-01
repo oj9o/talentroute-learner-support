@@ -1,0 +1,9 @@
+segment,group,n,adverse_n,flagged_adverse_n,missed_adverse_n,coverage,interpretation_allowed
+no_early_assessment,0,2737,1099,380,719,0.34576888080072793,True
+no_early_assessment,1,3197,1775,936,839,0.5273239436619719,True
+code_module,BBB,1266,540,195,345,0.3611111111111111,True
+code_module,CCC,1355,721,438,283,0.6074895977808599,True
+code_module,DDD,867,478,231,247,0.48326359832635984,True
+code_module,EEE,485,226,74,152,0.3274336283185841,True
+code_module,FFF,1174,594,378,216,0.6363636363636364,True
+code_module,GGG,787,315,0,315,0.0,True

@@ -1,0 +1,18 @@
+{
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "python": "3.14.7",
+  "fresh_environment_install_and_pipeline_passed": true,
+  "raw_download_cache": "reviewed checksum-pinned UCI archive reused; extracted CSVs and analytical outputs regenerated",
+  "tests_passed": 5,
+  "elapsed_seconds_upper_bound_since_fresh_environment_creation": 143.31,
+  "matching_outputs_between_runs": {
+    "validation_model_search.csv": true,
+    "validation_decision_metrics.csv": true,
+    "development_target_counts.csv": true,
+    "development_coverage.csv": true
+  },
+  "linux_verified": false,
+  "final_test_evaluated": false,
+  "focused_tests_after_semantic_checks_added": 6,
+  "focused_evaluation_after_overlap_diagnostic_added": "passed"
+}

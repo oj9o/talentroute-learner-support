@@ -1,0 +1,143 @@
+{
+  "checked_at": "2026-10-31T13:18:03.075615+00:00",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "python": "3.14.7",
+  "pipeline_exit_code": 0,
+  "final_test_scored": false,
+  "stages": [
+    {
+      "command": [
+        "just",
+        "download-data"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 42.9
+    },
+    {
+      "command": [
+        "just",
+        "prepare-data"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 4.31
+    },
+    {
+      "command": [
+        "just",
+        "run-baseline"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 100.25
+    },
+    {
+      "command": [
+        "just",
+        "evaluate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.43
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "talentroute",
+        "stability"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.25
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "talentroute",
+        "data-sensitivity"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 15.53
+    },
+    {
+      "command": [
+        "just",
+        "revision"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 16.62
+    },
+    {
+      "command": [
+        "just",
+        "diagnostics"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 3.59
+    },
+    {
+      "command": [
+        "just",
+        "eda"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 16.68
+    },
+    {
+      "command": [
+        "just",
+        "report"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.37
+    },
+    {
+      "command": [
+        "just",
+        "review"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.33
+    },
+    {
+      "command": [
+        "just",
+        "test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 2.52
+    },
+    {
+      "command": [
+        "just",
+        "report"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.27
+    },
+    {
+      "command": [
+        "just",
+        "review"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.31
+    },
+    {
+      "command": [
+        "just",
+        "test"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.82
+    }
+  ],
+  "scope": "Current local pipeline execution; operating system measured, VM/container type not inferred",
+  "tests_passed": 21,
+  "data_access": "official archive extraction",
+  "elapsed_seconds": 210.2,
+  "verification_scope": "Historical clean-code check before the rubric-order/EDA revision. New uv environment and cached archive extraction passed 21 tests; see current-clean-package-check.json for latest-source validation when present.",
+  "later_checks": "After the full clean run, added the rubric scripts/eda.py entry point (same implementation), tested just eda, adjusted display policy colors and gitignore, rebuilt the interface and reran all 21 tests."
+}
