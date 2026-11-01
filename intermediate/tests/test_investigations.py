@@ -10,3 +10,21 @@ def test_development_loader_excludes_reserved_and_unknown_rows(tmp_path):
     result=module.development_data(path)
     assert result.signal.tolist()==[1,2]
     assert 'SECRET' not in set(result.target)
+
+
+def test_investigation_builder_recreates_review_directory_after_clean(tmp_path,monkeypatch):
+    import runpy
+    import shutil
+    import talentroute.data as data
+    original=data.ROOT
+    if not (original/'outputs/investigations/manifest.json').exists():
+        import pytest
+        pytest.skip('Run just investigations before testing the clean-state builder')
+    dest=tmp_path/'outputs/investigations';dest.mkdir(parents=True)
+    for name in ['manifest.json','learning_curve.csv','single_feature.csv','period_shift.csv']:
+        shutil.copy2(original/'outputs/investigations'/name,dest/name)
+    shutil.copy2(original/'outputs/validation_paired_interval.json',tmp_path/'outputs/validation_paired_interval.json')
+    assert not (tmp_path/'review').exists()
+    monkeypatch.setattr(data,'ROOT',tmp_path)
+    runpy.run_path(str(original/'scripts/build_investigations.py'),run_name='__main__')
+    assert (tmp_path/'review/investigations.html').is_file()
