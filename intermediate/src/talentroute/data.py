@@ -123,7 +123,7 @@ def prepare(override=None, write_outputs=True):
     dev.groupby(['split','target']).size().rename('n').to_csv(out/'development_target_counts.csv')
     dev.groupby(['split','code_module']).agg(n=('id_student','size'),no_assessment_rate=('no_early_assessment','mean')).to_csv(out/'development_coverage.csv')
     (out/'data_audit.json').write_text(json.dumps(audit,indent=2), encoding='utf-8')
-    pd.DataFrame({'column':df.columns,'role':['label' if c in ['target','final_result','date_unregistration'] else 'partition/key' if c in KEY+['split'] else 'raw/candidate; model allowlist controls access' for c in df.columns]}).to_csv(ROOT/'docs/data_dictionary.csv',index=False)
+    pd.DataFrame({'column':df.columns,'role':['label' if c in ['target','final_result','date_unregistration'] else 'categorical predictor and enrolment key' if c=='code_module' else 'partition/key' if c in KEY+['split'] else 'raw/candidate; model allowlist controls access' for c in df.columns]}).to_csv(ROOT/'docs/data_dictionary.csv',index=False)
     return audit
 
 

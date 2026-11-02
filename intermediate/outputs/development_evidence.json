@@ -1,0 +1,45 @@
+{
+  "scope": "exploratory development interpretation; no fitting, selection or test scoring",
+  "test_rows_used": 0,
+  "final_2014J_already_observed": true,
+  "new_model_selection": false,
+  "segment_interpretation": "Descriptive shared-budget coverage shifts; no causal or fairness guarantee",
+  "validation_adverse_n": 2874,
+  "validation_prevalence": 0.48432760364004046,
+  "perfect_ranking_coverage_ceiling_at_current_contact_count": 0.5915100904662491,
+  "missing_withdrawal_date_adverse_development_n": 6,
+  "submission_present_but_score_missing_development_n": 3,
+  "classifier_minus_rule": {
+    "coverage_difference": 0.04418928322894922,
+    "extra_adverse_cases_flagged": 127,
+    "adverse_cases": 2874,
+    "ci95": [
+      0.025687929162516245,
+      0.06331346775418997
+    ],
+    "bootstrap_repeats": 300,
+    "status": "exploratory validation; fixed fitted models and operating rules; selection not removed"
+  },
+  "blend_minus_classifier": {
+    "metric": "adverse_coverage_difference",
+    "comparison": "coupled_selected minus classifier_only",
+    "ci95": [
+      -0.0055057189461296145,
+      0.016019808492716874
+    ],
+    "caveat": "validation-selected policy; exploratory uncertainty, not independent confirmatory evidence"
+  },
+  "sources": [
+    "development_coverage.csv",
+    "validation_challenge_segments.csv",
+    "revision/same_quota_layers.csv",
+    "revision/warning_outcome_profiles.csv",
+    "revision/model_comparison.csv",
+    "validation_seed_stability.csv"
+  ],
+  "commitment_status": {
+    "layer_escape": "executed at equal quota; round-robin underperforms",
+    "warning_profiles": "executed descriptive profiles, not causal resilience or trajectories",
+    "module_specialists": "executed with train-only eligibility and global fallback"
+  }
+}

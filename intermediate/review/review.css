@@ -6,3 +6,5 @@
 body{background:#f4f7fb;color:#1c2733}.mast{background:linear-gradient(110deg,#0b3b5c,#107e79);color:white}.mast a,.mast .mast-meta,.mast .mast-meta span{color:white}.panel,.finding-card,.flow-card{border-radius:14px;border-color:#e1e8f0;box-shadow:0 2px 10px rgba(30,60,100,.08)}.research-grid{gap:18px}.hero h1{line-height:1.15}.hero-copy{max-width:660px}
 
 .mast .brand>span:not(.brand-icon){color:white}.hero-actions{flex-wrap:wrap;gap:14px}
+/* Keep evidence tables inside their own scroll area on narrow displays. */
+main,.view,.panel,.scroll{min-width:0}main{width:100%}.research-grid,.overview-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.panel p{overflow-wrap:anywhere}svg{max-width:100%}@media(max-width:850px){.research-grid,.overview-grid{grid-template-columns:1fr}}

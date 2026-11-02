@@ -26,9 +26,9 @@ def eda():
     missing=df[['score_mean','score_min','late_rate','last_day']].isna().mean().sort_values();missing.plot.barh();save('eda_02_missingness','Observable feature missingness at day 28','Missing fraction','Feature')
     sns.boxplot(data=df,x='target',y='log_clicks',order=order,hue='target',palette=outcomes,legend=False,showfliers=False);save('eda_03_engagement','Early engagement by later outcome','Outcome','log(1 + clicks), days 0–28')
     sns.boxplot(data=df,x='target',y='score_mean',order=order,hue='target',palette=outcomes,legend=False,showfliers=False);save('eda_04_scores','Observed early scores by later outcome','Outcome','Mean score (0–100), assumed 7-day availability lag')
-    sns.scatterplot(data=df.sample(min(2000,len(df)),random_state=7101),x='log_early_clicks',y='log_late_clicks',hue='target',hue_order=order,palette=outcomes,alpha=.35);save('eda_05_change','Engagement change: first versus second fortnight','log(1 + clicks), days 0–14','log(1 + clicks), days 15–28')
+    sns.scatterplot(data=df.sample(min(2000,len(df)),random_state=7101),x='log_early_clicks',y='log_late_clicks',hue='target',hue_order=order,palette=outcomes,alpha=.35);save('eda_05_change','Engagement totals in two unequal observation windows','log(1 + clicks), days 0–14','log(1 + clicks), days 15–28')
     pd.crosstab(df.code_module,df.target,normalize='index')[order].plot.bar(stacked=True,color=[outcomes[k] for k in order]);save('eda_06_modules','Outcome composition differs across modules','Module','Within-module fraction')
-    df.groupby('code_module').no_early_assessment.mean().plot.bar();save('eda_07_observability','Assessment availability constrains early decisions','Module','Fraction without observable early assessment')
+    df.groupby(['code_module','split']).no_early_assessment.mean().unstack().plot.bar(color=['#34445d','#a5b2c3']);save('eda_07_observability','Early submissions: availability shifts by period','Module','Fraction without a qualifying submission')
     sns.boxplot(data=df,x='target',y='inactive_days',order=order,hue='target',palette=outcomes,legend=False,showfliers=False);save('eda_08_inactivity','Inactivity is a warning signal, not a treatment effect','Outcome','Days since last observed VLE activity')
     if (out/'validation_sensitivity.csv').exists():
         s=pd.read_csv(out/'validation_sensitivity.csv');s=s[(s.assumption=='staff_minutes_per_100')&s.policy.isin(['business_rule','classifier_only','coupled_fixed_020'])]
@@ -37,7 +37,7 @@ def eda():
     # Development-only model diagnostic; no student keys or presumed anomaly truth.
     if (out/'validation_predictions.csv').exists():
         pred=pd.read_csv(out/'validation_predictions.csv')
-        pred['warning']=pred.action_anomaly_only.gt(0).map({True:'Detector-only flag',False:'Not flagged'})
+        pred['warning']=pred.action_anomaly_only.gt(0).map({True:'Flagged by detector policy',False:'Not flagged'})
         sample=pred.sample(min(2000,len(pred)),random_state=7101)
-        sns.scatterplot(data=sample,x='risk',y='anomaly',hue='warning',palette={'Detector-only flag':'#a66b20','Not flagged':'#738092'},alpha=.4,s=18)
+        sns.scatterplot(data=sample,x='risk',y='anomaly',hue='warning',palette={'Flagged by detector policy':'#a66b20','Not flagged':'#738092'},alpha=.4,s=18)
         save('eda_09_detector','Risk and unusual engagement need not identify the same cases','Classifier adverse-outcome probability','Training-reference anomaly percentile (not probability)')

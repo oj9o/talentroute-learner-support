@@ -25,6 +25,8 @@ sources={'policies':'validation_decision_metrics.csv','budgets':'validation_sens
 data={key:rows(name) for key,name in sources.items()}
 frame=pd.read_csv(ROOT/'data/processed/enrolments.csv');frame=frame[frame.split.isin(['train','validation'])]
 audit=json.loads((OUT/'data_audit.json').read_text(encoding='utf-8'))
+data['segmentTradeoffs']=rows('development_segment_tradeoffs.csv')
+data['developmentEvidence']=json.loads((OUT/'development_evidence.json').read_text())
 data['quality']={'development_rows':len(frame),'duplicate_keys':int(frame.duplicated(['code_module','code_presentation','id_student']).sum()),'missing_early_score_n':int(frame.score_mean.isna().sum()),'audit':audit}
 val=frame[frame.split=='validation'];data['outcomeCounts']={'adverse':int((val.target!='Success').sum()),'fail':int((val.target=='Fail').sum()),'withdrawn':int((val.target=='Withdrawn').sum())}
 data['blendInterval']=json.loads((OUT/'validation_paired_interval.json').read_text(encoding='utf-8'))

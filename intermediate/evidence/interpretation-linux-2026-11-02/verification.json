@@ -1,0 +1,127 @@
+{
+  "checked_at": "2026-11-02T15:28:33.279302+00:00",
+  "python": "3.14.2",
+  "platform": "Linux-7.0.14-linuxkit-aarch64-with-glibc2.36",
+  "stages": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "talentroute",
+        "report"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "talentroute",
+        "eda"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "scripts/build_review.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "scripts/verify_intermediate_release.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "tests_passed": 28,
+  "protected_artifacts_unchanged": true,
+  "protected_sha256": {
+    "data/processed/enrolments.csv": "257371db908214032ae5b38e2068c45c0a60af2d9427de3847b5fab2a557fcb5",
+    "outputs/validation_anomaly_proxy_metrics.csv": "833a083e6ba323fbb06e93b7bc33a7da9d427f6445191eaafe4796f52650d4bc",
+    "outputs/validation_challenge_segments.csv": "02a18f85f5ab569d073c1e0bf008a91c7f0f5bf82b7f2b1a6191a5ccb0a910a3",
+    "outputs/validation_data_assumptions.csv": "f2a18c0a499e50c5fdf644104e8d8761231f2eff8ac8c07fc1a927147d323e51",
+    "outputs/validation_decision_metrics.csv": "2bf3d7e8f8c7288b04894d8c57404f71855f10b8927a53925a7c4017cfb3c0b3",
+    "outputs/validation_layer_overlap.csv": "c90c8b04eb3d7dceefaafe42913e5e831fb615a6dd09654e22d68225d55ec216",
+    "outputs/validation_model_search.csv": "1479288231f2765119a71526bed6d351202a1d644994fbf704d9e2b13f2e3f1b",
+    "outputs/validation_policy_search.csv": "7a33924f04b8744f74f58b22248ca85d9c0d0d21bea6c231d94d9be13aca995a",
+    "outputs/validation_predictions.csv": "ddd1d48513d500515f442556b17b5a648872998512ff8722f4a53f9067e2c2f9",
+    "outputs/validation_primary_intervals.csv": "b411e7a418453d140d5c9e046151a073fe99c2394cf910ec4a3f16fe89416cb7",
+    "outputs/validation_seed_stability.csv": "2c0987a8a94a770226f9a8d1faf403a79af474946cab07140e7c8752c62fc31a",
+    "outputs/validation_selected_ml_metrics.csv": "ac410f3586cdd0f817379e44b6898aff281200b8c8497a74cd4b5066a0c5f578",
+    "outputs/validation_sensitivity.csv": "1adac2450029fc1778dc4136c7535edb26e037caa427098e94b0dff5698ccc68",
+    "outputs/validation_uncertainty_analysis.csv": "3121cbc34d9f536ada4688085ae1fc76be9d6b07ca0dd7fb5e36be9a9ce92923",
+    "outputs/revision/action_break_even.csv": "aee1d08362df7f7d527696201004f51b5ad3fba963af7f090d9238de2647257e",
+    "outputs/revision/forest_minus_hgb_intervals.csv": "e87a5188b5da401557d0bc9e3451f8ede70cd2b79c14d886b367fceb9cff7ef1",
+    "outputs/revision/layer_quota_sensitivity.csv": "3b3538cfcaf2a465bd8a310f8473ae668944327fd14b64625532ac02c240d961",
+    "outputs/revision/layer_rank_correlations.csv": "03a12cde401c85656917b46778179afe2d1b085ecffbe2a9bb114ef37bb5e5ff",
+    "outputs/revision/layer_selected_jaccard.csv": "174cd7f472563f51979d4037799dec5d5aac9cdbf7d421e72e0760193c73b3ab",
+    "outputs/revision/model_comparison.csv": "5b64537a99fa3fff27aa86bfe5e0da83340c7b5ae053e96c71fd39544785bac9",
+    "outputs/revision/model_segments.csv": "5dcc196f6f0e857c43791cfe47e68e10ff64ef9d2123eca7970282699f588247",
+    "outputs/revision/runtime.csv": "9b8c1e4eebfeac5018db9509727ab6a779d8735a9907d6be93d45a49cc6793f3",
+    "outputs/revision/same_quota_layers.csv": "deb09baa4ad2c4c4ad4ee07cfb69a4cded3b9e4d3277570ea6b4769f439cf6cc",
+    "outputs/revision/specialist_eligibility.csv": "5de40800d2fa673d7614c438e5e43cb5fb4db4b850d238977110485e3a14bab8",
+    "outputs/revision/tie_sensitivity.csv": "1ac2006a7c8499708b0a627b0461d750528b6ba942cbb3cdeb45d98f0e19cb9c",
+    "outputs/revision/warning_outcome_profiles.csv": "5e8f9898a8175f9f610415466051765a222337a7445aba7b84d8a73e54b8aedc",
+    "outputs/development_models.joblib": "2c149df6f70d99f20035489d83683b2ea50d296bb196df873c03e391d734d367",
+    "outputs/development_selection.json": "d3e5aad2bbbe623a190e8e824b5a46bc65dcdbde773404eff8c182974f19e637"
+  },
+  "source_sha256": {
+    "src/talentroute/__init__.py": "d0c8f30bfa6458262852d93a2d687909208b12dd784e72762ea43c2c30a39594",
+    "src/talentroute/__main__.py": "df38fef4b5d06f77d550ae45806bb69695d82a62fe131ebd30fabd598dbc83ad",
+    "src/talentroute/data.py": "0b00695e1a3f4327faa957d4557aa169a87a3ea3f6ab33c3d9d38ee9d980932a",
+    "src/talentroute/data_sensitivity.py": "a52e8315427cb00cebca1031ef6e9d65e20c8bdca8c8056327b9309d7401fef9",
+    "src/talentroute/decision.py": "fa2f62b762cc7f8ec33e1551a776af760a4d5082bd5aa0044bd27702815cf276",
+    "src/talentroute/demo.py": "b2233f149cb0c6e88ba411d4b8db818e270a229e7a86cccbd5a4dd67a8e5bdcd",
+    "src/talentroute/diagnostics.py": "b4f80ba4cebb03beadf8d8a777611e2474ffc62ce35d7095e97b3a9e282b9c70",
+    "src/talentroute/eda.py": "bb778e598f2c280ae35b7a04234e0189dc17ac9dd5acffdaebd816a956636d7c",
+    "src/talentroute/evaluation.py": "21dbf13851c1aedf102145fd9b27571d24204f7ff11b389de146808c1fc8bed2",
+    "src/talentroute/model_intervals.py": "db4a5c02c73d60e8612fc37ad106ff28f9e230f3368c899c7c786fd306e771c0",
+    "src/talentroute/models.py": "bfd8b456230fe7bf980588e9c26ed1b05be38af97faa24548871055165934c94",
+    "src/talentroute/report.py": "f0cae00d709f9dc1e90ba822481a05fcce55eb564939199f77ac8a6fe54d7eb4",
+    "src/talentroute/revision.py": "2ef9c23d30458346116b8fe13aaf853adc72ef41c00479b63e952fc20f217960",
+    "src/talentroute/revision_checks.py": "b33c7a33e66041b9b6b4c3037e7923c9fd3d0fc05cc68b5f2ad0e5fdc797de9f",
+    "src/talentroute/stability.py": "5ea31f0afee0a8680f0731ea0ad1676710f09b54891b235fb6d42fa9e7d6df20",
+    "scripts/build_decision_room.py": "9d678c46cd5ded485b61cd8cd906d42c81af50b04e8bb572cf5dd71219f6a497",
+    "scripts/build_investigations.py": "521b36526f430983cd9168ff3c5140dc89d78e43e44bedf70cbc0b5d13d6c5de",
+    "scripts/build_review.py": "420dc5bb8ccaae6c221c275dc4b5515d4c71aa3d446409db3de0d782cb90709d",
+    "scripts/clean_generated.py": "754fd184e51c1616be71905d5cefd625ffde7093dec3a7e268728f552c973e87",
+    "scripts/debug_investigations.py": "a19bc381186de70afdf7f9098776aa0002db9480199f043eb0267c00f524f59d",
+    "scripts/eda.py": "c1b66eede6da3e6b722b3e2524cd3a4e7063bec98c10bb41f12b3116e0ce1892",
+    "scripts/run_pipeline.py": "b1c3a11b6c88487c719e7e78af7e240565a5c5300c192adf117b74f55f00bae7",
+    "scripts/verify_intermediate_release.py": "555c96df35481ee3e6adf89cf45e16f250c0ad566ba578bc847c5ee2880073b8",
+    "scripts/verify_revision.py": "f8482c6e979af97f4fed9d47e84476b877a59adc0a70a7f7e71e380cf4d83520",
+    "scripts/verify_submission.py": "586666bd63d45b6748f0d6be3fb561d858796f93d09cb02f0695735b2c9bfd19",
+    "scripts/review_ui/decision_room.css": "2e185eed7f2dc079ee7c0bab12c14b3dd0dcd91887b565d68386cea8791a29ae",
+    "scripts/review_ui/decision_room.html": "a6bfa9c969f9a624fa628f064bc5c00ccf696389bff0df3d091776fe92e778b2",
+    "scripts/review_ui/decision_room.js": "4c4968999609d8058c039f9a49d58a09ce9e65d33838b3618b82e35e32f5fe5e",
+    "scripts/review_ui/index.html": "8bbc32562179b7ea48c31223de8d26ea00d08c19523f8664cb963a9c28f1b7f3",
+    "scripts/review_ui/review.css": "faa47a8d3e2832f3677679411a666de913f66d1ba1cacc5c540820500903065d",
+    "scripts/review_ui/review.js": "ff494634184b003e85f3f0c98f5a39d2b45910b951fc17a3e8b8254cf13da470",
+    "tests/test_decision_room.py": "932ffba444093613aa5b8279d94390c5e4d3be0e558b7cb6c1e9b417d220c9a0",
+    "tests/test_diagnostics.py": "7e496f02394f94ff7990a91a9eba1587bcb2384e47c6a2c697ecca55df2007a3",
+    "tests/test_download.py": "cfe26fb8f1d8834c880c2403c81e85c714d29e0106d4dab3d9366b417666e57d",
+    "tests/test_event_cutoffs.py": "a589953ac1abfa1e4e3fda647dcb254172fadd09b4d9371daaf5577d9c3d90d9",
+    "tests/test_integrity.py": "3fe86b1af517906e9332c05c2aeca14cd75d171c0456aeafcbb62af333f5d136",
+    "tests/test_investigations.py": "446ca7f2457affe2984d1f87cf671dc332e17226288157ddd8621692a0167946",
+    "tests/test_review.py": "097ae912ded8e340f261698521c5c5fcc4782730632e1787d121f06bdcc18fab",
+    "tests/test_revision.py": "2de7a99f164da2e5d227f18ffa64ddd722977dfe981e3663fe83e527875a4ebb",
+    "pyproject.toml": "35e08d9f0246d9c99e1e802a2f0a3674c6e005c3b1df5d1b698ca2b4dc09a930",
+    "uv.lock": "2c88973f582d7e722ec8059ff2ff84bc2cf6930961d893f2c16c491ca706f090",
+    "Justfile": "f0ec2336ed11068e68513096d4d1dd690538294570577e9108b582466e67f974"
+  },
+  "new_model_fitting": false,
+  "final_test_scored": false,
+  "scope": "Interpretation, EDA, interface and regression checks against saved development evidence; not a new full analytical pipeline run"
+}

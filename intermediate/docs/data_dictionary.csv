@@ -1,5 +1,5 @@
 column,role
-code_module,partition/key
+code_module,categorical predictor and enrolment key
 code_presentation,partition/key
 id_student,partition/key
 gender,raw/candidate; model allowlist controls access

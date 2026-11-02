@@ -74,3 +74,32 @@ def test_report_diagnostic_prose_survives_table_rendering():
     rendered=ROOT/'review/report.html'
     if not rendered.exists():pytest.skip('Run just review before checking rendered report')
     assert 'shuffled-training-label controls' in rendered.read_text(encoding='utf-8')
+
+
+def test_interpretation_uses_development_counts_and_preserves_outcome_separation():
+    path=ROOT/'outputs/development_evidence.json'
+    if not path.exists():pytest.skip('Run report before checking interpretation')
+    prepared=ROOT/'data/processed/enrolments.csv'
+    if not prepared.exists():pytest.skip('Run prepare-data before checking development interpretation')
+    evidence=json.loads(path.read_text())
+    frame=pd.read_csv(prepared)
+    dev=frame[frame.split.isin(['train','validation'])]
+    val=dev[dev.split=='validation']
+    assert evidence['test_rows_used']==0 and not evidence['new_model_selection']
+    assert evidence['validation_adverse_n']==int(val.target.ne('Success').sum())
+    assert evidence['validation_prevalence']==pytest.approx(val.target.ne('Success').mean())
+    assert evidence['submission_present_but_score_missing_development_n']==int((dev.submitted_count.gt(0)&dev.score_mean.isna()).sum())
+    assert evidence['missing_withdrawal_date_adverse_development_n']==int((dev.target.eq('Withdrawn')&dev.date_unregistration.isna()).sum())
+    tradeoffs=pd.read_csv(ROOT/'outputs/development_segment_tradeoffs.csv')
+    assert 'id_student' not in tradeoffs
+    assert tradeoffs.coverage_difference.to_list()==pytest.approx((tradeoffs.blend_coverage-tradeoffs.classifier_coverage).to_list())
+
+
+def test_interpretation_skips_without_prepared_data(tmp_path,monkeypatch):
+    """A clean checkout can contain aggregate evidence but no prepared data."""
+    import sys
+    (tmp_path/'outputs').mkdir()
+    (tmp_path/'outputs/development_evidence.json').write_text('{}')
+    monkeypatch.setattr(sys.modules[__name__],'ROOT',tmp_path)
+    with pytest.raises(pytest.skip.Exception,match='prepare-data'):
+        test_interpretation_uses_development_counts_and_preserves_outcome_separation()

@@ -1,28 +1,28 @@
 # TalentRoute: Intermediate evidence report
 
-## Problem and decision
-An educational consulting team serving universities must decide which learners receive an alert, human review or no action within limited staff time. TalentRoute uses information available at day 28 to prioritise that queue. OULAD is the evaluated learner population; corporate employee transfer and causal intervention benefit are not established.
+## Decision and scope
+An educational consulting team serving universities prioritises alerts and human reviews using information available at day 28. The assumed alternative is an early-score/inactivity queue, not a documented institutional workflow. Missed cases lose an opportunity for review; false warnings burden learners and staff.
 
-The original recommender/uplift framing changed to classification plus engagement outlier detection because the available data support observed learner outcomes and engagement, not verified treatment benefits. The baseline, uncertainty analysis, same-budget comparisons and added-component go/no-go principle are retained. Scope and the three final commitments are in project_definition.md.
+The proposal's employee recommender/uplift became student classification plus engagement outlier detection: OULAD supports learner outcomes, not employee transfer or treatment benefits. Same-budget baselines, uncertainty and component go/no-go checks remain. Commitments and acceptance criteria: project_definition.md.
 
-## Data and evaluation history
-OULAD (Kuzilek, Hlosta & Zdrahal, 2015; doi:10.24432/C5KK69; CC BY 4.0) supplies real outcomes. Pass/Distinction map to Success; Fail and Withdrawn remain separate. From 32593 raw enrolments, 27515 meet initial eligibility; 1959 earlier records of later-partition students are purged. Training: 10412 (2013B/J); validation: 5934 (2014B); final cohort: 9210 (2014J). See outputs/data_audit.json.
+## Data and evaluation boundary
+OULAD (Kuzilek, Hlosta & Zdrahal, 2015; doi:10.24432/C5KK69; CC BY 4.0) contains 32593 enrolments. Of 27515 initially eligible, 1959 earlier repeat-student records are purged. Train: 10412 (2013B/J); validation: 5934 (2014B); final cohort: 9210 (2014J). Purging ensures disjoint identities but changes the population and can disadvantage analysis of repeat learners.
 
-This report and its pipeline evaluate development data. A separate frozen final candidate was already evaluated on 2014J before this update: it is no longer an unseen test. New diagnostics use training/validation only and cannot justify retuning against that observed test. Original Intermediate archives preserve the earlier chronology. Any later model change needs independent evidence for a confirmatory claim.
+A separate frozen candidate was already evaluated on 2014J. It is no longer unseen. Everything added here is development-only exploratory analysis; it neither selects a replacement nor reopens that test. Any changed final model needs independent evidence for confirmatory claims. Preserve the original frozen evaluation separately.
 
-VLE aggregates stop at day 28. Non-banked, non-exam assessment submissions stop at day 21 under an assumed seven-day grading delay. Training-fitted imputation keeps missingness explicit. IDs, protected demographics and future outcomes are excluded from predictors. Eligibility, cutoff and identity-disjointness are tested. The data dictionary defines each variable and its availability assumption.
+VLE ends at day 28; non-banked/non-exam submissions end at day 21 under an assumed seven-day score delay. Imputation uses training data only. IDs, demographics and future outcomes are excluded from predictors. Success combines Pass/Distinction; Fail and Withdrawn remain distinct. Among development records, 6 Withdrawn cases lack withdrawal dates, leaving day-28 eligibility uncertain; 3 have submissions but no score. No-submission flags are not missing-score flags.
 
-## What is actually implemented
-Two technique families feed one policy: classification estimates three outcome probabilities; Isolation Forest maps unusual engagement to a training-reference percentile. Their weighted score ranks cases before staff-time allocation. Multiple classifiers are comparisons within one family, not extra technique families.
+## Connected methods
+Classification estimates Success/Fail/Withdrawn probabilities; Isolation Forest supplies an engagement-rarity percentile. A weighted ranking feeds one staff-time policy. Five classifiers are comparisons within one family; classification and outlier detection are the two families.
 
-Executed classifier comparisons include logistic regression, a constrained Decision Tree, Random Forest, histogram gradient boosting and module-specific logistic models with global fallback. Logistic is the supervised baseline; inactivity is the detector baseline; early scores plus inactivity form the model-free decision baseline. Module eligibility is decided using training rows only.
-
-Original settings: logistic C=1; boosting 140 iterations, learning rate 0.07, leaf/L2 candidates (7,2), (15,2), (15,10); Isolation Forest 150 trees and max_samples=512. Seed 7101. Tree/forest/specialist configurations are reproducible in revision.py. Historical selection maximized validation adverse PR-AUC; the blend search examined 0, 0.1, 0.2, 0.35 and 0.5. Later comparisons are exploratory.
+Baselines: logistic classification, inactivity detection, and early-score/inactivity decision rule. First-pass comparisons include constrained tree, forest, histogram boosting and module-logistic specialists with training-only eligibility/global fallback. Settings: logistic C=1; boosting 140 iterations, learning rate .07, leaf/L2 candidates (7,2), (15,2), (15,10); detector 150 trees, max_samples=512; seed 7101. Historical validation search used adverse PR-AUC and blend weights 0/.1/.2/.35/.5. Exact configurations: revision.py.
 
 ## Metrics and results
-Primary ML metric is adverse PR-AUC, measuring how well risk ranks later Fail/Withdrawn cases. Outcome-specific PR-AUC, macro-F1, log loss and Brier score describe discrimination and probability quality. Detector PR-AUC, flag precision and coverage measure relevance to recorded outcomes, not accuracy against nonexistent anomaly labels. Primary decision metric is adverse coverage at a fixed effort budget; precision and missed cases expose contact burden and omissions.
+Primary ML metric: average precision, reported as PR-AUC, for ranking adverse outcomes. Fail/Withdrawn AP, macro-F1, log loss and Brier assess distinct outcomes and probability quality. Detector AP/precision/coverage are outcome-relevance proxies, not accuracy against verified anomaly labels. Primary decision metric: adverse coverage at fixed effort; precision, missed cases and workload expose trade-offs.
 
-Classification comparison, outputs/revision/model_comparison.csv:
+Validation prevalence is 48.43%, the population no-skill AP reference. With 1700 contacts and 2874 adverse cases, perfect ranking could cover at most 59.15%, counting either action equally. This is a targeting ceiling, not achievable prevention.
+
+Classification, outputs/revision/model_comparison.csv:
 ```csv
 model,adverse_pr_auc,fail_pr_auc,withdrawn_pr_auc,macro_f1,log_loss,adverse_brier,adverse_coverage
 logistic,0.7280,0.4870,0.2829,0.4001,0.9145,0.2076,0.4283
@@ -42,38 +42,38 @@ anomaly_only,0.3553,0.4042,0.2725,0.6006,514,1186,17792.0000
 coupled_selected,0.4624,0.4679,0.4532,0.7818,514,1186,17792.0000
 ```
 
-Detector comparison, outputs/validation_anomaly_proxy_metrics.csv:
+Detector proxies, outputs/validation_anomaly_proxy_metrics.csv:
 ```csv
-detector,proxy_adverse_pr_auc,n,flagged_n,human_n,alert_n,adverse_coverage,human_precision,flag_precision,missed_adverse_n,staff_minutes,fail_coverage,withdrawn_coverage
-isolation_forest,0.5899,5934,1700,514,1186,0.3553,0.7004,0.6006,1853,17792.0000,0.4042,0.2725
-inactivity_rule,0.6300,5934,1700,514,1186,0.3876,0.7938,0.6553,1760,17792.0000,0.4241,0.3258
+detector,proxy_adverse_pr_auc,adverse_coverage,flag_precision,missed_adverse_n
+isolation_forest,0.5899,0.3553,0.6006,1853
+inactivity_rule,0.6300,0.3876,0.6553,1760
 ```
 
-The configured scenario allows 300 staff minutes per 100 learners, 30 per review and two per alert. Up to 20% of time is reserved for alerts, capped at 20% of learners. Reviews go to highest-ranked cases; alerts go to subsequent cases. These are configurable workload assumptions, not measured intervention costs. Either contact counts equally toward coverage.
+Classifier versus rule reaches 127 additional adverse cases: +4.42 percentage points (paired 95% interval 2.57–6.33). It clears the original development comparison, but selection makes this exploratory evidence, not independent confirmation. Source: diagnostics/classifier_minus_rule.json.
 
-The coupled candidate covers 46.24%, versus 45.79% for classifier-only. Its paired student-cluster interval is [-0.0055, 0.0160] (validation_paired_interval.json). Because it crosses zero and follows validation selection, incremental benefit is unconfirmed. Keep the simpler classifier as the provisional operating reference. A working second component need not be a proven deployment improvement.
+Isolation Forest loses to inactivity (AP 0.590 versus 0.630): unusual behaviour need not imply adverse outcomes. Blending covers 46.24% versus classifier 45.79%; difference interval [-0.0055, 0.0160] crosses zero. Added benefit is unconfirmed. Across seeds, gains range 0.07–0.45 percentage points (validation_seed_stability.csv); do not retune from this diagnostic.
 
-## EDA and Week 10 investigations
-Ten figures cover outcomes, missingness, assessments, engagement, modules, detector disagreement and the budget frontier. Overview CSVs contain feature types, summary statistics, missing counts and sample development records without IDs. Missing scores are not zero; course differences are not individual ability.
+Budget assumptions: 300 minutes/100 learners, 30/review, 2/alert; up to 20% of time reserved for alerts, capped at 20% of learners. Both actions count equally. This remains constrained ranking with a fixed action mix, not learned treatment allocation or measured benefit.
 
-![Development outcome balance](../outputs/eda_01_outcomes.png)
-![Early assessment availability](../outputs/eda_07_observability.png)
-![Engagement patterns](../outputs/eda_05_change.png)
+## EDA: observations that affect interpretation
+CCC is absent from training but contributes 22.8% of validation: test unseen-course robustness rather than assume course-specific learning transfers. FFF's no-submission rate shifts from 14.7% to 70.2%; GGG's validation rate is 99.4%. Missingness can reflect assessment schedules, not disengagement. Overall 47.0% lack early scores. Keep missingness explicit and audit course/period slices.
 
-The offline decision room offers three guided predict–investigate–decide cases using these saved model, detector and budget comparisons. Stakeholder prompts are illustrative, not real communications. The diagnostic investigations follow question → expected pattern → observed evidence → interpretation limit. Learning curves compare logistic/HGB at three training fractions over three seeds. HGB keeps early stopping disabled throughout this diagnostic to hold the iteration budget fixed. Its mean validation AP moves from 0.7308 to 0.7447; this does not guarantee future data gains. Individual-feature probes rank inactive_days highest at AP 0.6266; predictive strength alone cannot establish leakage. A student-grouped period classifier gives mean ROC-AUC 0.7912, suggesting detectable covariate differences, not proven concept drift. Source CSVs and fingerprints: outputs/investigations/; reproduce with just investigations.
+![Development outcomes](../outputs/eda_01_outcomes.png)
+![Submission availability by course and period](../outputs/eda_07_observability.png)
+![Unequal-window engagement totals](../outputs/eda_05_change.png)
 
-Existing train/validation diagnostics, ten shuffled-training-label controls and grouped permutation checks remain in outputs/diagnostics/. They generate hypotheses, not proof of clean labels or absence of leakage. No outcome is relabeled because a model disagrees with it. The new studies are explicitly exploratory after the separate final evaluation.
+Ten saved figures and overview CSVs cover both families and the decision. Engagement windows are days 0–14 and 15–28 (15 versus 14 days): totals are not equal-duration trends.
 
-## Deeper work and final commitments
-1. Layer escape at equal total quota: test whether complementary warnings reach missed adverse cases. Completed development sweeps compare all 24 orders and three tie seeds; retain negative findings rather than crediting a larger union with a larger contact budget.
-2. Warning-positive Success/Fail/Withdrawn profiles: compare descriptive trajectories/observed-score summaries, without claiming resilience causes or treatment effects.
-3. Global versus module-specialist models: compare pooled predictions with training-only eligibility and flexible global models; course heterogeneity does not itself justify specialist deployment.
+## Three commitments: executed evidence and consequence
+1. Layer escape: equal-quota round-robin covers 41.89% versus classifier 45.79%. Extra layers do not automatically help; retain the single ranking as reference. Sources: revision/same_quota_layers.csv; layer_quota_sensitivity.csv tests 24 orders/three tie seeds.
+2. Warning profiles: under historical four-layer selection, 496 flagged learners succeeded; observed-score medians are 62 (Success), 48 (Fail), 40 (Withdrawn), with observed counts 277/262/208. Source: revision/warning_outcome_profiles.csv. Treat warnings as review prompts; these static profiles establish neither resilience mechanisms nor intervention effects.
+3. Course specialists: hybrid AP 0.737 versus logistic 0.728, boosting 0.747. Specialisation is not automatically better; retain global fallback for unsupported courses. Sources: revision/model_comparison.csv, specialist_eligibility.csv, model_segments.csv.
 
-Ablation removes/swaps classifier, detector and rule under identical constraints. Sensitivity varies budget, review/alert effort, score availability and cutoff; seed checks assess stability. Outputs/revision/ and validation_sensitivity.csv record executed development analyses. These high-level commitments remain fixed; further refinement must respect the already-observed final-test boundary.
+A critical segment audit: classifier selects zero of GGG's 315 adverse cases; blend reaches 21.3%. Female/male adverse coverage is 34.0%/53.9%. These descriptive validation gaps require course-aware review before deployment; they neither prove discrimination nor justify retuning on the final test. Source: validation_challenge_segments.csv. Aggregate improvement alone is insufficient.
 
-## Practical recommendation and limitations
-Use an interpretable review queue with an explicit capacity setting; audit learners lacking early assessments and module slices with minimum sample guards. Human review is required. Risk estimates are not guarantees. Detection of unusual engagement is not a verified diagnosis of learner need.
+## Debugging, ablation and final path
+Learning curves, single-feature probes, grouped permutation and shuffled-training-label controls are development diagnostics, not proof against leakage. HGB learning-curve AP moves 0.731→0.745; period-classifier ROC-AUC 0.791 signals covariate differences, not proven concept drift. Sources: outputs/investigations/ and diagnostics/; reproduce with just investigations.
 
-This is a reproducible day-28 prototype, not a weekly live integration. OULAD has no randomized support interventions or measured staff costs. No prevented failures, retained value, ROI or employee benefit is estimated. One development validation period, course shift and uncertain score availability constrain generalization. The report is an Intermediate development account; separate final results must not be presented as newly untouched confirmation.
+Ablation removes/swaps classifier, detector and rule at equal effort. Executed sensitivity varies budget, action costs, availability delay/cutoff and seeds (validation_sensitivity.csv, validation_data_assumptions.csv). The three commitments stay fixed; final writing must explain their decision consequences, not promise universal improvement.
 
-Run just install and just pipeline; use just app with a chosen budget. Current runtime/platform/test results are in outputs/current_pipeline_verification.json. Historical platform evidence verifies its named snapshot only. Week 10 inspiration: Saravanan Thirumuruganathan, Debugging ML Models. All learner outcomes are real; diagnostic expectations are interpretations rather than hidden synthetic answer keys.
+Keep classifier-only as a provisional analytical reference, not a deployable recommendation. A stakeholder pilot additionally needs an agreed practical gain, segment review, real workload checks and intervention evidence. No prevented failures, ROI, weekly integration or employee benefit is established. Reproduce: just install; just pipeline. Evidence provenance: outputs/development_evidence.json. Historical platform checks apply only to their recorded snapshots.

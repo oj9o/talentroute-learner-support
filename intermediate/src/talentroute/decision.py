@@ -24,7 +24,7 @@ def allocate(risk, anomaly, cfg, weight=0., uncertainty=None):
     order=np.argsort(-score,kind='stable'); actions=np.zeros(n,dtype=int); actions[order[:human_n]]=2
     remaining=budget-human_n*cfg['human_minutes']
     alert_n=min(n-human_n,int(n*cfg['max_alert_fraction']),int(remaining//cfg['alert_minutes']))
-    # Remaining anomaly warnings can trigger low-effort alerts, with the same order for all policies.
+    # Subsequent cases in the same policy ranking receive low-effort alerts.
     available=order[human_n:];actions[available[:alert_n]]=1
     assert (actions==2).sum()*cfg['human_minutes']+(actions==1).sum()*cfg['alert_minutes']<=budget+1e-8
     return actions
