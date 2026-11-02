@@ -29,6 +29,42 @@ def aligned_probability(model, frame):
     return raw[:, [list(model.classes_).index(label) for label in labels]]
 
 
+def segment_results(name, frame, probability, actions, cfg):
+    """Evaluate pre-existing shared-budget actions; never reallocate within a slice."""
+    rows=[]
+    for field in ['code_module','no_early_assessment']:
+        for group, indices in frame.groupby(field).indices.items():
+            y=frame.iloc[indices].target
+            if len(y)<50 or y.ne('Success').sum()<10:continue
+            values=model_metrics(y,probability[indices],['Fail','Success','Withdrawn'])
+            for outcome in ['Fail','Withdrawn']:
+                count=int(y.eq(outcome).sum());stable=count>=10 and len(y)-count>=10
+                values[outcome.lower()+'_positive_n']=count
+                values[outcome.lower()+'_stable']=stable
+                if not stable:values[outcome.lower()+'_pr_auc']=np.nan
+            action_metrics=metrics(y,actions[indices],cfg)
+            rows.append({'model':name,'segment':field,'group':group,
+                'adverse_n':int(y.ne('Success').sum()),**values,**action_metrics,
+                'allocation_scope':'shared cohort budget; no per-segment reallocation'})
+    return rows
+
+
+def warning_profiles(frame, actions_by_policy):
+    """Describe observed outcomes within each fixed warning policy, without causal labels."""
+    rows=[]
+    fields=['log_clicks','inactive_days','engagement_change','score_mean','no_early_assessment']
+    for policy, actions in actions_by_policy.items():
+        part=frame[['target',*fields]].copy();part['flagged']=np.asarray(actions)>0
+        for (flagged,outcome), group in part.groupby(['flagged','target']):
+            if len(group)<50:continue
+            for field in fields:
+                observed=int(group[field].notna().sum())
+                rows.append({'policy':policy,'flagged':flagged,'outcome':outcome,'feature':field,
+                    'n':len(group),'observed_n':observed,'missing_fraction':1-observed/len(group),
+                    'median':group[field].median(),'mean':group[field].mean()})
+    return pd.DataFrame(rows)
+
+
 def revision():
     cfg = config()
     frame = pd.read_csv(ROOT / 'data/processed/enrolments.csv')
@@ -47,25 +83,13 @@ def revision():
         risk = 1 - p[:, 1]
         records.append({'model': name, **model_metrics(val.target, p, ['Fail','Success','Withdrawn']),
                         **metrics(val.target, allocate(risk, risk, cfg), cfg)})
-        for field in ['code_module', 'no_early_assessment']:
-            for group, indices in val.groupby(field).indices.items():
-                y = val.iloc[indices].target
-                if len(y) < 50 or (y != 'Success').sum() < 10:
-                    continue
-                subgroup = model_metrics(y, p[indices], ['Fail','Success','Withdrawn'])
-                for outcome in ['Fail','Withdrawn']:
-                    count = int((y == outcome).sum())
-                    subgroup[outcome.lower()+'_positive_n'] = count
-                    subgroup[outcome.lower()+'_stable'] = count >= 10 and len(y)-count >= 10
-                    if not subgroup[outcome.lower()+'_stable']:
-                        subgroup[outcome.lower()+'_pr_auc'] = np.nan
-                segments.append({'model': name, 'segment': field, 'group': group,
-                    'n': len(y), 'adverse_n': int((y != 'Success').sum()), **subgroup})
+        segments.extend(segment_results(name,val,p,allocate(risk,risk,cfg),cfg))
         timings.append({'model': name, 'fit_and_evaluation_seconds': time.monotonic()-start})
     # Fixed exploratory design: module-specific logistic models, eligibility from TRAINING ONLY.
     # No selecting the winning module by validation errors and then claiming independent evidence.
     p = predictions['logistic'].copy(); eligibility = []
-    for module, part in train.groupby('code_module'):
+    for module in sorted(set(train.code_module)|set(val.code_module)):
+        part=train[train.code_module==module]
         counts = part.target.value_counts()
         eligible = len(part) >= 300 and all(counts.get(c, 0) >= 30 for c in ['Fail','Success','Withdrawn'])
         ix = np.flatnonzero(val.code_module.to_numpy() == module)
@@ -74,7 +98,10 @@ def revision():
         if eligible and len(ix):
             specialist = classifier('logistic', cfg['seed']).fit(part[FEATURES], part.target)
             p[ix] = aligned_probability(specialist, val.iloc[ix])
+    predictions['module_logistic_hybrid']=p.copy()
     risk_hybrid = 1-p[:, 1]
+    hybrid_actions=allocate(risk_hybrid,risk_hybrid,cfg)
+    segments.extend(segment_results('module_logistic_hybrid',val,p,hybrid_actions,cfg))
     records.append({'model': 'module_logistic_hybrid',
         **model_metrics(val.target, p, ['Fail','Success','Withdrawn']),
         **metrics(val.target, allocate(risk_hybrid, risk_hybrid, cfg), cfg)})
@@ -128,6 +155,22 @@ def revision():
                          'n': len(part), 'observed_n': int(part[field].notna().sum()),
                          'median': part[field].median()})
     pd.DataFrame(rows).to_csv(out/'warning_outcome_profiles.csv', index=False)
+    # Canonical saved policies anchor profiles; historical layer descriptions stay separate.
+    saved=pd.read_csv(ROOT/'outputs/validation_predictions.csv')
+    assert saved.id_student.tolist()==val.id_student.tolist()
+    assert saved.code_module.tolist()==val.code_module.tolist() and saved.target.tolist()==val.target.tolist()
+    actions_by_policy={name:saved['action_'+name].to_numpy() for name in ['classifier_only','anomaly_rule','anomaly_only','coupled_selected']}
+    warning_profiles(val,actions_by_policy).to_csv(out/'policy_warning_profiles.csv',index=False)
+    layer_segments=[]
+    for field in ['code_module','no_early_assessment']:
+        for group,indices in val.groupby(field).indices.items():
+            y=val.iloc[indices].target
+            for name,actions in [('classifier_only',base_actions),('four_layer_round_robin',layered)]:
+                layer_segments.append({'segment':field,'group':str(group),'policy':name,
+                    'adverse_n':int(y.ne('Success').sum()),
+                    'interpretation_allowed':bool(len(y)>=50 and y.ne('Success').sum()>=10),
+                    **metrics(y,actions[indices],cfg)})
+    pd.DataFrame(layer_segments).to_csv(out/'layer_segments.csv',index=False)
     (out/'scope.json').write_text(json.dumps({'test_scored': False,
         'status': 'exploratory post-original-validation revision; not confirmatory',
         'specialist_design': 'module logistic; train n>=300 and each class>=30; global fallback',

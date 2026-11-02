@@ -1,0 +1,3 @@
+scenario,n,adverse_n,reached_adverse_n,adverse_coverage,scope
+as_recorded,5934,2874,1316,0.45789839944328464,retrospective eligibility ambiguity; saved actions unchanged; no operational filter or label repair
+omit_unknown_withdrawal_dates_retrospective,5931,2871,1314,0.45768025078369906,retrospective eligibility ambiguity; saved actions unchanged; no operational filter or label repair

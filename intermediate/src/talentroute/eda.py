@@ -23,7 +23,8 @@ def eda():
     def save(name,title,x,y):
         plt.title(title);plt.xlabel(x);plt.ylabel(y);plt.tight_layout();plt.savefig(out/(name+'.png'),dpi=140);plt.close()
     sns.countplot(data=df,x='target',hue='split',order=order,palette={'train':'#34445d','validation':'#a5b2c3'});save('eda_01_outcomes','Development outcomes by temporal partition','Outcome','Enrolments (count)')
-    missing=df[['score_mean','score_min','late_rate','last_day']].isna().mean().sort_values();missing.plot.barh();save('eda_02_missingness','Observable feature missingness at day 28','Missing fraction','Feature')
+    missing=df.groupby('split')[['score_mean','late_rate','last_day']].agg(lambda x:x.isna().mean())
+    sns.heatmap(missing,annot=True,fmt='.1%',vmin=0,vmax=1,cmap='Blues',cbar_kws={'label':'Missing fraction'});save('eda_02_missingness','Missingness differs by feature and development period','Feature','Temporal partition')
     sns.boxplot(data=df,x='target',y='log_clicks',order=order,hue='target',palette=outcomes,legend=False,showfliers=False);save('eda_03_engagement','Early engagement by later outcome','Outcome','log(1 + clicks), days 0–28')
     sns.boxplot(data=df,x='target',y='score_mean',order=order,hue='target',palette=outcomes,legend=False,showfliers=False);save('eda_04_scores','Observed early scores by later outcome','Outcome','Mean score (0–100), assumed 7-day availability lag')
     sns.scatterplot(data=df.sample(min(2000,len(df)),random_state=7101),x='log_early_clicks',y='log_late_clicks',hue='target',hue_order=order,palette=outcomes,alpha=.35);save('eda_05_change','Engagement totals in two unequal observation windows','log(1 + clicks), days 0–14','log(1 + clicks), days 15–28')
@@ -32,7 +33,8 @@ def eda():
     sns.boxplot(data=df,x='target',y='inactive_days',order=order,hue='target',palette=outcomes,legend=False,showfliers=False);save('eda_08_inactivity','Inactivity is a warning signal, not a treatment effect','Outcome','Days since last observed VLE activity')
     if (out/'validation_sensitivity.csv').exists():
         s=pd.read_csv(out/'validation_sensitivity.csv');s=s[(s.assumption=='staff_minutes_per_100')&s.policy.isin(['business_rule','classifier_only','coupled_fixed_020'])]
-        sns.lineplot(data=s,x='value',y='adverse_coverage',hue='policy',palette={'business_rule':'#738092','classifier_only':'#126c72','coupled_fixed_020':'#a66b20'},marker='o');save('decision_frontier','Validation frontier: coverage under staff constraints','Staff minutes per 100 enrolments','Later adverse outcomes flagged (fraction)')
+        s=s.copy();s['policy']=s.policy.map({'business_rule':'Model-free rule','classifier_only':'Classifier only','coupled_fixed_020':'Classifier + detector'})
+        sns.lineplot(data=s,x='value',y='adverse_coverage',hue='policy',palette={'Model-free rule':'#738092','Classifier only':'#126c72','Classifier + detector':'#a66b20'},marker='o');save('decision_frontier','Validation frontier: coverage under staff constraints','Staff minutes per 100 enrolments','Later adverse outcomes flagged (fraction)')
 
     # Development-only model diagnostic; no student keys or presumed anomaly truth.
     if (out/'validation_predictions.csv').exists():

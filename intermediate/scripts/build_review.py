@@ -20,11 +20,14 @@ sources={'policies':'validation_decision_metrics.csv','budgets':'validation_sens
     'models':'revision/model_comparison.csv','intervals':'revision/forest_minus_hgb_intervals.csv',
     'layers':'revision/layer_quota_sensitivity.csv','jaccard':'revision/layer_selected_jaccard.csv',
     'breakEven':'revision/action_break_even.csv','ties':'revision/tie_sensitivity.csv',
-    'profiles':'revision/warning_outcome_profiles.csv','ladder':'diagnostics/train_validation_metrics.csv',
+    'profiles':'revision/policy_warning_profiles.csv','ladder':'diagnostics/train_validation_metrics.csv',
     'shuffled':'diagnostics/shuffled_training_labels.csv','permutation':'diagnostics/grouped_permutation.csv'}
 data={key:rows(name) for key,name in sources.items()}
 frame=pd.read_csv(ROOT/'data/processed/enrolments.csv');frame=frame[frame.split.isin(['train','validation'])]
 audit=json.loads((OUT/'data_audit.json').read_text(encoding='utf-8'))
+data['specialistSegments']=rows('revision/model_segments.csv')
+data['layerSegments']=rows('revision/layer_segments.csv')
+data['specialistEligibility']=rows('revision/specialist_eligibility.csv')
 data['segmentTradeoffs']=rows('development_segment_tradeoffs.csv')
 data['developmentEvidence']=json.loads((OUT/'development_evidence.json').read_text())
 data['quality']={'development_rows':len(frame),'duplicate_keys':int(frame.duplicated(['code_module','code_presentation','id_student']).sum()),'missing_early_score_n':int(frame.score_mean.isna().sum()),'audit':audit}

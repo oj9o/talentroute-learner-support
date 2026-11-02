@@ -109,6 +109,9 @@ def prepare(override=None, write_outputs=True):
     if df.split.isna().any(): raise ValueError('Unknown presentation; revisit temporal design')
     test_ids=set(df.loc[df.split=='test','id_student']); val_ids=set(df.loc[df.split=='validation','id_student'])-test_ids
     keep=((df.split=='test')|((df.split=='validation')&~df.id_student.isin(test_ids))|((df.split=='train')&~df.id_student.isin(test_ids|val_ids)))
+    purge_profile=df.loc[df.split.isin(['train','validation']),['split','target']].copy()
+    purge_profile['retention']=np.where(keep.loc[purge_profile.index],'retained','purged')
+    purge_counts=purge_profile.groupby(['split','retention','target']).size().rename('n').reset_index()
     audit['purged_earlier_repeat_enrolments']=int((~keep).sum()); df=df.loc[keep].copy()
     for a,b in [('train','validation'),('train','test'),('validation','test')]:
         assert not set(df.loc[df.split==a,'id_student'])&set(df.loc[df.split==b,'id_student'])
@@ -120,6 +123,7 @@ def prepare(override=None, write_outputs=True):
     df.to_csv(ROOT/'data/processed/enrolments.csv',index=False)
     # Audit reports development data only. No test labels/metrics inspected here.
     dev=df.loc[df.split!='test']
+    purge_counts.to_csv(out/'purge_population_audit.csv',index=False)
     dev.groupby(['split','target']).size().rename('n').to_csv(out/'development_target_counts.csv')
     dev.groupby(['split','code_module']).agg(n=('id_student','size'),no_assessment_rate=('no_early_assessment','mean')).to_csv(out/'development_coverage.csv')
     (out/'data_audit.json').write_text(json.dumps(audit,indent=2), encoding='utf-8')

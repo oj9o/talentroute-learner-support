@@ -1,11 +1,11 @@
 {
   "release": "Intermediate interpretation revision 2026-11-02",
-  "changes": "Evidence interpretation, segment tradeoffs, EDA, dictionary roles, event-boundary tests and interface",
+  "changes": "Current-policy warning profiles, per-course hybrid evaluation, equal-quota course tradeoffs, population/eligibility audits, platform comparison and EDA clarity",
   "development_pipeline_reproduced": true,
   "final_test_scored": false,
   "final_2014J_already_observed": true,
   "local": {
-    "checked_at": "2026-11-02T16:10:44.477593+00:00",
+    "checked_at": "2026-11-02T16:59:36.246913+00:00",
     "python": "3.14.7",
     "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
     "stages": [
@@ -51,7 +51,7 @@
         "exit_code": 0
       }
     ],
-    "tests_passed": 29,
+    "tests_passed": 33,
     "protected_artifacts_unchanged": true,
     "protected_sha256": {
       "data/processed/enrolments.csv": "257371db908214032ae5b38e2068c45c0a60af2d9427de3847b5fab2a557fcb5",
@@ -72,12 +72,14 @@
       "outputs/revision/forest_minus_hgb_intervals.csv": "e87a5188b5da401557d0bc9e3451f8ede70cd2b79c14d886b367fceb9cff7ef1",
       "outputs/revision/layer_quota_sensitivity.csv": "3b3538cfcaf2a465bd8a310f8473ae668944327fd14b64625532ac02c240d961",
       "outputs/revision/layer_rank_correlations.csv": "03a12cde401c85656917b46778179afe2d1b085ecffbe2a9bb114ef37bb5e5ff",
+      "outputs/revision/layer_segments.csv": "078dba027f68eb1b5214f347ec7dcf356145c19a5b210f07dd524d4bde644f15",
       "outputs/revision/layer_selected_jaccard.csv": "174cd7f472563f51979d4037799dec5d5aac9cdbf7d421e72e0760193c73b3ab",
       "outputs/revision/model_comparison.csv": "5b64537a99fa3fff27aa86bfe5e0da83340c7b5ae053e96c71fd39544785bac9",
-      "outputs/revision/model_segments.csv": "5dcc196f6f0e857c43791cfe47e68e10ff64ef9d2123eca7970282699f588247",
-      "outputs/revision/runtime.csv": "9b8c1e4eebfeac5018db9509727ab6a779d8735a9907d6be93d45a49cc6793f3",
+      "outputs/revision/model_segments.csv": "90fc4bd4001771d580a0d51af8a5d16217413e4ec0102f0da0980f337d9c6ebe",
+      "outputs/revision/policy_warning_profiles.csv": "6b7775a3ca63ce44c1d2b1bcd9b2cb231a45b8b22e916d016b7cad5f0b4e1649",
+      "outputs/revision/runtime.csv": "479fdfc15b382be8366bb94bfcd41b64d6f6dc266f4e07d287d5a27abd1c37d1",
       "outputs/revision/same_quota_layers.csv": "deb09baa4ad2c4c4ad4ee07cfb69a4cded3b9e4d3277570ea6b4769f439cf6cc",
-      "outputs/revision/specialist_eligibility.csv": "5de40800d2fa673d7614c438e5e43cb5fb4db4b850d238977110485e3a14bab8",
+      "outputs/revision/specialist_eligibility.csv": "4b5f352863c54c334aef07999ed2859eaf4e1df0eb5421cb386a9950136e05d3",
       "outputs/revision/tie_sensitivity.csv": "1ac2006a7c8499708b0a627b0461d750528b6ba942cbb3cdeb45d98f0e19cb9c",
       "outputs/revision/warning_outcome_profiles.csv": "5e8f9898a8175f9f610415466051765a222337a7445aba7b84d8a73e54b8aedc",
       "outputs/development_models.joblib": "2c149df6f70d99f20035489d83683b2ea50d296bb196df873c03e391d734d367",
@@ -86,46 +88,46 @@
     "source_sha256": {
       "src/talentroute/__init__.py": "d0c8f30bfa6458262852d93a2d687909208b12dd784e72762ea43c2c30a39594",
       "src/talentroute/__main__.py": "df38fef4b5d06f77d550ae45806bb69695d82a62fe131ebd30fabd598dbc83ad",
-      "src/talentroute/data.py": "0b00695e1a3f4327faa957d4557aa169a87a3ea3f6ab33c3d9d38ee9d980932a",
+      "src/talentroute/data.py": "38ab2eca9058f178af5e6fd502d8b61ac5ee36c4a07311742f358e978eb8cb5c",
       "src/talentroute/data_sensitivity.py": "a52e8315427cb00cebca1031ef6e9d65e20c8bdca8c8056327b9309d7401fef9",
       "src/talentroute/decision.py": "fa2f62b762cc7f8ec33e1551a776af760a4d5082bd5aa0044bd27702815cf276",
       "src/talentroute/demo.py": "b2233f149cb0c6e88ba411d4b8db818e270a229e7a86cccbd5a4dd67a8e5bdcd",
       "src/talentroute/diagnostics.py": "b4f80ba4cebb03beadf8d8a777611e2474ffc62ce35d7095e97b3a9e282b9c70",
-      "src/talentroute/eda.py": "bb778e598f2c280ae35b7a04234e0189dc17ac9dd5acffdaebd816a956636d7c",
+      "src/talentroute/eda.py": "05717f5c46f8099119a4b83b33eb599255b500471e6e72eff0d242a38098e385",
       "src/talentroute/evaluation.py": "21dbf13851c1aedf102145fd9b27571d24204f7ff11b389de146808c1fc8bed2",
       "src/talentroute/model_intervals.py": "db4a5c02c73d60e8612fc37ad106ff28f9e230f3368c899c7c786fd306e771c0",
       "src/talentroute/models.py": "bfd8b456230fe7bf980588e9c26ed1b05be38af97faa24548871055165934c94",
-      "src/talentroute/report.py": "f0cae00d709f9dc1e90ba822481a05fcce55eb564939199f77ac8a6fe54d7eb4",
-      "src/talentroute/revision.py": "2ef9c23d30458346116b8fe13aaf853adc72ef41c00479b63e952fc20f217960",
+      "src/talentroute/report.py": "866a08f2fe9fa926b3bf153be111c3e0f35e94b28be7ce8727025c904036011f",
+      "src/talentroute/revision.py": "621bb0c13885f1e3a5ec4c4d8089bd71fb9f23fed5068af8bf0f21e6222934b2",
       "src/talentroute/revision_checks.py": "b33c7a33e66041b9b6b4c3037e7923c9fd3d0fc05cc68b5f2ad0e5fdc797de9f",
       "src/talentroute/stability.py": "5ea31f0afee0a8680f0731ea0ad1676710f09b54891b235fb6d42fa9e7d6df20",
       "scripts/build_decision_room.py": "9d678c46cd5ded485b61cd8cd906d42c81af50b04e8bb572cf5dd71219f6a497",
       "scripts/build_investigations.py": "521b36526f430983cd9168ff3c5140dc89d78e43e44bedf70cbc0b5d13d6c5de",
-      "scripts/build_review.py": "420dc5bb8ccaae6c221c275dc4b5515d4c71aa3d446409db3de0d782cb90709d",
+      "scripts/build_review.py": "f9fd7670f1d6d0b4c71d68f2c73e6a7f630d9a5a9ff276427151a0a82b72dcbb",
       "scripts/clean_generated.py": "754fd184e51c1616be71905d5cefd625ffde7093dec3a7e268728f552c973e87",
       "scripts/debug_investigations.py": "a19bc381186de70afdf7f9098776aa0002db9480199f043eb0267c00f524f59d",
       "scripts/eda.py": "c1b66eede6da3e6b722b3e2524cd3a4e7063bec98c10bb41f12b3116e0ce1892",
       "scripts/run_pipeline.py": "b1c3a11b6c88487c719e7e78af7e240565a5c5300c192adf117b74f55f00bae7",
-      "scripts/verify_intermediate_release.py": "555c96df35481ee3e6adf89cf45e16f250c0ad566ba578bc847c5ee2880073b8",
+      "scripts/verify_intermediate_release.py": "49246488657bdb4c2908df0c1dddae3c062f689e458b8e9946497c061ad3e52e",
       "scripts/verify_revision.py": "f8482c6e979af97f4fed9d47e84476b877a59adc0a70a7f7e71e380cf4d83520",
       "scripts/verify_submission.py": "586666bd63d45b6748f0d6be3fb561d858796f93d09cb02f0695735b2c9bfd19",
       "scripts/review_ui/decision_room.css": "2e185eed7f2dc079ee7c0bab12c14b3dd0dcd91887b565d68386cea8791a29ae",
       "scripts/review_ui/decision_room.html": "a6bfa9c969f9a624fa628f064bc5c00ccf696389bff0df3d091776fe92e778b2",
       "scripts/review_ui/decision_room.js": "4c4968999609d8058c039f9a49d58a09ce9e65d33838b3618b82e35e32f5fe5e",
-      "scripts/review_ui/index.html": "8bbc32562179b7ea48c31223de8d26ea00d08c19523f8664cb963a9c28f1b7f3",
+      "scripts/review_ui/index.html": "08653870f2dafd2ba5634f8064df2597b52b96f2b1b52cdfc286e46f8ab38ba7",
       "scripts/review_ui/review.css": "faa47a8d3e2832f3677679411a666de913f66d1ba1cacc5c540820500903065d",
-      "scripts/review_ui/review.js": "ff494634184b003e85f3f0c98f5a39d2b45910b951fc17a3e8b8254cf13da470",
+      "scripts/review_ui/review.js": "74ac50fb2970b24e4e00cfc7551355df4fa576e061d5aab8185a01d2ae6321cf",
       "tests/test_decision_room.py": "932ffba444093613aa5b8279d94390c5e4d3be0e558b7cb6c1e9b417d220c9a0",
       "tests/test_diagnostics.py": "7e496f02394f94ff7990a91a9eba1587bcb2384e47c6a2c697ecca55df2007a3",
       "tests/test_download.py": "cfe26fb8f1d8834c880c2403c81e85c714d29e0106d4dab3d9366b417666e57d",
       "tests/test_event_cutoffs.py": "a589953ac1abfa1e4e3fda647dcb254172fadd09b4d9371daaf5577d9c3d90d9",
       "tests/test_integrity.py": "3fe86b1af517906e9332c05c2aeca14cd75d171c0456aeafcbb62af333f5d136",
       "tests/test_investigations.py": "446ca7f2457affe2984d1f87cf671dc332e17226288157ddd8621692a0167946",
-      "tests/test_review.py": "6a14ab1b2b79620c45b9b6e136907ad440a85039addaacb7a8dc561a4765cba0",
-      "tests/test_revision.py": "2de7a99f164da2e5d227f18ffa64ddd722977dfe981e3663fe83e527875a4ebb",
+      "tests/test_review.py": "fa2e9f322ce8f7e242daa294aed2e1d756040dbf3ee1ecff9b9b939db3baef0e",
+      "tests/test_revision.py": "74470bf2d155bd30ffa44dc9daa5d6de0f32c13dde80069cc325f1edaa7d86ff",
       "pyproject.toml": "35e08d9f0246d9c99e1e802a2f0a3674c6e005c3b1df5d1b698ca2b4dc09a930",
       "uv.lock": "2c88973f582d7e722ec8059ff2ff84bc2cf6930961d893f2c16c491ca706f090",
-      "Justfile": "f0ec2336ed11068e68513096d4d1dd690538294570577e9108b582466e67f974"
+      "Justfile": "1917390749efbe74f3b370eb8f0f6ca199a26b8fe96081d0ea17702147c86d58"
     },
     "new_model_fitting": false,
     "final_test_scored": false,
@@ -259,12 +261,12 @@
     "scope": "Interpretation, EDA, interface and regression checks against saved development evidence; not a new full analytical pipeline run"
   },
   "full_linux": {
-    "checked_at": "2026-11-02T16:10:24.674931+00:00",
+    "checked_at": "2026-11-02T16:49:28.750419+00:00",
     "python": "3.14.2",
     "platform": "Linux-7.0.14-linuxkit-x86_64-with-glibc2.36",
     "machine": "x86_64",
     "container_image": "talentroute-full-check:2026-11-02",
-    "elapsed_seconds": 107.52,
+    "elapsed_seconds": 98.16,
     "stages": [
       {
         "command": [
@@ -273,7 +275,7 @@
         ],
         "exit_code": 0,
         "stdout": "",
-        "stderr": "uv sync --frozen\nUsing CPython 3.14.2 interpreter at: /usr/local/bin/python3.14\nCreating virtual environment at: .venv\n   Building talentroute @ file:///work\nDownloading pygments (1.2MiB)\nDownloading scipy (33.7MiB)\nDownloading numpy (15.9MiB)\nDownloading pillow (6.8MiB)\nDownloading pandas (11.8MiB)\nDownloading scikit-learn (8.7MiB)\nDownloading fonttools (5.1MiB)\nDownloading kiwisolver (1.4MiB)\nDownloading matplotlib (10.4MiB)\n Downloaded pygments\n Downloaded kiwisolver\n Downloaded fonttools\n      Built talentroute @ file:///work\n Downloaded pillow\n Downloaded scikit-learn\n Downloaded matplotlib\n Downloaded pandas\n Downloaded numpy\n Downloaded scipy\nPrepared 26 packages in 5.30s\nInstalled 26 packages in 1.73s\n + cloudpickle==3.1.2\n + contourpy==1.4.0\n + cycler==0.12.1\n + fonttools==4.67.0\n + iniconfig==2.3.1\n + joblib==1.6.0\n + kiwisolver==1.5.1\n + matplotlib==3.11.2\n + narwhals==2.27.1\n + numpy==2.5.4\n + packaging==26.3\n + pandas==2.3.3\n + pillow==13.0.0\n + pluggy==1.7.0\n + pygments==2.21.0\n + pyparsing==3.3.3\n + pytest==9.1.1\n + python-dateutil==3.0.0\n + pytz==2026.5\n + scikit-learn==1.9.1\n + scipy==1.18.1\n + seaborn==0.13.2\n + six==1.17.0\n + talentroute==0.1.0 (from file:///work)\n + threadpoolctl==3.7.0\n + tzdata==2026.5\n"
+        "stderr": "uv sync --frozen\nUsing CPython 3.14.2 interpreter at: /usr/local/bin/python3.14\nCreating virtual environment at: .venv\n   Building talentroute @ file:///work\nDownloading pillow (6.8MiB)\nDownloading pygments (1.2MiB)\nDownloading matplotlib (10.4MiB)\nDownloading numpy (15.9MiB)\nDownloading scikit-learn (8.7MiB)\nDownloading fonttools (5.1MiB)\nDownloading pandas (11.8MiB)\nDownloading scipy (33.7MiB)\nDownloading kiwisolver (1.4MiB)\n Downloaded pygments\n Downloaded kiwisolver\n Downloaded fonttools\n      Built talentroute @ file:///work\n Downloaded pillow\n Downloaded scikit-learn\n Downloaded matplotlib\n Downloaded pandas\n Downloaded numpy\n Downloaded scipy\nPrepared 26 packages in 5.10s\nInstalled 26 packages in 1.29s\n + cloudpickle==3.1.2\n + contourpy==1.4.0\n + cycler==0.12.1\n + fonttools==4.67.0\n + iniconfig==2.3.1\n + joblib==1.6.0\n + kiwisolver==1.5.1\n + matplotlib==3.11.2\n + narwhals==2.27.1\n + numpy==2.5.4\n + packaging==26.3\n + pandas==2.3.3\n + pillow==13.0.0\n + pluggy==1.7.0\n + pygments==2.21.0\n + pyparsing==3.3.3\n + pytest==9.1.1\n + python-dateutil==3.0.0\n + pytz==2026.5\n + scikit-learn==1.9.1\n + scipy==1.18.1\n + seaborn==0.13.2\n + six==1.17.0\n + talentroute==0.1.0 (from file:///work)\n + threadpoolctl==3.7.0\n + tzdata==2026.5\n"
       },
       {
         "command": [
@@ -281,7 +283,7 @@
           "test"
         ],
         "exit_code": 0,
-        "stdout": "..........s.s.......s........                                            [100%]\n26 passed, 3 skipped in 4.81s\n",
+        "stdout": "..........s.s.......s............                                        [100%]\n30 passed, 3 skipped in 4.80s\n",
         "stderr": "uv run pytest -q\n"
       },
       {
@@ -299,12 +301,12 @@
           "pipeline"
         ],
         "exit_code": 0,
-        "stdout": "Stage: just download-data\nuv run python -m talentroute download\n/work/data/raw/manifest.json\nStage: just prepare-data\nuv run python -m talentroute prepare\n{\n  \"raw_enrolments\": 32593,\n  \"eligible_enrolments\": 27515,\n  \"cutoff_day\": 28,\n  \"score_delay_days_assumed\": 7,\n  \"missing_registration_excluded\": 45,\n  \"purged_earlier_repeat_enrolments\": 1959,\n  \"split_counts\": {\n    \"test\": 9210,\n    \"train\": 10412,\n    \"validation\": 5934\n  }\n}\nStage: just eda\nuv run python scripts/eda.py\nStage: just run-baseline\nuv run python -m talentroute fit\n[{'model': 'logistic', 'macro_f1': 0.4001340703695085, 'log_loss': 0.9145482536029084, 'adverse_pr_auc': 0.7280034530861036, 'fail_pr_auc': 0.48697561377099546, 'withdrawn_pr_auc': 0.2829115291815038, 'adverse_brier': 0.2075886050996757, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.42832289491997216, 'decision_human_precision': 0.8988326848249028, 'decision_flag_precision': 0.7241176470588235, 'decision_missed_adverse_n': 1643, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.4269102990033223, 'decision_withdrawn_coverage': 0.4307116104868914}, {'model': 'hgb_7_2', 'macro_f1': 0.44685467059980516, 'log_loss': 0.9030104778659469, 'adverse_pr_auc': 0.7419270160514045, 'fail_pr_auc': 0.49873648964193584, 'withdrawn_pr_auc': 0.2982655982088789, 'adverse_brier': 0.2027103243024403, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.4547668754349339, 'decision_human_precision': 0.9124513618677043, 'decision_flag_precision': 0.7688235294117647, 'decision_missed_adverse_n': 1567, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.44629014396456257, 'decision_withdrawn_coverage': 0.4691011235955056}, {'model': 'hgb_15_2', 'macro_f1': 0.45307196243744147, 'log_loss': 0.9047256488897132, 'adverse_pr_auc': 0.7451476315550838, 'fail_pr_auc': 0.48819960536927165, 'withdrawn_pr_auc': 0.30112843814151546, 'adverse_brier': 0.2031513938125152, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.45407098121085593, 'decision_human_precision': 0.9105058365758755, 'decision_flag_precision': 0.7676470588235295, 'decision_missed_adverse_n': 1569, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.44629014396456257, 'decision_withdrawn_coverage': 0.46722846441947563}, {'model': 'hgb_15_10', 'macro_f1': 0.4533482098145321, 'log_loss': 0.9053064920744623, 'adverse_pr_auc': 0.7456794765229335, 'fail_pr_auc': 0.48589926339605966, 'withdrawn_pr_auc': 0.3046428726371042, 'adverse_brier': 0.2035525725054115, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.4547668754349339, 'decision_human_precision': 0.914396887159533, 'decision_flag_precision': 0.7688235294117647, 'decision_missed_adverse_n': 1567, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.4485049833887043, 'decision_withdrawn_coverage': 0.4653558052434457}]\nuv run python -m talentroute evaluate\n{'selected_model': 'hgb_15_10', 'chosen_weight': 0.2, 'ci': [-0.006014017581373248, 0.01379451756810247]}\nStage: uv run python -m talentroute stability\nStage: uv run python -m talentroute data-sensitivity\nStage: just revision\nuv run python -m talentroute revision\n[{'model': 'logistic', 'macro_f1': 0.4001340703695085, 'log_loss': 0.9145482536029084, 'adverse_pr_auc': 0.7280034530861036, 'fail_pr_auc': 0.48697561377099546, 'withdrawn_pr_auc': 0.2829115291815038, 'adverse_brier': 0.2075886050996757, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.42832289491997216, 'human_precision': 0.8988326848249028, 'flag_precision': 0.7241176470588235, 'missed_adverse_n': 1643, 'staff_minutes': 17792.0, 'fail_coverage': 0.4269102990033223, 'withdrawn_coverage': 0.4307116104868914}, {'model': 'tree', 'macro_f1': 0.3964501305731702, 'log_loss': 0.9300471732506508, 'adverse_pr_auc': 0.7099475414766291, 'fail_pr_auc': 0.46502036641322797, 'withdrawn_pr_auc': 0.25599340267046383, 'adverse_brier': 0.21138448347216166, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4488517745302714, 'human_precision': 0.9046692607003891, 'flag_precision': 0.7588235294117647, 'missed_adverse_n': 1584, 'staff_minutes': 17792.0, 'fail_coverage': 0.4435215946843854, 'withdrawn_coverage': 0.45786516853932585}, {'model': 'forest', 'macro_f1': 0.41158942188226005, 'log_loss': 0.905217109912755, 'adverse_pr_auc': 0.7475713006443488, 'fail_pr_auc': 0.5028029380800689, 'withdrawn_pr_auc': 0.2857430796121623, 'adverse_brier': 0.20252132623001612, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4558107167710508, 'human_precision': 0.9163424124513618, 'flag_precision': 0.7705882352941177, 'missed_adverse_n': 1564, 'staff_minutes': 17792.0, 'fail_coverage': 0.45182724252491696, 'withdrawn_coverage': 0.46254681647940077}, {'model': 'hgb_15_10', 'macro_f1': 0.4533482098145321, 'log_loss': 0.9053064920744623, 'adverse_pr_auc': 0.7456794765229335, 'fail_pr_auc': 0.48589926339605966, 'withdrawn_pr_auc': 0.3046428726371042, 'adverse_brier': 0.2035525725054115, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4547668754349339, 'human_precision': 0.914396887159533, 'flag_precision': 0.7688235294117647, 'missed_adverse_n': 1567, 'staff_minutes': 17792.0, 'fail_coverage': 0.4485049833887043, 'withdrawn_coverage': 0.4653558052434457}, {'model': 'module_logistic_hybrid', 'macro_f1': 0.4224050366510459, 'log_loss': 0.9121816557379454, 'adverse_pr_auc': 0.7368718317513026, 'fail_pr_auc': 0.48714313354392486, 'withdrawn_pr_auc': 0.2807060046770072, 'adverse_brier': 0.204488877523844, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4474599860821155, 'human_precision': 0.9085603112840467, 'flag_precision': 0.7564705882352941, 'missed_adverse_n': 1588, 'staff_minutes': 17792.0, 'fail_coverage': 0.4424141749723145, 'withdrawn_coverage': 0.4559925093632959}]\nStage: just diagnostics\nuv run python -m talentroute diagnostics\nStage: just investigations\nuv run python scripts/debug_investigations.py\n{\n  \"created_utc\": \"2026-11-02T16:10:06.643349+00:00\",\n  \"train_n\": 10412,\n  \"validation_n\": 5934,\n  \"validation_adverse_prevalence\": 0.48432760364004046,\n  \"test_rows_used\": 0,\n  \"script_sha256\": \"a19bc381186de70afdf7f9098776aa0002db9480199f043eb0267c00f524f59d\",\n  \"development_sha256\": \"2b515b346627e4383bd6a0a23fd88acad1afaad697de166805ff8ae78dbb6f43\",\n  \"scope\": \"Exploratory development diagnostics added after the recorded final evaluation; not an independent confirmation or pre-registered study.\"\n}\nuv run python scripts/build_investigations.py\nBuilt investigations.html\nStage: just eda\nuv run python scripts/eda.py\nStage: uv run python scripts/verify_submission.py\n14 submission claim checks passed; reserved test outcomes not scored.\nStage: just report\nuv run python -m talentroute report\nGenerated development evidence and report; no model fitting or final scoring\nStage: just review\nuv run python scripts/build_review.py\nBuilt offline TalentRoute interface and readable report from aggregate evidence.\nBuilt offline decision room from saved development evidence\nStage: just readiness\nuv run python scripts/verify_intermediate_release.py\n{\n  \"scope\": \"Artifact and consistency checks, not a grading or deployment certificate\",\n  \"combined_markdown_words\": 2956,\n  \"required_files_checked\": 19,\n  \"eda_figures\": 10,\n  \"interface_links_resolve\": true,\n  \"new_diagnostics_test_rows\": 0,\n  \"separate_final_evaluation_already_observed\": true\n}\nStage: just test\nuv run pytest -q\n.............................                                            [100%]\n29 passed in 2.46s\nStage: just report\nuv run python -m talentroute report\nGenerated development evidence and report; no model fitting or final scoring\nStage: just review\nuv run python scripts/build_review.py\nBuilt offline TalentRoute interface and readable report from aggregate evidence.\nBuilt offline decision room from saved development evidence\nStage: just test\nuv run pytest -q\n.............................                                            [100%]\n29 passed in 2.19s\n",
+        "stdout": "Stage: just download-data\nuv run python -m talentroute download\n/work/data/raw/manifest.json\nStage: just prepare-data\nuv run python -m talentroute prepare\n{\n  \"raw_enrolments\": 32593,\n  \"eligible_enrolments\": 27515,\n  \"cutoff_day\": 28,\n  \"score_delay_days_assumed\": 7,\n  \"missing_registration_excluded\": 45,\n  \"purged_earlier_repeat_enrolments\": 1959,\n  \"split_counts\": {\n    \"test\": 9210,\n    \"train\": 10412,\n    \"validation\": 5934\n  }\n}\nStage: just eda\nuv run python scripts/eda.py\nStage: just run-baseline\nuv run python -m talentroute fit\n[{'model': 'logistic', 'macro_f1': 0.4001340703695085, 'log_loss': 0.9145482536029084, 'adverse_pr_auc': 0.7280034530861036, 'fail_pr_auc': 0.48697561377099546, 'withdrawn_pr_auc': 0.2829115291815038, 'adverse_brier': 0.2075886050996757, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.42832289491997216, 'decision_human_precision': 0.8988326848249028, 'decision_flag_precision': 0.7241176470588235, 'decision_missed_adverse_n': 1643, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.4269102990033223, 'decision_withdrawn_coverage': 0.4307116104868914}, {'model': 'hgb_7_2', 'macro_f1': 0.44685467059980516, 'log_loss': 0.9030104778659469, 'adverse_pr_auc': 0.7419270160514045, 'fail_pr_auc': 0.49873648964193584, 'withdrawn_pr_auc': 0.2982655982088789, 'adverse_brier': 0.2027103243024403, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.4547668754349339, 'decision_human_precision': 0.9124513618677043, 'decision_flag_precision': 0.7688235294117647, 'decision_missed_adverse_n': 1567, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.44629014396456257, 'decision_withdrawn_coverage': 0.4691011235955056}, {'model': 'hgb_15_2', 'macro_f1': 0.45307196243744147, 'log_loss': 0.9047256488897132, 'adverse_pr_auc': 0.7451476315550838, 'fail_pr_auc': 0.48819960536927165, 'withdrawn_pr_auc': 0.30112843814151546, 'adverse_brier': 0.2031513938125152, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.45407098121085593, 'decision_human_precision': 0.9105058365758755, 'decision_flag_precision': 0.7676470588235295, 'decision_missed_adverse_n': 1569, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.44629014396456257, 'decision_withdrawn_coverage': 0.46722846441947563}, {'model': 'hgb_15_10', 'macro_f1': 0.4533482098145321, 'log_loss': 0.9053064920744623, 'adverse_pr_auc': 0.7456794765229335, 'fail_pr_auc': 0.48589926339605966, 'withdrawn_pr_auc': 0.3046428726371042, 'adverse_brier': 0.2035525725054115, 'decision_n': 5934, 'decision_flagged_n': 1700, 'decision_human_n': 514, 'decision_alert_n': 1186, 'decision_adverse_coverage': 0.4547668754349339, 'decision_human_precision': 0.914396887159533, 'decision_flag_precision': 0.7688235294117647, 'decision_missed_adverse_n': 1567, 'decision_staff_minutes': 17792.0, 'decision_fail_coverage': 0.4485049833887043, 'decision_withdrawn_coverage': 0.4653558052434457}]\nuv run python -m talentroute evaluate\n{'selected_model': 'hgb_15_10', 'chosen_weight': 0.2, 'ci': [-0.006014017581373248, 0.01379451756810247]}\nStage: uv run python -m talentroute stability\nStage: uv run python -m talentroute data-sensitivity\nStage: just revision\nuv run python -m talentroute revision\n[{'model': 'logistic', 'macro_f1': 0.4001340703695085, 'log_loss': 0.9145482536029084, 'adverse_pr_auc': 0.7280034530861036, 'fail_pr_auc': 0.48697561377099546, 'withdrawn_pr_auc': 0.2829115291815038, 'adverse_brier': 0.2075886050996757, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.42832289491997216, 'human_precision': 0.8988326848249028, 'flag_precision': 0.7241176470588235, 'missed_adverse_n': 1643, 'staff_minutes': 17792.0, 'fail_coverage': 0.4269102990033223, 'withdrawn_coverage': 0.4307116104868914}, {'model': 'tree', 'macro_f1': 0.3964501305731702, 'log_loss': 0.9300471732506508, 'adverse_pr_auc': 0.7099475414766291, 'fail_pr_auc': 0.46502036641322797, 'withdrawn_pr_auc': 0.25599340267046383, 'adverse_brier': 0.21138448347216166, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4488517745302714, 'human_precision': 0.9046692607003891, 'flag_precision': 0.7588235294117647, 'missed_adverse_n': 1584, 'staff_minutes': 17792.0, 'fail_coverage': 0.4435215946843854, 'withdrawn_coverage': 0.45786516853932585}, {'model': 'forest', 'macro_f1': 0.41158942188226005, 'log_loss': 0.905217109912755, 'adverse_pr_auc': 0.7475713006443488, 'fail_pr_auc': 0.5028029380800689, 'withdrawn_pr_auc': 0.2857430796121623, 'adverse_brier': 0.20252132623001612, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4558107167710508, 'human_precision': 0.9163424124513618, 'flag_precision': 0.7705882352941177, 'missed_adverse_n': 1564, 'staff_minutes': 17792.0, 'fail_coverage': 0.45182724252491696, 'withdrawn_coverage': 0.46254681647940077}, {'model': 'hgb_15_10', 'macro_f1': 0.4533482098145321, 'log_loss': 0.9053064920744623, 'adverse_pr_auc': 0.7456794765229335, 'fail_pr_auc': 0.48589926339605966, 'withdrawn_pr_auc': 0.3046428726371042, 'adverse_brier': 0.2035525725054115, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4547668754349339, 'human_precision': 0.914396887159533, 'flag_precision': 0.7688235294117647, 'missed_adverse_n': 1567, 'staff_minutes': 17792.0, 'fail_coverage': 0.4485049833887043, 'withdrawn_coverage': 0.4653558052434457}, {'model': 'module_logistic_hybrid', 'macro_f1': 0.4224050366510459, 'log_loss': 0.9121816557379454, 'adverse_pr_auc': 0.7368718317513026, 'fail_pr_auc': 0.48714313354392486, 'withdrawn_pr_auc': 0.2807060046770072, 'adverse_brier': 0.204488877523844, 'n': 5934, 'flagged_n': 1700, 'human_n': 514, 'alert_n': 1186, 'adverse_coverage': 0.4474599860821155, 'human_precision': 0.9085603112840467, 'flag_precision': 0.7564705882352941, 'missed_adverse_n': 1588, 'staff_minutes': 17792.0, 'fail_coverage': 0.4424141749723145, 'withdrawn_coverage': 0.4559925093632959}]\nStage: just diagnostics\nuv run python -m talentroute diagnostics\nStage: just investigations\nuv run python scripts/debug_investigations.py\n{\n  \"created_utc\": \"2026-11-02T16:49:12.799288+00:00\",\n  \"train_n\": 10412,\n  \"validation_n\": 5934,\n  \"validation_adverse_prevalence\": 0.48432760364004046,\n  \"test_rows_used\": 0,\n  \"script_sha256\": \"a19bc381186de70afdf7f9098776aa0002db9480199f043eb0267c00f524f59d\",\n  \"development_sha256\": \"2b515b346627e4383bd6a0a23fd88acad1afaad697de166805ff8ae78dbb6f43\",\n  \"scope\": \"Exploratory development diagnostics added after the recorded final evaluation; not an independent confirmation or pre-registered study.\"\n}\nuv run python scripts/build_investigations.py\nBuilt investigations.html\nStage: just eda\nuv run python scripts/eda.py\nStage: uv run python scripts/verify_submission.py\n14 submission claim checks passed; reserved test outcomes not scored.\nStage: just report\nuv run python -m talentroute report\nGenerated development evidence and report; no model fitting or final scoring\nStage: just review\nuv run python scripts/build_review.py\nBuilt offline TalentRoute interface and readable report from aggregate evidence.\nBuilt offline decision room from saved development evidence\nStage: just readiness\nuv run python scripts/verify_intermediate_release.py\n{\n  \"scope\": \"Artifact and consistency checks, not a grading or deployment certificate\",\n  \"combined_markdown_words\": 2941,\n  \"required_files_checked\": 24,\n  \"eda_figures\": 10,\n  \"interface_links_resolve\": true,\n  \"new_diagnostics_test_rows\": 0,\n  \"separate_final_evaluation_already_observed\": true\n}\nStage: just test\nuv run pytest -q\n.................................                                        [100%]\n33 passed in 2.12s\nStage: just report\nuv run python -m talentroute report\nGenerated development evidence and report; no model fitting or final scoring\nStage: just review\nuv run python scripts/build_review.py\nBuilt offline TalentRoute interface and readable report from aggregate evidence.\nBuilt offline decision room from saved development evidence\nStage: just test\nuv run pytest -q\n.................................                                        [100%]\n33 passed in 2.08s\n",
         "stderr": "uv run python scripts/run_pipeline.py\n"
       }
     ],
     "runtime": {
-      "checked_at": "2026-11-02T16:08:51.526560+00:00",
+      "checked_at": "2026-11-02T16:48:04.070084+00:00",
       "platform": "Linux-7.0.14-linuxkit-x86_64-with-glibc2.36",
       "python": "3.14.2",
       "pipeline_exit_code": 0,
@@ -317,7 +319,7 @@
             "download-data"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 2.92
+          "elapsed_seconds": 1.65
         },
         {
           "command": [
@@ -325,7 +327,7 @@
             "prepare-data"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 4.85
+          "elapsed_seconds": 4.41
         },
         {
           "command": [
@@ -333,7 +335,7 @@
             "eda"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 3.87
+          "elapsed_seconds": 3.71
         },
         {
           "command": [
@@ -341,7 +343,7 @@
             "run-baseline"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 5.44
+          "elapsed_seconds": 5.36
         },
         {
           "command": [
@@ -365,7 +367,7 @@
             "data-sensitivity"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 22.37
+          "elapsed_seconds": 21.6
         },
         {
           "command": [
@@ -373,7 +375,7 @@
             "revision"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 15.64
+          "elapsed_seconds": 15.54
         },
         {
           "command": [
@@ -381,7 +383,7 @@
             "diagnostics"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 3.41
+          "elapsed_seconds": 3.45
         },
         {
           "command": [
@@ -389,7 +391,7 @@
             "investigations"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 15.39
+          "elapsed_seconds": 11.73
         },
         {
           "command": [
@@ -397,7 +399,7 @@
             "eda"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 3.2
+          "elapsed_seconds": 3.21
         },
         {
           "command": [
@@ -407,7 +409,39 @@
             "scripts/verify_submission.py"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 1.72
+          "elapsed_seconds": 1.77
+        },
+        {
+          "command": [
+            "just",
+            "report"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.9
+        },
+        {
+          "command": [
+            "just",
+            "review"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.97
+        },
+        {
+          "command": [
+            "just",
+            "readiness"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 0.72
+        },
+        {
+          "command": [
+            "just",
+            "test"
+          ],
+          "exit_code": 0,
+          "elapsed_seconds": 2.73
         },
         {
           "command": [
@@ -423,15 +457,7 @@
             "review"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 1.81
-        },
-        {
-          "command": [
-            "just",
-            "readiness"
-          ],
-          "exit_code": 0,
-          "elapsed_seconds": 1.3
+          "elapsed_seconds": 0.96
         },
         {
           "command": [
@@ -439,71 +465,47 @@
             "test"
           ],
           "exit_code": 0,
-          "elapsed_seconds": 3.19
-        },
-        {
-          "command": [
-            "just",
-            "report"
-          ],
-          "exit_code": 0,
-          "elapsed_seconds": 0.86
-        },
-        {
-          "command": [
-            "just",
-            "review"
-          ],
-          "exit_code": 0,
-          "elapsed_seconds": 1.03
-        },
-        {
-          "command": [
-            "just",
-            "test"
-          ],
-          "exit_code": 0,
-          "elapsed_seconds": 2.82
+          "elapsed_seconds": 2.7
         }
       ],
       "scope": "Current local pipeline execution; operating system measured, VM/container type not inferred",
-      "tests_passed": 29,
+      "tests_passed": 33,
       "data_access": "bundled CSVs; hashes pinned from verified official archive",
-      "elapsed_seconds": 93.09
+      "elapsed_seconds": 84.66
     },
     "source_sha256": {
-      "Justfile": "f0ec2336ed11068e68513096d4d1dd690538294570577e9108b582466e67f974",
+      "Justfile": "1917390749efbe74f3b370eb8f0f6ca199a26b8fe96081d0ea17702147c86d58",
       "configs/policy.json": "5b8556e88e348399ac00a052943357bd12a499a474eb69a3588ec159a00303bc",
       "pyproject.toml": "35e08d9f0246d9c99e1e802a2f0a3674c6e005c3b1df5d1b698ca2b4dc09a930",
       "scripts/build_decision_room.py": "9d678c46cd5ded485b61cd8cd906d42c81af50b04e8bb572cf5dd71219f6a497",
       "scripts/build_investigations.py": "521b36526f430983cd9168ff3c5140dc89d78e43e44bedf70cbc0b5d13d6c5de",
-      "scripts/build_review.py": "420dc5bb8ccaae6c221c275dc4b5515d4c71aa3d446409db3de0d782cb90709d",
+      "scripts/build_review.py": "f9fd7670f1d6d0b4c71d68f2c73e6a7f630d9a5a9ff276427151a0a82b72dcbb",
       "scripts/clean_generated.py": "754fd184e51c1616be71905d5cefd625ffde7093dec3a7e268728f552c973e87",
       "scripts/debug_investigations.py": "a19bc381186de70afdf7f9098776aa0002db9480199f043eb0267c00f524f59d",
       "scripts/eda.py": "c1b66eede6da3e6b722b3e2524cd3a4e7063bec98c10bb41f12b3116e0ce1892",
       "scripts/review_ui/decision_room.css": "2e185eed7f2dc079ee7c0bab12c14b3dd0dcd91887b565d68386cea8791a29ae",
       "scripts/review_ui/decision_room.html": "a6bfa9c969f9a624fa628f064bc5c00ccf696389bff0df3d091776fe92e778b2",
       "scripts/review_ui/decision_room.js": "4c4968999609d8058c039f9a49d58a09ce9e65d33838b3618b82e35e32f5fe5e",
-      "scripts/review_ui/index.html": "8bbc32562179b7ea48c31223de8d26ea00d08c19523f8664cb963a9c28f1b7f3",
+      "scripts/review_ui/index.html": "08653870f2dafd2ba5634f8064df2597b52b96f2b1b52cdfc286e46f8ab38ba7",
       "scripts/review_ui/review.css": "faa47a8d3e2832f3677679411a666de913f66d1ba1cacc5c540820500903065d",
-      "scripts/review_ui/review.js": "ff494634184b003e85f3f0c98f5a39d2b45910b951fc17a3e8b8254cf13da470",
+      "scripts/review_ui/review.js": "74ac50fb2970b24e4e00cfc7551355df4fa576e061d5aab8185a01d2ae6321cf",
       "scripts/run_pipeline.py": "b1c3a11b6c88487c719e7e78af7e240565a5c5300c192adf117b74f55f00bae7",
-      "scripts/verify_intermediate_release.py": "555c96df35481ee3e6adf89cf45e16f250c0ad566ba578bc847c5ee2880073b8",
+      "scripts/verify_intermediate_release.py": "49246488657bdb4c2908df0c1dddae3c062f689e458b8e9946497c061ad3e52e",
       "scripts/verify_revision.py": "f8482c6e979af97f4fed9d47e84476b877a59adc0a70a7f7e71e380cf4d83520",
       "scripts/verify_submission.py": "586666bd63d45b6748f0d6be3fb561d858796f93d09cb02f0695735b2c9bfd19",
       "src/talentroute/__init__.py": "d0c8f30bfa6458262852d93a2d687909208b12dd784e72762ea43c2c30a39594",
       "src/talentroute/__main__.py": "df38fef4b5d06f77d550ae45806bb69695d82a62fe131ebd30fabd598dbc83ad",
-      "src/talentroute/data.py": "0b00695e1a3f4327faa957d4557aa169a87a3ea3f6ab33c3d9d38ee9d980932a",
+      "src/talentroute/data.py": "38ab2eca9058f178af5e6fd502d8b61ac5ee36c4a07311742f358e978eb8cb5c",
       "src/talentroute/data_sensitivity.py": "a52e8315427cb00cebca1031ef6e9d65e20c8bdca8c8056327b9309d7401fef9",
       "src/talentroute/decision.py": "fa2f62b762cc7f8ec33e1551a776af760a4d5082bd5aa0044bd27702815cf276",
       "src/talentroute/demo.py": "b2233f149cb0c6e88ba411d4b8db818e270a229e7a86cccbd5a4dd67a8e5bdcd",
       "src/talentroute/diagnostics.py": "b4f80ba4cebb03beadf8d8a777611e2474ffc62ce35d7095e97b3a9e282b9c70",
-      "src/talentroute/eda.py": "bb778e598f2c280ae35b7a04234e0189dc17ac9dd5acffdaebd816a956636d7c",
+      "src/talentroute/eda.py": "05717f5c46f8099119a4b83b33eb599255b500471e6e72eff0d242a38098e385",
       "src/talentroute/evaluation.py": "21dbf13851c1aedf102145fd9b27571d24204f7ff11b389de146808c1fc8bed2",
       "src/talentroute/model_intervals.py": "db4a5c02c73d60e8612fc37ad106ff28f9e230f3368c899c7c786fd306e771c0",
       "src/talentroute/models.py": "bfd8b456230fe7bf980588e9c26ed1b05be38af97faa24548871055165934c94",
-      "src/talentroute/report.py": "f0cae00d709f9dc1e90ba822481a05fcce55eb564939199f77ac8a6fe54d7eb4",
-      "src/talentroute/revision.py": "2ef9c23d30458346116b8fe13aaf853adc72ef41c00479b63e952fc20f217960",
+      "src/talentroute/report.py": "866a08f2fe9fa926b3bf153be111c3e0f35e94b28be7ce8727025c904036011f",
+      "src/talentroute/revision.py": "621bb0c13885f1e3a5ec4c4d8089bd71fb9f23fed5068af8bf0f21e6222934b2",
       "src/talentroute/revision_checks.py": "b33c7a33e66041b9b6b4c3037e7923c9fd3d0fc05cc68b5f2ad0e5fdc797de9f",
       "src/talentroute/stability.py": "5ea31f0afee0a8680f0731ea0ad1676710f09b54891b235fb6d42fa9e7d6df20",
       "tests/test_decision_room.py": "932ffba444093613aa5b8279d94390c5e4d3be0e558b7cb6c1e9b417d220c9a0",
@@ -512,25 +514,48 @@
       "tests/test_event_cutoffs.py": "a589953ac1abfa1e4e3fda647dcb254172fadd09b4d9371daaf5577d9c3d90d9",
       "tests/test_integrity.py": "3fe86b1af517906e9332c05c2aeca14cd75d171c0456aeafcbb62af333f5d136",
       "tests/test_investigations.py": "446ca7f2457affe2984d1f87cf671dc332e17226288157ddd8621692a0167946",
-      "tests/test_review.py": "6a14ab1b2b79620c45b9b6e136907ad440a85039addaacb7a8dc561a4765cba0",
-      "tests/test_revision.py": "2de7a99f164da2e5d227f18ffa64ddd722977dfe981e3663fe83e527875a4ebb",
+      "tests/test_review.py": "fa2e9f322ce8f7e242daa294aed2e1d756040dbf3ee1ecff9b9b939db3baef0e",
+      "tests/test_revision.py": "74470bf2d155bd30ffa44dc9daa5d6de0f32c13dde80069cc325f1edaa7d86ff",
       "uv.lock": "2c88973f582d7e722ec8059ff2ff84bc2cf6930961d893f2c16c491ca706f090"
     },
     "scope": "Fresh uv install; tests before preparation; clean generated state; complete development pipeline. Prior final evaluation is not reopened."
+  },
+  "official_download": {
+    "checked_at": "2026-11-02T16:48:52.849920+00:00",
+    "python": "3.14.7",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "elapsed_seconds": 7.29,
+    "access": "actual download from configured official URL; no preexisting archive or CSVs",
+    "manifest": {
+      "url": "https://archive.ics.uci.edu/static/public/349/open%2Buniversity%2Blearning%2Banalytics%2Bdataset.zip",
+      "sha256": "f2ed1902616c1fe8d2824d872c0b7d2d72be435bf0124d077044fe4be2c6d3e4",
+      "license": "CC BY 4.0",
+      "citation": "Kuzilek, Hlosta, Zdrahal (2015), doi:10.24432/C5KK69"
+    },
+    "raw_csv_sha256": {
+      "assessments.csv": "9ce92381e4a0ac457f8e251b2eb2c179ed51e023ab30d1d671a0268bd62316ba",
+      "courses.csv": "4f16eee7454b15e109b0a21a0e43be820e6846ed6f9301bb7feb5ab5ad737a75",
+      "studentAssessment.csv": "b1839e17618a5de36b6d189a242d3123f7939a56c8c9ccef0c17b9199c614a6b",
+      "studentInfo.csv": "815fbc3e2de29f79900bc63f0345a35db62c9146afaa1d86e7107b8b3beffc60",
+      "studentRegistration.csv": "bbc87a0de1fe2a9ec6decce1ca6c1a02cf17b54ad3bdcc673fc6413b41c61d47",
+      "studentVle.csv": "52668253d876c5becbcb72185977152700cecab2942aca807fecc3dd54b937f0",
+      "vle.csv": "d7a146497edd0e47ef536144b58796c07b554002d3753e848b8e4cd8a56f4c38"
+    },
+    "download_source_sha256": "38ab2eca9058f178af5e6fd502d8b61ac5ee36c4a07311742f358e978eb8cb5c"
   },
   "scope": "Complete Linux x86 development pipeline and clean-checkout tests verified. No LMS upload claimed.",
   "packages": [
     {
       "file": "Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-02_Main_Code.zip",
-      "bytes": 148717,
-      "sha256": "89066e855eaf6a56ee91bb79e26582246176a487e4ac9468692dd057b6ec2d3b",
-      "markdown_words": 2986
+      "bytes": 163119,
+      "sha256": "d6d9f779f2df4496ee27743be21997c745ce2620cfd7c2492b3aba42077fc692",
+      "markdown_words": 2980
     },
     {
       "file": "Mouza_Aldarmaki_MAAI7101_Intermediate_2026-11-02_Full.zip",
-      "bytes": 47770795,
-      "sha256": "fcfa0f1b422be66c36893a9a34359666e2fa57d59d05db299745207bb714b0d5",
-      "markdown_words": 2986
+      "bytes": 47823805,
+      "sha256": "24436b6c68411d6e42a38277b9bf727f6598d00223b168aa3cab28cc74a3de1d",
+      "markdown_words": 2980
     }
   ]
 }

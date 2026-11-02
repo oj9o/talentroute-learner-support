@@ -33,13 +33,19 @@
     "development_coverage.csv",
     "validation_challenge_segments.csv",
     "revision/same_quota_layers.csv",
-    "revision/warning_outcome_profiles.csv",
+    "revision/policy_warning_profiles.csv",
+    "revision/model_segments.csv",
+    "revision/layer_segments.csv",
     "revision/model_comparison.csv",
     "validation_seed_stability.csv"
   ],
   "commitment_status": {
     "layer_escape": "executed at equal quota; round-robin underperforms",
-    "warning_profiles": "executed descriptive profiles, not causal resilience or trajectories",
-    "module_specialists": "executed with train-only eligibility and global fallback"
-  }
+    "warning_profiles": "executed for current reference, detector and blend; not causal resilience",
+    "module_specialists": "executed per-module AP and shared-budget coverage with train-only eligibility and fallback"
+  },
+  "current_policy_warning_success_n": 384,
+  "if_policy_warning_success_n": 679,
+  "ggg_round_robin_reached": 178,
+  "ggg_hybrid_ap": 0.5599432035738521
 }

@@ -1,0 +1,13 @@
+split,retention,target,n
+train,purged,Fail,179
+train,purged,Success,726
+train,purged,Withdrawn,480
+train,retained,Fail,3049
+train,retained,Success,5840
+train,retained,Withdrawn,1523
+validation,purged,Fail,23
+validation,purged,Success,297
+validation,purged,Withdrawn,254
+validation,retained,Fail,1806
+validation,retained,Success,3060
+validation,retained,Withdrawn,1068

@@ -69,8 +69,13 @@ function renderResearch(){
  const ref=DATA.policies.find(r=>r.policy==='classifier_only').adverse_coverage;
  const mixed=DATA.layers.filter(r=>r.classifier_first_share<1).map(r=>r.adverse_coverage);
  $('layerFinding').textContent=`Tested mixed-quota pooled coverage: ${pct(Math.min(...mixed))}–${pct(Math.max(...mixed))}; classifier-only ${pct(ref)}. These results concern these quota designs, not layered detection generally.`;
- const scores=DATA.profiles.filter(r=>r.flagged&&r.feature==='score_mean');
- $('profileSummary').innerHTML=table(['Outcome','Observed scores','Median score'],scores.map(r=>[r.outcome,`${r.observed_n} / ${r.n}`,Number(r.median).toFixed(1)]),'Early scores within historical flagged groups');
+ const scores=DATA.profiles.filter(r=>r.policy===$('profilePolicy').value&&r.flagged&&r.feature==='score_mean');
+ $('profileSummary').innerHTML=table(['Later outcome','Scored / flagged','Median observed score'],scores.map(r=>[r.outcome,`${r.observed_n} / ${r.n}`,Number(r.median).toFixed(1)]),'Observed early scores within the selected policy warning set');
+ const layerGGG=DATA.layerSegments.find(r=>r.group==='GGG'&&r.policy==='four_layer_round_robin');
+ $('layerCourseFinding').textContent=`The fixed round-robin reaches ${integer(layerGGG.adverse_coverage*layerGGG.adverse_n)} of ${integer(layerGGG.adverse_n)} adverse GGG cases, despite lower overall coverage. This is a redistribution trade-off, not a recommendation to switch policy.`;
+ const byCourse=DATA.specialistSegments.filter(r=>r.segment==='code_module');
+ const courses=[...new Set(byCourse.map(r=>r.group))];
+ $('specialistCourses').innerHTML=table(['Course','Adverse cases','Global logistic AP','Module hybrid AP','Boosting AP','Hybrid cases reached'],courses.map(module=>{const get=model=>byCourse.find(r=>r.group===module&&r.model===model);const h=get('module_logistic_hybrid');return [module,h.adverse_n,get('logistic').adverse_pr_auc.toFixed(3),h.adverse_pr_auc.toFixed(3),get('hgb_15_10').adverse_pr_auc.toFixed(3),`${integer(h.adverse_n*h.adverse_coverage)} / ${integer(h.adverse_n)}`];}),'Course metrics; actions share the original cohort budget, not a separate quota per course');
  const specialist=DATA.models.find(r=>r.model==='module_logistic_hybrid'),global=DATA.models.find(r=>r.model==='logistic');
  $('specialistSummary').textContent=`Pooled PR-AUC: global logistic ${global.adverse_pr_auc.toFixed(4)}, module hybrid ${specialist.adverse_pr_auc.toFixed(4)}. Best flexible global ensemble ${Math.max(...DATA.models.filter(r=>['forest','hgb_15_10'].includes(r.model)).map(r=>r.adverse_pr_auc)).toFixed(4)}. These are exploratory validation comparisons.`;
  const grouped={};DATA.jaccard.forEach(r=>(grouped[r.layer_a+' / '+r.layer_b]??=[]).push(r.jaccard));
@@ -94,6 +99,7 @@ document.querySelectorAll('[data-outcome]').forEach(b=>b.onclick=()=>{outcome=b.
 document.querySelectorAll('[data-budget]').forEach(b=>b.onclick=()=>{budget=Number(b.dataset.budget);document.querySelectorAll('[data-budget]').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b));});renderDecision();});
 document.querySelectorAll('[data-source]').forEach(b=>b.onclick=()=>{opener=b;const [file,explanation]=sources[b.dataset.source];$('evidenceBody').innerHTML=`<p class="source-name">outputs/${esc(file)}</p><p>${esc(explanation)}</p><p class="muted">Development evidence. Separate final evaluation already recorded; no final-test tuning in these investigations.</p>`;$('evidence').showModal();});
 $('closeEvidence').onclick=()=>$('evidence').close();$('evidence').addEventListener('close',()=>opener?.focus());
+$('profilePolicy').onchange=renderResearch;
 $('share').onchange=renderLayers;$('multiplier').onchange=renderScenario;$('alertCap').onchange=renderScenario;
 document.querySelectorAll('[data-outcome]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.outcome===outcome)));
 document.querySelectorAll('[data-budget]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.budget)===budget)));

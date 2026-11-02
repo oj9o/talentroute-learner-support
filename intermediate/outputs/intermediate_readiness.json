@@ -1,19 +1,20 @@
 {
   "scope": "Artifact and consistency checks, not a grading or deployment certificate",
-  "combined_markdown_words": 2986,
+  "combined_markdown_words": 2980,
   "word_counts": {
-    "README.md": 278,
+    "README.md": 297,
     "docs/data_dictionary.md": 438,
-    "docs/baseline_report.md": 962,
-    "docs/project_definition.md": 889,
+    "docs/baseline_report.md": 1085,
+    "docs/project_definition.md": 710,
     "docs/development_findings.md": 26,
     "docs/system_diagram.md": 102,
     "docs/EXPERIMENT_REGISTER.md": 157,
     "evidence/interpretation-linux-2026-11-02/README.md": 55,
     "evidence/full-linux-2026-11-02/README.md": 37,
-    "evidence/platform-validation-2026-10-31/README.md": 42
+    "evidence/platform-validation-2026-10-31/README.md": 42,
+    "evidence/rigorous-linux-2026-11-02/README.md": 31
   },
-  "required_files_checked": 19,
+  "required_files_checked": 24,
   "eda_figures": 10,
   "interface_links_resolve": true,
   "new_diagnostics_test_rows": 0,

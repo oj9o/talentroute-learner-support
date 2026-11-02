@@ -1,6 +1,7 @@
 module,training_n,eligible,validation_n,specialist_used
 AAA,338,False,0,False
 BBB,3259,True,1266,True
+CCC,0,False,1355,False
 DDD,2272,True,867,True
 EEE,588,True,485,True
 FFF,3070,True,1174,True

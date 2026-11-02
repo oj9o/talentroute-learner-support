@@ -1,0 +1,11 @@
+{
+  "coverage_difference": 0.041057759220598455,
+  "extra_adverse_cases_flagged": 118,
+  "adverse_cases": 2874,
+  "ci95": [
+    0.022451563458733143,
+    0.05984306662951188
+  ],
+  "bootstrap_repeats": 300,
+  "status": "exploratory validation; fixed fitted models and operating rules; selection not removed"
+}

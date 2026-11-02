@@ -20,7 +20,7 @@ def test_interface_uses_current_model_outputs_and_computed_budgets():
         'budgets':'validation_sensitivity.csv', 'intervals':'revision/forest_minus_hgb_intervals.csv',
         'layers':'revision/layer_quota_sensitivity.csv', 'jaccard':'revision/layer_selected_jaccard.csv',
         'breakEven':'revision/action_break_even.csv', 'ties':'revision/tie_sensitivity.csv',
-        'profiles':'revision/warning_outcome_profiles.csv', 'ladder':'diagnostics/train_validation_metrics.csv',
+        'profiles':'revision/policy_warning_profiles.csv', 'ladder':'diagnostics/train_validation_metrics.csv',
         'shuffled':'diagnostics/shuffled_training_labels.csv', 'permutation':'diagnostics/grouped_permutation.csv',
     }
     for key, source in sources.items():

@@ -90,3 +90,65 @@ def test_full_classifier_share_recovers_same_quota_reference():
     expected=reference[reference.model=='hgb_15_10'].iloc[0]
     assert (r.flagged_n==expected.flagged_n).all()
     np.testing.assert_allclose(r.adverse_coverage,expected.adverse_coverage)
+
+
+def test_profiles_retain_policy_identity_and_missing_score_denominators():
+    from talentroute.revision import warning_profiles
+    n=150
+    frame=pd.DataFrame({'target':np.repeat(['Fail','Success','Withdrawn'],50),
+        'log_clicks':1.,'inactive_days':3.,'engagement_change':0.,
+        'score_mean':np.tile(np.r_[np.full(10,70.),np.full(40,np.nan)],3),
+        'no_early_assessment':0})
+    profiles=warning_profiles(frame,{'reference':np.ones(n),'alternative':np.zeros(n)})
+    score=profiles[profiles.feature=='score_mean']
+    assert set(score.policy)=={'reference','alternative'}
+    assert (score.observed_n==10).all() and (score.n==50).all()
+    np.testing.assert_allclose(score.missing_fraction,.8)
+    assert score[score.policy=='reference'].flagged.all()
+    assert not score[score.policy=='alternative'].flagged.any()
+
+
+def test_segment_results_use_shared_actions_and_guard_rare_classes():
+    from talentroute.revision import segment_results
+    frame=pd.DataFrame({'target':['Fail']*40+['Success']*31+['Withdrawn']*4,
+        'code_module':'AAA','no_early_assessment':0})
+    probability=np.tile([.4,.5,.1],(len(frame),1));actions=np.zeros(len(frame),dtype=int)
+    actions[:3]=2
+    from talentroute.data import config
+    rows=segment_results('fixed',frame,probability,actions,config())
+    module=next(row for row in rows if row['segment']=='code_module')
+    assert module['flagged_n']==3 and module['human_n']==3
+    assert module['withdrawn_positive_n']==4 and not module['withdrawn_stable']
+    assert np.isnan(module['withdrawn_pr_auc'])
+    assert module['adverse_coverage']==3/44
+
+
+def test_hybrid_has_course_metrics_and_unseen_course_uses_global_fallback():
+    from talentroute.data import ROOT
+    import pytest
+    path=ROOT/'outputs/revision/model_segments.csv'
+    if not path.exists():pytest.skip('Run revision before checking course evidence')
+    frame=pd.read_csv(path);subset=frame[frame.segment=='code_module']
+    hybrid=subset[subset.model=='module_logistic_hybrid'].set_index('group')
+    assert not hybrid.empty,'Missing per-course hybrid evidence'
+    global_model=subset[subset.model=='logistic'].set_index('group')
+    assert set(hybrid.index)==set(global_model.index)
+    eligibility=pd.read_csv(ROOT/'outputs/revision/specialist_eligibility.csv').set_index('module')
+    for module,row in eligibility.iterrows():
+        if row.specialist_used:assert row.eligible and row.training_n>=300
+        elif module in hybrid.index:
+            assert hybrid.loc[module,'adverse_pr_auc']==pytest.approx(global_model.loc[module,'adverse_pr_auc'])
+
+
+def test_population_purge_audit_contains_development_only():
+    from talentroute.data import ROOT
+    import pytest
+    path=ROOT/'outputs/purge_population_audit.csv'
+    if not path.exists():pytest.skip('Prepare data before checking population audit')
+    frame=pd.read_csv(path)
+    assert set(frame.split)<= {'train','validation'}
+    assert set(frame.retention)=={'retained','purged'}
+    assert set(frame.target)=={'Success','Fail','Withdrawn'}
+    audit=__import__('json').loads((ROOT/'outputs/data_audit.json').read_text())
+    assert frame.loc[frame.retention=='purged','n'].sum()==audit['purged_earlier_repeat_enrolments']
+    assert frame.loc[frame.retention=='retained','n'].sum()==audit['split_counts']['train']+audit['split_counts']['validation']

@@ -1,0 +1,9 @@
+{
+  "metric": "adverse_coverage_difference",
+  "comparison": "coupled_selected minus classifier_only",
+  "ci95": [
+    -0.006014017581373248,
+    0.01379451756810247
+  ],
+  "caveat": "validation-selected policy; exploratory uncertainty, not independent confirmatory evidence"
+}

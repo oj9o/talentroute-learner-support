@@ -10,7 +10,7 @@ def verify():
     markdown=[ROOT/'README.md',*[p for p in (ROOT/'docs').glob('*.md') if p.name not in excluded],*(ROOT/'evidence').rglob('README.md')]
     counts={str(p.relative_to(ROOT)):len(p.read_text().split()) for p in markdown}
     assert sum(counts.values())<3000,counts
-    required=['pyproject.toml','uv.lock','.python-version','Justfile','docs/project_definition.md','docs/data_dictionary.md','docs/baseline_report.md','review/index.html','review/report.html','review/investigations.html','review/decision_room.html','outputs/validation_model_search.csv','outputs/validation_anomaly_proxy_metrics.csv','outputs/validation_decision_metrics.csv','outputs/validation_primary_intervals.csv','outputs/submission_claim_checks.json','outputs/investigations/manifest.json','outputs/development_evidence.json','outputs/development_segment_tradeoffs.csv']
+    required=['pyproject.toml','uv.lock','.python-version','Justfile','docs/project_definition.md','docs/data_dictionary.md','docs/baseline_report.md','review/index.html','review/report.html','review/investigations.html','review/decision_room.html','outputs/validation_model_search.csv','outputs/validation_anomaly_proxy_metrics.csv','outputs/validation_decision_metrics.csv','outputs/validation_primary_intervals.csv','outputs/submission_claim_checks.json','outputs/investigations/manifest.json','outputs/development_evidence.json','outputs/development_segment_tradeoffs.csv','outputs/revision/policy_warning_profiles.csv','outputs/revision/layer_segments.csv','outputs/revision/model_segments.csv','outputs/eligibility_ambiguity.csv','outputs/purge_population_audit.csv']
     assert all((ROOT/p).is_file() for p in required)
     assert len(list((ROOT/'outputs').glob('*.png')))==10
     missing=[]

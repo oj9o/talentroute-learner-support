@@ -28,7 +28,7 @@ ablation: evaluate
 sensitivity: evaluate
     uv run python -m talentroute data-sensitivity
 
-deep-dives: evaluate
+deep-dives: revision
     uv run python -m talentroute stability
 
 app budget="300":
