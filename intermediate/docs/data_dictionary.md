@@ -21,4 +21,4 @@ Source: official OULAD CSV tables, cited in README. Keys are module, presentatio
 - `region`, `highest_education`, `imd_band`, `age_band`: retained raw metadata, excluded by model predictor allowlist.
 - `last_day`, `final_result`: engineering/audit metadata and source outcome, excluded from model inputs except the explicitly computed inactivity feature.
 
-Types: scores, counts, dates, flags, logs and rates are numeric; course/outcome and categorical audit fields are strings. Exact dtypes: outputs/eda_feature_types.csv. The generated dictionary CSV inventories column roles. Missing values use the source's '?' token. Checksums pin the downloaded archive. Train-only preprocessing prevents using validation/test distribution statistics. Chronological labels do not by themselves prevent duplicate-student leakage, hence the additional ID purge.
+The CSV lists roles, dtypes and transformations, including detector output (not an observed anomaly label). '?' denotes source missingness. Checksums pin data; training-only preprocessing and identity purging prevent leakage.

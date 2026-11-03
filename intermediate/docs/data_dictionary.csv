@@ -1,31 +1,32 @@
-column,role
-code_module,categorical predictor and enrolment key
-code_presentation,partition/key
-id_student,partition/key
-gender,raw/candidate; model allowlist controls access
-region,raw/candidate; model allowlist controls access
-highest_education,raw/candidate; model allowlist controls access
-imd_band,raw/candidate; model allowlist controls access
-age_band,raw/candidate; model allowlist controls access
-num_of_prev_attempts,raw/candidate; model allowlist controls access
-studied_credits,raw/candidate; model allowlist controls access
-disability,raw/candidate; model allowlist controls access
-final_result,label
-date_registration,raw/candidate; model allowlist controls access
-date_unregistration,label
-clicks,raw/candidate; model allowlist controls access
-early_clicks,raw/candidate; model allowlist controls access
-late_clicks,raw/candidate; model allowlist controls access
-last_day,raw/candidate; model allowlist controls access
-inactive_days,raw/candidate; model allowlist controls access
-engagement_change,raw/candidate; model allowlist controls access
-score_mean,raw/candidate; model allowlist controls access
-score_min,raw/candidate; model allowlist controls access
-submitted_count,raw/candidate; model allowlist controls access
-late_rate,raw/candidate; model allowlist controls access
-no_early_assessment,raw/candidate; model allowlist controls access
-log_clicks,raw/candidate; model allowlist controls access
-log_early_clicks,raw/candidate; model allowlist controls access
-log_late_clicks,raw/candidate; model allowlist controls access
-target,label
-split,partition/key
+column,role,type,transformation
+code_module,model input,object,source value; see data_dictionary.md
+code_presentation,key/engineering metadata; excluded from predictors,object,source value; see data_dictionary.md
+id_student,key/engineering metadata; excluded from predictors,int64,source value; see data_dictionary.md
+gender,audit-only; never a model input,object,source value; see data_dictionary.md
+region,excluded from predictors,object,source value; see data_dictionary.md
+highest_education,excluded from predictors,object,source value; see data_dictionary.md
+imd_band,excluded from predictors,object,source value; see data_dictionary.md
+age_band,excluded from predictors,object,source value; see data_dictionary.md
+num_of_prev_attempts,model input,int64,source value; see data_dictionary.md
+studied_credits,model input,int64,source value; see data_dictionary.md
+disability,audit-only; never a model input,object,source value; see data_dictionary.md
+final_result,label; never a predictor,object,source value; see data_dictionary.md
+date_registration,key/engineering metadata; excluded from predictors,float64,source value; see data_dictionary.md
+date_unregistration,key/engineering metadata; excluded from predictors,float64,source value; see data_dictionary.md
+clicks,key/engineering metadata; excluded from predictors,float64,VLE sum_click over days 0 to cutoff
+early_clicks,key/engineering metadata; excluded from predictors,float64,VLE sum_click over days 0 to 14
+late_clicks,key/engineering metadata; excluded from predictors,float64,VLE sum_click over days 15 to cutoff
+last_day,key/engineering metadata; excluded from predictors,float64,source value; see data_dictionary.md
+inactive_days,model input,float64,cutoff minus last VLE day; no activity -> cutoff+1
+engagement_change,model input,float64,log1p late minus log1p early clicks; unequal-duration windows
+score_mean,model input,float64,mean qualifying non-banked/non-exam score by lagged cutoff
+score_min,model input,float64,minimum qualifying non-banked/non-exam score by lagged cutoff
+submitted_count,model input,float64,distinct qualifying early assessment submissions
+late_rate,model input,float64,fraction of qualifying submissions after assessment due date
+no_early_assessment,model input,int64,1 if no qualifying early submission; else 0
+log_clicks,model input,float64,log1p of clicks
+log_early_clicks,model input,float64,log1p of early_clicks
+log_late_clicks,model input,float64,log1p of late_clicks
+target,label; never a predictor,object,Pass/Distinction -> Success; Fail and Withdrawn remain separate
+split,key/engineering metadata; excluded from predictors,object,presentation partition with earlier repeat-student enrolments purged
+engagement_rarity_percentile,detector output; not a source label,numeric,training-reference Isolation Forest engagement-rarity percentile; OULAD has no anomaly label

@@ -130,7 +130,35 @@ def prepare(override=None, write_outputs=True):
     dev.groupby(['split','target']).size().rename('n').to_csv(out/'development_target_counts.csv')
     dev.groupby(['split','code_module']).agg(n=('id_student','size'),no_assessment_rate=('no_early_assessment','mean')).to_csv(out/'development_coverage.csv')
     (out/'data_audit.json').write_text(json.dumps(audit,indent=2), encoding='utf-8')
-    pd.DataFrame({'column':df.columns,'role':['label' if c in ['target','final_result','date_unregistration'] else 'categorical predictor and enrolment key' if c=='code_module' else 'partition/key' if c in KEY+['split'] else 'raw/candidate; model allowlist controls access' for c in df.columns]}).to_csv(ROOT/'docs/data_dictionary.csv',index=False)
+    # Document actual predictor allowlists, without changing prepared data or model inputs.
+    from .models import FEATURES
+    roles = []
+    for c in df.columns:
+        role = ('audit-only; never a model input' if c in {'gender','disability'} else
+                'excluded from predictors' if c in {'region','highest_education','imd_band','age_band'} else
+                'label; never a predictor' if c in {'target','final_result'} else
+                'model input' if c in FEATURES else 'key/engineering metadata; excluded from predictors')
+        roles.append(role)
+    transformations = {
+        'target': 'Pass/Distinction -> Success; Fail and Withdrawn remain separate',
+        'inactive_days': 'cutoff minus last VLE day; no activity -> cutoff+1',
+        'engagement_change': 'log1p late minus log1p early clicks; unequal-duration windows',
+        'no_early_assessment': '1 if no qualifying early submission; else 0',
+        'split': 'presentation partition with earlier repeat-student enrolments purged',
+        'score_mean': 'mean qualifying non-banked/non-exam score by lagged cutoff',
+        'score_min': 'minimum qualifying non-banked/non-exam score by lagged cutoff',
+        'submitted_count': 'distinct qualifying early assessment submissions',
+        'late_rate': 'fraction of qualifying submissions after assessment due date',
+        'clicks': 'VLE sum_click over days 0 to cutoff',
+        'early_clicks': 'VLE sum_click over days 0 to 14',
+        'late_clicks': 'VLE sum_click over days 15 to cutoff',
+    }
+    rows = [{'column': c, 'role': role, 'type': str(df[c].dtype),
+             'transformation': ('log1p of '+c.removeprefix('log_') if c.startswith('log_') else transformations.get(c,'source value; see data_dictionary.md'))}
+            for c, role in zip(df.columns, roles)]
+    rows.append({'column':'engagement_rarity_percentile','role':'detector output; not a source label',
+                 'type':'numeric','transformation':'training-reference Isolation Forest engagement-rarity percentile; OULAD has no anomaly label'})
+    pd.DataFrame(rows).to_csv(ROOT/'docs/data_dictionary.csv',index=False)
     return audit
 
 

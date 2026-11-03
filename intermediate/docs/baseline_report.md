@@ -13,14 +13,14 @@ A separate frozen candidate was already evaluated on 2014J. It is no longer unse
 VLE ends at day 28; non-banked/non-exam submissions end at day 21 under an assumed seven-day score delay. Imputation uses training data only. IDs, demographics and future outcomes are excluded from predictors. Success combines Pass/Distinction; Fail and Withdrawn remain distinct. Among development records, 6 Withdrawn cases lack withdrawal dates, leaving day-28 eligibility uncertain; 3 have submissions but no score. No-submission flags are not missing-score flags. Omitting unknown withdrawal-date cases changes reference validation coverage by 0.02 percentage points with actions fixed (eligibility_ambiguity.csv); this retrospective audit cannot repair unavailable dates.
 
 ## Connected methods
-Classification estimates Success/Fail/Withdrawn probabilities; Isolation Forest supplies an engagement-rarity percentile. A weighted ranking feeds one staff-time policy. Five classifiers are comparisons within one family; classification and outlier detection are the two families.
+Classification estimates Success/Fail/Withdrawn probabilities; Isolation Forest supplies an engagement-rarity percentile. Classifier-only is the provisional reference; blending is an ablation, not an accepted improvement. Five classifiers are comparisons within one family; classification and outlier detection are the two families.
 
-Baselines: logistic classification, inactivity detection, and early-score/inactivity decision rule. First-pass comparisons include constrained tree, forest, histogram boosting and module-logistic specialists with training-only eligibility/global fallback. Settings: logistic C=1; boosting 140 iterations, learning rate .07, leaf/L2 candidates (7,2), (15,2), (15,10); detector 150 trees, max_samples=512; seed 7101. Historical validation search used adverse PR-AUC and blend weights 0/.1/.2/.35/.5. Exact configurations: revision.py.
+Baselines: logistic classification, inactivity detection, and early-score/inactivity decision rule. First-pass comparisons include constrained tree, forest, histogram boosting and module-logistic specialists with training-only eligibility/global fallback. Settings: logistic C=1; tree depth=5/min_leaf=40; forest trees=180/depth=12/min_leaf=15/max_features=sqrt/n_jobs=2; boosting 140 iterations, learning rate .07, leaf/L2 candidates (7,2), (15,2), (15,10); detector 150 trees, max_samples=512; seed 7101. Historical validation search used adverse PR-AUC and blend weights 0/.1/.2/.35/.5. Exact configurations: revision.py.
 
 ## Metrics and results
 Primary ML metric: average precision, reported as PR-AUC, for ranking adverse outcomes. Fail/Withdrawn AP, macro-F1, log loss and Brier assess distinct outcomes and probability quality. Detector AP/precision/coverage are outcome-relevance proxies, not accuracy against verified anomaly labels. Primary decision metric: adverse coverage at fixed effort; precision, missed cases and workload expose trade-offs.
 
-Validation prevalence is 48.43%, the population no-skill AP reference. With 1700 contacts and 2874 adverse cases, perfect ranking could cover at most 59.15%, counting either action equally. This is a targeting ceiling, not achievable prevention.
+Validation prevalence is 48.43%, the population no-skill AP reference. With 1700 hypothetical contacts and 2874 adverse cases, perfect ranking could cover at most 59.15%, counting either action equally. This is a targeting ceiling, not achievable prevention.
 
 Classification, outputs/revision/model_comparison.csv:
 ```csv
@@ -42,6 +42,8 @@ anomaly_only,0.3553,0.4042,0.2725,0.6006,514,1186,17792.0000
 coupled_selected,0.4624,0.4679,0.4532,0.7818,514,1186,17792.0000
 ```
 
+classifier_only is hgb_15_10: coverage 0.4579, AP 0.7472. Forest has AP 0.7478 and coverage 0.4555; best AP need not mean best coverage. Adverse pools Fail/Withdrawn only for evaluation; classifier coverage beats the rule on each separately. Logistic Withdrawn AP 0.2829 remains weaker than Fail AP 0.4870.
+
 Detector proxies, outputs/validation_anomaly_proxy_metrics.csv:
 ```csv
 detector,proxy_adverse_pr_auc,adverse_coverage,flag_precision,missed_adverse_n
@@ -51,9 +53,9 @@ inactivity_rule,0.6300,0.3876,0.6553,1760
 
 Classifier versus rule reaches 127 additional adverse cases: +4.42 percentage points (paired 95% interval 2.57–6.33). It clears the original development comparison, but selection makes this exploratory evidence, not independent confirmation. Source: diagnostics/classifier_minus_rule.json. This run differs from the recorded Linux coverage by up to 0.38 percentage points (outputs/platform_reproduction.csv). Reports regenerate from each run; platform-specific results are not silently substituted.
 
-Isolation Forest loses to inactivity (AP 0.590/0.630). It flags 679 later Success cases versus classifier 384 at identical effort: rarity is not equivalent to adverse-outcome risk. Blending covers 46.24% versus classifier 45.79%; difference interval [-0.0055, 0.0160] crosses zero. Added benefit is unconfirmed. Across seeds, gains range 0.07–0.45 percentage points (validation_seed_stability.csv); do not retune from this diagnostic.
+Isolation Forest loses to inactivity (AP 0.590/0.630). It flags 679 later Success cases versus classifier 384 at identical effort: rarity is not equivalent to adverse-outcome risk. Blending covers 46.24% versus classifier 45.79%; difference interval [-0.0055, 0.0160] crosses zero. The detector go/no-go is not met; classifier-only remains the reference. Pattern Mining is not added. Across seeds, gains range 0.07–0.45 percentage points (validation_seed_stability.csv); do not retune from this diagnostic.
 
-Budget assumptions: 300 minutes/100 learners, 30/review, 2/alert; up to 20% time for alerts, capped at 20% of learners. Both actions count equally. This remains constrained ranking with a fixed action mix, not learned treatment allocation or measured benefit.
+Budget assumptions: 300 minutes/100 learners, 30/review, 2/alert; up to 20% time for alerts, capped at 20% of learners. The learner cap applies to alerts, not all contacts. Reviews and alerts count equally toward coverage. This is hypothetical ranking, not measured treatment benefit; integer rounding can slightly shift the reserved minute share.
 
 ## EDA: observations that affect interpretation
 CCC is absent from training but contributes 22.8% of validation: test unseen-course robustness rather than assume course-specific learning transfers. FFF's no-submission rate shifts from 14.7% to 70.2%; GGG's validation rate is 99.4%. Missingness can reflect assessment schedules, not disengagement. Overall 47.0% lack early scores. Keep missingness explicit and audit course/period slices.

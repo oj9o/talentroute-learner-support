@@ -2,17 +2,17 @@
 
 ```mermaid
 flowchart LR
-  A[Official OULAD CSVs] --> B[Eligibility and day-28 cutoff]
-  B --> C[ID-disjoint temporal partitions]
-  C --> D[Training-only preprocessing]
-  D --> E[Three-outcome classifier]
-  D --> F[Engagement outlier detector]
-  E --> G[Validation-selected score blend]
-  F --> G
-  G --> H[Staff-time constrained triage]
-  H --> I[No action / alert / human review]
-  I --> J[Held-out outcome coverage and workload]
-  J --> K[Ablation, uncertainty, frontier, challenges]
+  A[OULAD: eligibility and day-28 cutoff] --> B[ID-disjoint temporal partitions]
+  B --> C[Training-only preprocessing]
+  C --> D[Three-outcome classifier]
+  C --> E[Engagement outlier detector]
+  D --> F[Classifier-only provisional reference]
+  D --> G[Blend: equal-effort ablation only]
+  E --> G
+  F --> H[Staff-minute triage: review / alert / no action]
+  G --> I[Compare actual later outcome labels and workload]
+  H --> I
+  I --> J[Ablation, intervals, budget sensitivity, warning profiles, course segments]
 ```
 
-Validation selects models/settings. The recorded final candidate was frozen before test scoring; new development investigations do not reuse final-test outcomes for selection. The diagram describes risk targeting, not a causal chain of prevented failures.
+The detector's incremental-benefit gate is not met. No treatment effect is established. Validation selection is exploratory; 2014J was already observed for a separate frozen candidate and is not rescored here.
