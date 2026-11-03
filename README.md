@@ -11,7 +11,7 @@ The current deliverable is in [`intermediate/`](intermediate/README.md). It comb
 - [Data dictionary](intermediate/docs/data_dictionary.md)
 - [Submission packages and verification](submission/README.md)
 
-Use the packages named **Intermediate_2026-11-03** for this submission. The Full ZIP includes public data, aggregate results, the report and offline interactive pages. The Main_Code ZIP supplies source/configuration/documentation for audit; download data and regenerate outputs before viewing the artifact.
+Use the packages named **Intermediate_2026-11-03_Reviewed** for this submission. The Full ZIP includes public data, aggregate results, the report and offline interactive pages. The Main_Code ZIP supplies source/configuration/documentation for audit; download data and regenerate outputs before viewing the artifact.
 
 ```sh
 cd intermediate
