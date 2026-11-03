@@ -30,6 +30,7 @@ def allocate(risk, anomaly, cfg, weight=0., uncertainty=None):
     return actions
 
 def metrics(y, actions, cfg):
+    """Return targeting, precision and effort metrics for real outcomes and fixed actions."""
     y=np.asarray(y); actions=np.asarray(actions); bad=y!='Success'; flagged=actions>0; human=actions==2
     result={'n':len(y),'flagged_n':int(flagged.sum()),'human_n':int(human.sum()),'alert_n':int((actions==1).sum()),'adverse_coverage':float(flagged[bad].mean()) if bad.any() else np.nan,'human_precision':float(bad[human].mean()) if human.any() else np.nan,'flag_precision':float(bad[flagged].mean()) if flagged.any() else np.nan,'missed_adverse_n':int((bad&~flagged).sum()),'staff_minutes':float(human.sum()*cfg['human_minutes']+(actions==1).sum()*cfg['alert_minutes'])}
     for label in ['Fail','Withdrawn']:

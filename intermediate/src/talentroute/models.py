@@ -20,10 +20,12 @@ CAT=['code_module']
 FEATURES=NUM+ENG+CAT
 
 def preprocessing(columns):
+    """Build train-fitted numeric imputation/scaling and unknown-safe module encoding."""
     return ColumnTransformer([('numeric',Pipeline([('impute',SimpleImputer(strategy='median',add_indicator=True)),('scale',StandardScaler())]),columns),('module',OneHotEncoder(handle_unknown='ignore',sparse_output=False),CAT)])
 
 def classifier(kind, seed):
     # Comparable supervised baselines can use all valid signals; no deliberately weak strawman.
+    """Return an unfitted logistic or named boosting pipeline using the supplied seed."""
     if kind=='logistic': model=LogisticRegression(C=1.,max_iter=1500,random_state=seed)
     else:
         leaf,l2=kind.split('_')[1:]
@@ -31,10 +33,12 @@ def classifier(kind, seed):
     return Pipeline([('preprocess',preprocessing(NUM+ENG)),('model',model)])
 
 def risk_from(model,frame):
+    """Return adverse-risk scores and class-ordered probabilities for the given rows."""
     p=model.predict_proba(frame[FEATURES]); classes=list(model.classes_)
     return 1-p[:,classes.index('Success')],p
 
 def model_metrics(y,p,classes):
+    """Return discrimination and probability metrics using the stated class-column order."""
     y=np.asarray(y); labels=list(classes)
     result={'macro_f1':f1_score(y,np.array(labels)[p.argmax(1)],average='macro'),'log_loss':log_loss(y,p,labels=labels),'adverse_pr_auc':average_precision_score(y!='Success',1-p[:,labels.index('Success')])}
     for name in ['Fail','Withdrawn']: result[name.lower()+'_pr_auc']=average_precision_score(y==name,p[:,labels.index(name)])
@@ -42,6 +46,7 @@ def model_metrics(y,p,classes):
     return result
 
 def fit_development():
+    """Fit fixed training candidates, select on validation and save the development bundle."""
     cfg=config();df=pd.read_csv(ROOT/'data/processed/enrolments.csv');train=df[df.split=='train'];val=df[df.split=='validation']; out=ROOT/'outputs'
     records=[];models={}
     for kind in ['logistic','hgb_7_2','hgb_15_2','hgb_15_10']:
@@ -68,6 +73,7 @@ def fit_development():
     return records
 
 def predictions(bundle,frame):
+    """Return row-aligned validation scores and probabilities from a fitted model bundle."""
     rows=frame[['id_student','code_module','gender','disability','no_early_assessment','target']].copy()
     for kind,model in bundle['models'].items(): rows[kind],_=risk_from(model,frame)
     rows['risk'],p=risk_from(bundle['models'][bundle['selected_model']],frame)

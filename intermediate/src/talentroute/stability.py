@@ -9,6 +9,7 @@ from .models import preprocessing,ENG,CAT,predictions
 from .decision import allocate,metrics
 
 def stability():
+    """Save detector-seed sensitivity with the validation cohort and classifier fixed."""
     cfg=config();df=pd.read_csv(ROOT/'data/processed/enrolments.csv');train=df[df.split=='train'];val=df[df.split=='validation'].reset_index(drop=True)
     b=joblib.load(ROOT/'outputs/development_models.joblib');pred,_=predictions(b,val);rows=[]
     for seed in [7101,7102,7103]:

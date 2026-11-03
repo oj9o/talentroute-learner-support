@@ -2,6 +2,7 @@ import argparse,json
 from .data import download,prepare
 
 def main():
+    """Parse the command and optional budget, then run its development workflow."""
     p=argparse.ArgumentParser();p.add_argument('command',choices=['download','prepare','fit','evaluate','eda','report','stability','demo','data-sensitivity','revision','diagnostics']);p.add_argument('--budget',type=float,default=300);args=p.parse_args()
     if args.command=='download': print(download())
     elif args.command=='prepare': print(json.dumps(prepare(),indent=2))

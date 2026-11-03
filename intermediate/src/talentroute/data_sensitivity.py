@@ -11,6 +11,7 @@ from .models import classifier,FEATURES,risk_from
 from .decision import allocate,metrics
 
 def data_sensitivity():
+    """Save development-only comparisons under fixed cutoff and score-delay scenarios."""
     cfg=config();sel=json.loads((ROOT/'outputs/development_selection.json').read_text(encoding='utf-8'));rows=[]
     for cutoff,delay in [(21,7),(28,0),(28,7),(28,14),(35,7)]:
         scenario={**cfg,'cutoff_day':cutoff,'score_delay_days':delay}

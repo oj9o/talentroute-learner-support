@@ -12,6 +12,7 @@ def seeded_order(scores, seed):
 
 
 def shuffled_allocate(scores, cfg, seed):
+    """Break score ties with a fixed row permutation and restore original action order."""
     permutation = np.random.default_rng(seed).permutation(len(scores))
     result = np.empty(len(scores), dtype=int)
     result[permutation] = allocate(np.asarray(scores)[permutation], np.asarray(scores)[permutation], cfg)
@@ -19,6 +20,7 @@ def shuffled_allocate(scores, cfg, seed):
 
 
 def robust_checks(train, val, probabilities, cfg, out):
+    """Save fixed action-mix, tie and equal-quota layer checks using development outcomes."""
     risk_hgb = 1-probabilities['hgb_15_10'][:, 1]
     bad = (val.target.to_numpy() != 'Success')
     y = val.target.to_numpy()

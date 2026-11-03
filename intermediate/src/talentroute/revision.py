@@ -12,6 +12,7 @@ from .decision import allocate, metrics
 
 
 def candidate(name, seed):
+    """Return an unfitted fixed tree, forest or supervised baseline pipeline."""
     if name == 'tree':
         estimator = DecisionTreeClassifier(max_depth=5, min_samples_leaf=40, random_state=seed)
     elif name == 'forest':
@@ -66,6 +67,7 @@ def warning_profiles(frame, actions_by_policy):
 
 
 def revision():
+    """Save fixed development comparisons and three commitment audits; never score test."""
     cfg = config()
     frame = pd.read_csv(ROOT / 'data/processed/enrolments.csv')
     # Filter first; no reserved test prediction, summary or outcome metric is produced.

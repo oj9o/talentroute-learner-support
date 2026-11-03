@@ -5,6 +5,7 @@ from .data import ROOT, config
 
 
 def report():
+    """Generate concise interpretations and provenance from saved development evidence."""
     out=ROOT/'outputs';cfg=config()
     def read(name): return pd.read_csv(out/name)
     def block(frame): return '```csv\n'+frame.to_csv(index=False,float_format='%.4f').strip()+'\n```\n'

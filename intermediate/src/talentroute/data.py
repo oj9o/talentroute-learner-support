@@ -8,9 +8,11 @@ ROOT = Path(__file__).resolve().parents[2]
 KEY = ['code_module', 'code_presentation', 'id_student']
 
 def config():
+    """Load the policy and data-source settings as a dictionary."""
     return json.loads((ROOT/'configs/policy.json').read_text(encoding='utf-8'))
 
 def file_sha256(path):
+    """Return the hexadecimal SHA-256 of a file without loading it all into memory."""
     checksum=hashlib.sha256()
     with Path(path).open('rb') as stream:
         while chunk:=stream.read(1024*1024):checksum.update(chunk)
@@ -30,6 +32,7 @@ def download_archive(url, target, expected_sha256):
         partial.unlink(missing_ok=True)
 
 def download():
+    """Verify bundled CSVs or fetch the pinned public archive; return its manifest path."""
     cfg=config(); raw=ROOT/'data/raw'
     supplied=cfg.get('raw_csv_sha256',{})
     if supplied and all((raw/name).is_file() for name in supplied):

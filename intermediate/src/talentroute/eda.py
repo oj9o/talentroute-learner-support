@@ -11,6 +11,7 @@ import pandas as pd
 from .data import ROOT
 
 def eda():
+    """Read prepared development rows and save labelled overview tables and figures."""
     out=ROOT/'outputs';df=pd.read_csv(ROOT/'data/processed/enrolments.csv');df=df[df.split!='test'];sns.set_theme(style='whitegrid')
     # Development-only overview; no identifiers or reserved-test samples exported.
     df.dtypes.astype(str).rename('dtype').to_csv(out/'eda_feature_types.csv')

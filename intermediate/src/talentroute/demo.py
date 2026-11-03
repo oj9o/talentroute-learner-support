@@ -5,6 +5,7 @@ from .data import ROOT,config
 from .decision import allocate
 
 def demo(budget):
+    """For a chosen budget, print workload and save an identifier-free review worklist."""
     cfg={**config(),'staff_minutes_per_100':budget};df=pd.read_csv(ROOT/'outputs/validation_predictions.csv')
     a=allocate(df.risk,df.anomaly,cfg,0.)
     print(json.dumps({'policy':'classifier_only_provisional_reference','scenario':'Validation cohort; workload illustration, not prevented failures','staff_minutes_per_100':budget,'cohort_size':len(df),'human_reviews':int((a==2).sum()),'alerts':int((a==1).sum()),'no_action':int((a==0).sum()),'total_effort_minutes':int((a==2).sum()*cfg['human_minutes']+(a==1).sum()*cfg['alert_minutes'])},indent=2))

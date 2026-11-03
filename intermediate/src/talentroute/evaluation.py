@@ -10,6 +10,7 @@ from .models import predictions,model_metrics
 
 
 def policy_actions(pred,cfg,weight):
+    """Return each fixed policy action vector for validation scores and workload settings."""
     return {'business_rule':allocate(pred.rule,pred.rule,cfg),'logistic':allocate(pred.logistic,pred.anomaly,cfg),'classifier_only':allocate(pred.risk,pred.anomaly,cfg),'anomaly_rule':allocate(pred.simple_anomaly,pred.simple_anomaly,cfg),'anomaly_only':allocate(pred.anomaly,pred.anomaly,cfg),'coupled_selected':allocate(pred.risk,pred.anomaly,cfg,weight),'coupled_fixed_020':allocate(pred.risk,pred.anomaly,cfg,.2)}
 
 def cluster_interval(pred,a,b,repeats,seed):
@@ -24,6 +25,7 @@ def cluster_interval(pred,a,b,repeats,seed):
     return np.quantile(vals,[.025,.975]).tolist()
 
 def evaluate_development():
+    """Score saved development models and policies; write metrics, intervals and diagnostics."""
     cfg=config();out=ROOT/'outputs';bundle=joblib.load(out/'development_models.joblib');df=pd.read_csv(ROOT/'data/processed/enrolments.csv');val=df[df.split=='validation'].reset_index(drop=True)
     pred,p=predictions(bundle,val);acts=policy_actions(pred,cfg,bundle['chosen_weight'])
     pd.DataFrame([{'policy':name,**metrics(pred.target,a,cfg)} for name,a in acts.items()]).to_csv(out/'validation_decision_metrics.csv',index=False)

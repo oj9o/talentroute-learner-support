@@ -12,6 +12,7 @@ from .evaluation import cluster_interval
 
 
 def diagnostics():
+    """Save development fit gaps, negative controls and reliance checks; never score test."""
     cfg=config();out=ROOT/'outputs';dest=out/'diagnostics';dest.mkdir(parents=True,exist_ok=True)
     frame=pd.read_csv(ROOT/'data/processed/enrolments.csv')
     dev=frame[frame.split.isin(['train','validation'])].copy();del frame

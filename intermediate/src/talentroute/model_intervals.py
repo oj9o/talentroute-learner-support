@@ -5,6 +5,7 @@ from sklearn.metrics import average_precision_score
 
 
 def paired_intervals(y, student_ids, first, second, repeats=300, seed=7101):
+    """Return second-minus-first AP intervals from paired student-cluster resamples."""
     y=np.asarray(y);ids=np.asarray(student_ids)
     unique,inverse=np.unique(ids,return_inverse=True)
     rng=np.random.default_rng(seed);rows=[]

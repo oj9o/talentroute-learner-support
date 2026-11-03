@@ -1,0 +1,143 @@
+{
+  "scope": "Only top-level function docstrings added; AST equality excludes docstrings and location attributes. No executable statements, model configuration or data logic changed.",
+  "files": [
+    {
+      "file": "src/talentroute/__main__.py",
+      "added_functions": [
+        "main"
+      ],
+      "before_sha256": "df38fef4b5d06f77d550ae45806bb69695d82a62fe131ebd30fabd598dbc83ad",
+      "after_sha256": "9105bf95b4c4e5246f09722f3e07078d542615f6e8c0a2127fbd7f5d64ecc622",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/data.py",
+      "added_functions": [
+        "config",
+        "file_sha256",
+        "download"
+      ],
+      "before_sha256": "38ab2eca9058f178af5e6fd502d8b61ac5ee36c4a07311742f358e978eb8cb5c",
+      "after_sha256": "fafc7e9a1cdafb6e08fcc5cd4e691c69d71755da32f1a9439c20ea387e9d54bb",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/data_sensitivity.py",
+      "added_functions": [
+        "data_sensitivity"
+      ],
+      "before_sha256": "a52e8315427cb00cebca1031ef6e9d65e20c8bdca8c8056327b9309d7401fef9",
+      "after_sha256": "7a8f2efb6002e329e3ad4a056a2510d76f9d58302cae86dc5a5dbf8b20d3b46f",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/decision.py",
+      "added_functions": [
+        "metrics"
+      ],
+      "before_sha256": "fa2f62b762cc7f8ec33e1551a776af760a4d5082bd5aa0044bd27702815cf276",
+      "after_sha256": "c134e03bbdd0ea8683736e829710dc73c2bc94c2b18361026974f7d3ac5ff4f4",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/demo.py",
+      "added_functions": [
+        "demo"
+      ],
+      "before_sha256": "b2233f149cb0c6e88ba411d4b8db818e270a229e7a86cccbd5a4dd67a8e5bdcd",
+      "after_sha256": "9b0a63a42eb03dda423d5d8db627913840d24cef5456269462dcfe2d5a866b1a",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/diagnostics.py",
+      "added_functions": [
+        "diagnostics"
+      ],
+      "before_sha256": "b4f80ba4cebb03beadf8d8a777611e2474ffc62ce35d7095e97b3a9e282b9c70",
+      "after_sha256": "c9324062d11996083186d9e38af929e59bed03e3bbc96f4702d11e97eb643bff",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/eda.py",
+      "added_functions": [
+        "eda"
+      ],
+      "before_sha256": "05717f5c46f8099119a4b83b33eb599255b500471e6e72eff0d242a38098e385",
+      "after_sha256": "66f9b11d61f9c49ae1206c85eddebf6a3b5e1081afbedce1a2abda0e566228e1",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/evaluation.py",
+      "added_functions": [
+        "policy_actions",
+        "evaluate_development"
+      ],
+      "before_sha256": "21dbf13851c1aedf102145fd9b27571d24204f7ff11b389de146808c1fc8bed2",
+      "after_sha256": "2e9fb726c633c591288470c51533883853e0fbce5789dd2b40ac55e1d5696c84",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/model_intervals.py",
+      "added_functions": [
+        "paired_intervals"
+      ],
+      "before_sha256": "db4a5c02c73d60e8612fc37ad106ff28f9e230f3368c899c7c786fd306e771c0",
+      "after_sha256": "e77c40321455a7c51a53d3f356d5bc0f396a1600dc452925799c46870b3395e9",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/models.py",
+      "added_functions": [
+        "preprocessing",
+        "classifier",
+        "risk_from",
+        "model_metrics",
+        "fit_development",
+        "predictions"
+      ],
+      "before_sha256": "bfd8b456230fe7bf980588e9c26ed1b05be38af97faa24548871055165934c94",
+      "after_sha256": "a52ba7659dc19e003d2d2c47b14ba0ea6d755a582a1e7bdfc79d7941db738926",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/report.py",
+      "added_functions": [
+        "report"
+      ],
+      "before_sha256": "866a08f2fe9fa926b3bf153be111c3e0f35e94b28be7ce8727025c904036011f",
+      "after_sha256": "128ba31ef09a5b2e776678e1b0b299041869297b07b09e2aefebaf3cb1be8904",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/revision.py",
+      "added_functions": [
+        "candidate",
+        "revision"
+      ],
+      "before_sha256": "621bb0c13885f1e3a5ec4c4d8089bd71fb9f23fed5068af8bf0f21e6222934b2",
+      "after_sha256": "4864007bc72940253fe2ce68855d4406a3b420661e426b9802a6dc8d44d8b847",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/revision_checks.py",
+      "added_functions": [
+        "shuffled_allocate",
+        "robust_checks"
+      ],
+      "before_sha256": "b33c7a33e66041b9b6b4c3037e7923c9fd3d0fc05cc68b5f2ad0e5fdc797de9f",
+      "after_sha256": "4faa4780149f95fc444c6b8d157a3b4f71cc35f3707080ad5e7b5bb3fd43ab24",
+      "ast_equal_after_stripping_docstrings": true
+    },
+    {
+      "file": "src/talentroute/stability.py",
+      "added_functions": [
+        "stability"
+      ],
+      "before_sha256": "5ea31f0afee0a8680f0731ea0ad1676710f09b54891b235fb6d42fa9e7d6df20",
+      "after_sha256": "19c4165b52ff0d014f694e1b2229c3a255f999a9ad126027237b8e13a4acdd92",
+      "ast_equal_after_stripping_docstrings": true
+    }
+  ],
+  "functions_documented": 24,
+  "all_ast_equal": true
+}
