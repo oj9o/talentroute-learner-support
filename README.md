@@ -2,6 +2,12 @@
 
 Mouza Al Darmaki · MAAI7101
 
+## Interface preview
+
+![TalentRoute dashboard showing the day-28 learner-support question and the connected analysis workflow](assets/screenshots/talentroute-dashboard.png)
+
+The offline dashboard introduces the decision, links to the evidence report, and opens the interactive decision room. The screenshot is from the reviewed Intermediate submission.
+
 ## Current Intermediate submission
 
 The current deliverable is in [`intermediate/`](intermediate/README.md). It combines learner-outcome classification and engagement outlier detection in a staff-time-constrained support queue, evaluated on real OULAD outcomes.
