@@ -1,3 +1,9 @@
+# Final protocol and experiment history
+
+The final system is assessment-free. Candidate selection uses three learner-grouped folds within 2013B; preprocessing is refitted inside every fold. Model selection does not use 2014B labels. The grid reflects earlier project work, and 2014B has previously been examined, so evaluation is retrospective. The app defaults to this model. All `final_*.csv` analyses use it, including the specialists, route ablations, five sensitivity sweeps and seed checks. The policy is unchanged; no new sweep winner is adopted. The earlier procedure below is retained as a labeled experiment history, not the current selection procedure.
+
+## Historical development procedure (superseded for final recommendation)
+
 # Development revision after Intermediate feedback
 
 This revision builds on TalentRoute's submitted data processing, three-class
@@ -81,7 +87,7 @@ unnecessary scaling from tree-based classifiers and check again; retain an
 explicit platform-stability result if differences remain. This is a numerical
 robustness change, not a search for a higher validation score.
 
-The initial design was written before these development fits, but was not committed as a public preregistration. It must not be described as one. The original routing reference was hgb_15_10. The follow-up selection now supplies the model used by all main route, subgroup, sensitivity and deeper analyses; hgb_15_10 remains a comparator. The detector is fitted on numeric engagement features. Boosting uses explicitly disabled early stopping and imputation without unnecessary scaling; empty numeric columns are retained by the imputer. Course specialists are an exploratory execution of the existing commitment.
+The initial design was written before these development fits, but was not committed as a public preregistration. It must not be described as one. The original routing reference was hgb_15_10. The historical follow-up selection supplied the model used by the earlier unprefixed route, subgroup, sensitivity and deeper analyses; hgb_15_10 remains a comparator. The detector is fitted on numeric engagement features. Boosting uses explicitly disabled early stopping and imputation without unnecessary scaling; empty numeric columns are retained by the imputer. Course specialists are an exploratory execution of the existing commitment.
 
 The identity-disjoint companion is an evaluation design using evaluation identity membership. The operational companion is the deployment-relevant population comparison. Earlier registration must be known by the earliest possible decision date; unknown registration dates do not establish history. Evaluation is on enrolments, not unique people. Student-cluster resampling accounts for repeated identities in intervals, but contact costs remain per case, so operational outreach requires coordination.
 
