@@ -47,7 +47,7 @@ def test_extrapolation_warns_and_anomaly_reference_is_sorted():
     assert np.all(np.diff(bundle['reference']) >= 0)
     inputs = case_inputs(0)
     inputs.update(submitted_count=100, score_mean=50, score_min=40, late_rate=.5)
-    result = predict_case({'inputs': inputs})
+    result = predict_case({'model': 'logistic', 'inputs': inputs})
     assert any('submitted_count: outside' in message for message in result['warnings'])
 
 

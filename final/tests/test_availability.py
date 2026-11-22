@@ -36,3 +36,28 @@ def test_selection_rejects_evaluation_rows_before_fitting():
     frame = pd.DataFrame({'code_presentation': ['2013B', '2014B']})
     with pytest.raises(ValueError, match='2013B training records only'):
         select_on_training(frame, SAFE_NUM, {})
+
+
+def test_default_app_and_final_outputs_use_identical_model_and_policy():
+    from talentroute.data import ROOT
+    from talentroute.app import selected_model
+    assert selected_model() == 'assessment_free'
+    outputs = pd.read_csv(ROOT / 'outputs/final_comparison.csv')
+    for protocol in ['identity_disjoint', 'operational']:
+        result = scenario({'protocol': protocol})
+        row = outputs.loc[outputs.protocol.eq(protocol) & outputs.route.eq('classifier')].iloc[0]
+        for name in ['coverage', 'adverse_contact_n', 'review_n', 'alert_n', 'staff_minutes']:
+            assert np.isclose(result['metrics'][name], row[name])
+
+
+def test_final_analysis_rejects_wrong_period_and_respects_threshold(monkeypatch):
+    import pytest
+    from talentroute import final_analysis
+    from talentroute.decision import Policy
+    frame, _, _ = final_analysis.load_frame('identity_disjoint')
+    actions = final_analysis.inactivity_actions(frame, Policy(risk_threshold=.9))
+    assert not (actions[frame.assessment_free.to_numpy() < .9] > 0).any()
+    frame['code_presentation'] = '2014J'
+    monkeypatch.setattr(final_analysis.pd, 'read_csv', lambda *a, **k: frame)
+    with pytest.raises(ValueError, match='2014B only'):
+        final_analysis.load_frame('identity_disjoint')
