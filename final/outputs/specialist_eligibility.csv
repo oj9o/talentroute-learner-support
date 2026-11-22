@@ -1,0 +1,13 @@
+protocol,module,training_n,smallest_class_n,specialist_fitted,routing_model
+identity_disjoint,BBB,1496,242,True,logistic
+identity_disjoint,CCC,0,0,False,logistic
+identity_disjoint,DDD,1024,242,True,logistic
+identity_disjoint,EEE,0,0,False,logistic
+identity_disjoint,FFF,1381,209,True,logistic
+identity_disjoint,GGG,0,0,False,logistic
+operational,BBB,1528,268,True,logistic
+operational,CCC,0,0,False,logistic
+operational,DDD,1141,274,True,logistic
+operational,EEE,0,0,False,logistic
+operational,FFF,1449,247,True,logistic
+operational,GGG,0,0,False,logistic

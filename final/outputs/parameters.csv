@@ -1,0 +1,2 @@
+minutes_per_100,review_minutes,alert_minutes,alert_budget_fraction,alert_learner_cap,reserve_fraction,risk_threshold,cutoff_day,score_delay_days_assumed,original_precision_loss_margin
+300,30,2,0.2,0.2,0.2,0,28,7,0.02

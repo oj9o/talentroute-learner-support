@@ -1,0 +1,13 @@
+protocol,seed,detector,outcome_relevance_average_precision,anomaly_accuracy_measurable
+identity_disjoint,7101,isolation_forest,0.595208150640546,False
+identity_disjoint,7101,inactivity,0.6265715212835128,False
+identity_disjoint,7102,isolation_forest,0.5917580484732868,False
+identity_disjoint,7102,inactivity,0.6265715212835128,False
+identity_disjoint,7103,isolation_forest,0.5919959712252768,False
+identity_disjoint,7103,inactivity,0.6265715212835128,False
+operational,7101,isolation_forest,0.5936556120765851,False
+operational,7101,inactivity,0.6265715212835128,False
+operational,7102,isolation_forest,0.5934926664288308,False
+operational,7102,inactivity,0.6265715212835128,False
+operational,7103,isolation_forest,0.594072076617311,False
+operational,7103,inactivity,0.6265715212835128,False

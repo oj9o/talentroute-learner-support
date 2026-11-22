@@ -1,0 +1,5 @@
+protocol,split,n,students,multi_enrolment_students,adverse_n,prior_enrolment_n,modules,train_validation_identity_overlap
+identity_disjoint,train,3901,3899,2,1886,0,"BBB,DDD,FFF",0
+identity_disjoint,validation,6508,6215,293,3151,763,"BBB,CCC,DDD,EEE,FFF,GGG",0
+operational,train,4118,4116,2,2025,0,"BBB,DDD,FFF",217
+operational,validation,6508,6215,293,3151,763,"BBB,CCC,DDD,EEE,FFF,GGG",217

@@ -1,0 +1,11 @@
+protocol,seed,model,route,coverage_low,coverage_high,difference_low,difference_high,scope
+identity_disjoint,7101,logistic,classifier,0.412602454895574,0.4477845901344485,0.0,0.0,fixed_actions_student_cluster_bootstrap_exploratory
+identity_disjoint,7101,logistic,anomaly,0.4121223695666848,0.4476833248056308,-0.002191808710172451,0.001589850555412665,fixed_actions_student_cluster_bootstrap_exploratory
+identity_disjoint,7101,logistic,inactivity,0.412602454895574,0.4477845901344485,0.0,0.0,fixed_actions_student_cluster_bootstrap_exploratory
+identity_disjoint,7101,logistic,course,0.412602454895574,0.4477845901344485,0.0,0.0,fixed_actions_student_cluster_bootstrap_exploratory
+identity_disjoint,7101,logistic,random,0.4088422479617547,0.4445694043792507,-0.008550187019482625,0.001911467681463592,fixed_actions_student_cluster_bootstrap_exploratory
+operational,7101,logistic,classifier,0.4127905280447399,0.4474683469840449,0.0,0.0,fixed_actions_student_cluster_bootstrap_exploratory
+operational,7101,logistic,anomaly,0.4118893179177612,0.44696922587304677,-0.0025604717153335137,0.0012880900328531653,fixed_actions_student_cluster_bootstrap_exploratory
+operational,7101,logistic,inactivity,0.4127905280447399,0.4474683469840449,0.0,0.0,fixed_actions_student_cluster_bootstrap_exploratory
+operational,7101,logistic,course,0.4127905280447399,0.4474683469840449,0.0,0.0,fixed_actions_student_cluster_bootstrap_exploratory
+operational,7101,logistic,random,0.4090345016005061,0.4436222865028395,-0.008556543391157342,0.0015898763130722299,fixed_actions_student_cluster_bootstrap_exploratory

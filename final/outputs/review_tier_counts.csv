@@ -1,0 +1,5 @@
+protocol,seed,model,route,n,adverse_n,contact_n,adverse_contact_n,coverage,contact_precision,staff_minutes,review_n,review_success_n,review_fail_n,review_withdrawn_n,alert_n,alert_success_n,alert_fail_n,alert_withdrawn_n,no_action_n,no_action_success_n,no_action_fail_n,no_action_withdrawn_n,baseline,average_precision,adverse_reviewed
+identity_disjoint,7101,logistic,classifier,6508,3151,1865,1359,0.4312916534433513,0.7286863270777479,19522.0,564,84,329,151,1301,422,509,370,4643,2851,991,801,,,480
+identity_disjoint,7101,logistic,anomaly,6508,3151,1865,1358,0.4309742938749603,0.7281501340482573,19522.0,564,94,325,145,1301,413,513,375,4643,2850,991,802,,,470
+identity_disjoint,7101,logistic,random,6508,3151,1865,1347,0.4274833386226594,0.7222520107238606,19522.0,564,117,304,143,1301,401,527,373,4643,2839,998,806,,,447
+identity_disjoint,7101,,score_inactivity_rule,6508,3151,1865,1307,0.4147889558870199,0.7008042895442359,19522.0,564,105,327,132,1301,453,485,363,4643,2799,1017,827,score_inactivity_rule,0.6796266207406181,459
