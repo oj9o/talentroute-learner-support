@@ -75,6 +75,12 @@ def run():
     availability = pd.read_csv(ROOT / 'outputs/availability_audit.csv')
     folds = pd.read_csv(ROOT / 'outputs/availability_selection.csv')
     foldmeans = folds.query("protocol == 'identity_disjoint' and variant == 'assessment_free'").groupby('model')[['coverage','adverse_average_precision']].mean().reset_index()
+    sensitivity = read('sensitivity').pivot(index=['parameter','value'], columns='route', values='adverse_contact_n')
+    sensitivity['classifier_minus_inactivity'] = sensitivity['classifier'] - sensitivity['inactivity_baseline']
+    sensitivity['anomaly_minus_classifier'] = sensitivity['anomaly'] - sensitivity['classifier']
+    sensitivity = sensitivity.reset_index()
+    selected = availability.query("protocol == 'identity_disjoint' and variant == 'assessment_free'").iloc[0]
+    enabled = availability.query("protocol == 'identity_disjoint' and variant == 'assessment_assumption'").iloc[0]
     report = f'''# TalentRoute: assessment-free learner-support decisions
 
 Mouza Aldarmaki · MAAI7101 · Final project
@@ -105,7 +111,7 @@ flowchart LR
     C --> E[Optional reserve inside existing review capacity]
     E --> D
     F[Staff time and action costs] --> D
-    D --> G[Independent feasibility checker]
+    D --> G[Separate feasibility checker]
     G --> H[Coordinator inspects and decides]
 ```
 
@@ -117,11 +123,11 @@ OULAD is a public distance-learning dataset with registration, platform activity
 
 Features are restricted to information recorded by day 28: engagement counts in early and later windows, their change, inactivity, study credits, previous attempts and course. Log counts reduce extreme activity scale; inactivity represents the absence of recent recorded engagement. These are plausible warning signals, not measures of motivation or proof of causation. All numeric imputation and model-specific preprocessing fit training records only. IDs, gender, final outcomes and post-cutoff activity are not predictors. Gender is used only for audit. There is no clustering or dimensionality reduction added merely to display another technique.
 
-OULAD does not establish exact assessment score-release dates. Restricting submission dates alone cannot prove a grade was visible. The final system therefore removes **all five assessment-derived inputs**, irrespective of their predictive value. Assessment fields retained in historical diagnostic tables are not accessed by its predictor. Mutation tests change assessments and outcomes while checking that final predictions stay identical.
+OULAD does not establish exact assessment score-release dates. Restricting submission dates alone cannot prove a grade was visible. The final system conservatively removes **all five assessment-derived inputs**. The score-release issue directly concerns scores; removing submission counts, lateness and the no-early-assessment indicator is a broader simplification to avoid dependence on assessment schedules and recording assumptions. A submission-only variant was not tested, and these fields are not asserted to be inherently unavailable. Earlier 2014B diagnostics prompted this design decision; training-only candidate selection does not erase that exposure. Assessment fields retained in historical diagnostic tables are not accessed by its predictor. Mutation tests change assessments and outcomes while checking that final predictions stay identical.
 
 Training uses 2013B; evaluation uses 2014B. Calendar interval checks account for uncertain start days and assumed result-release delays. Training on earlier completed courses is more defensible than using a possibly unfinished later presentation, but final-result publication remains an assumption. The identity-disjoint design removes overlapping evaluation identities from training. The operational companion retains mature prior enrolments and reports returning learners separately. Both evaluate the same cases; neither selects training rows using 2014J membership.
 
-The final classifier and preprocessing are selected within three learner-grouped training folds, comparing six bounded candidates: logistic regularization levels, a constrained tree and two boosting capacities. The ranking rule is mean fold coverage, then average precision, then fixed candidate order. The chosen family is fitted on all allowed training rows before evaluation. The candidate grid reflects earlier project learning, so this separation repairs direct selection on evaluation labels but does not create a fresh experiment.
+The final classifier and preprocessing are selected within three learner-grouped training folds, comparing six bounded candidates: logistic regularization levels, a constrained tree and two boosting capacities. The ranking rule is mean fold coverage, then average precision, then fixed candidate order. The selected candidate is logistic regression with C=1. Its mean fold coverage ties C=10, but its unrounded AP is slightly higher (0.730185675 versus 0.730183657); fixed candidate order did not decide this result. The chosen family is fitted on all allowed training rows before evaluation. The candidate grid reflects earlier project learning, so this separation repairs direct selection on evaluation labels but does not create a fresh experiment.
 
 Both 2014B and 2014J were previously examined. Repeated splits, new seeds and a new freeze cannot restore independence. No fresh cohort is available. This revision does not score 2014J again and does not claim the independent final-evaluation requirement is fully satisfied. Its results are retrospective development evidence; an external future cohort remains necessary for confirmation.
 
@@ -129,7 +135,7 @@ Both 2014B and 2014J were previously examined. Repeated splits, new seeds and a 
 
 The primary ML metric is adverse-outcome average precision (AP), appropriate for assessing ranking against the observed adverse prevalence. The final model has AP {metrics.adverse_average_precision:.3f}, with conditional learner-bootstrap interval [{metrics.average_precision_low:.3f}, {metrics.average_precision_high:.3f}]. Brier score and class-specific metrics are also exported. The primary decision metric is the fraction of actual adverse cases contacted at a common workload. Contact precision, separate Fail/Withdrawn counts, review/alert counts and staff minutes qualify that measure. Coverage treats both contacts equally; it does not itself answer which intervention is worth its cost.
 
-The default scenario allocates 300 staff minutes per 100 enrolments, assumes 30 minutes per review and two per alert, reserves an initial alert budget share of 20%, and caps alerts at 20% of cases. Whole-action rounding and the remaining time determine capacity. These are explicit constructed assumptions, not observed university practice. For this cohort the queue has {int(main.review_n):,} reviews and {int(main.alert_n):,} alerts, consuming {int(main.staff_minutes):,} minutes. Its contact precision is {main.contact_precision:.1%}.
+The default scenario allocates 300 staff minutes per 100 enrolments, assumes 30 minutes per review and two per alert, reserves an initial alert budget share of 20%, and caps alerts at 20% of cases. Whole-action rounding and the remaining time determine capacity. These are explicit constructed assumptions, not observed university practice. For this cohort the queue has {int(main.review_n):,} reviews and {int(main.alert_n):,} alerts, consuming {int(main.staff_minutes):,} minutes. Its contact precision is {main.contact_precision:.1%}. Reviews reach {int(main.review_fail_n+main.review_withdrawn_n)} adverse cases versus {int(baseline.review_fail_n+baseline.review_withdrawn_n)} for inactivity, while {int(main.review_success_n)} versus {int(baseline.review_success_n)} reviewed cases later succeed. These counts distinguish action tiers without claiming support was unnecessary.
 
 Isolation Forest fits engagement features on training data only. Its training-reference anomaly percentile ranks a separately reserved portion of the existing review capacity. It is never added to the outcome probability: equal numeric ranges do not imply comparable meanings. Removing the reserve gives the default classifier-only queue. Inactivity, course round-robin and seeded-random reserves test whether the detector earns its complexity. A full inactivity-ranked queue is the transparent no-model comparator; it is distinct from reserving only some reviews for inactivity.
 
@@ -149,7 +155,7 @@ All route comparisons use the same capacity. Cutoff sweeps apply the classifier 
 
 The difference interval columns compare each route with classifier-only. The separate inactivity comparison is reported in the executive summary and exported CSV. Intervals resample learners with all their enrolments together, holding predictions and assignments fixed. They describe conditional sampling uncertainty; they exclude refitting, earlier search and workflow uncertainty. They are not prospective confidence claims or treatment-effect intervals.
 
-The operational companion contacts {int(operational.adverse_contact_n):,} adverse cases ({operational.coverage:.1%}). Similar aggregate results across these designs do not prove generalization. Three seed checks refit the fixed selected candidate and vary tie-breaking and detector seeds; their spread is reported separately. Seeds are not independent test populations.
+The operational companion contacts {int(operational.adverse_contact_n):,} adverse cases ({operational.coverage:.1%}). Similar aggregate results across these designs do not prove generalization. Three seed checks refit the fixed selected candidate and vary tie-breaking and detector seeds; their spread is reported separately. Logistic fitting is deterministic here, so unchanged classifier coverage is expected; detector variation is the meaningful stochastic check. Seeds are not independent test populations.
 
 ![Final route comparison](../outputs/figures/final_comparison.png)
 
@@ -161,17 +167,23 @@ The anomaly reserve contacts {int(anomaly.adverse_contact_n):,} adverse cases, o
 
 Five sweeps vary budget, review effort, reserve share, score cutoff and alert share, one at a time. Results and workload counts are generated for both populations using the final assessment-free predictions. The budget and effort curves show how staffing choices change the observed coverage; they do not show saved students. More resources can increase contact reach, while a higher cutoff may leave capacity unused.
 
+{table(sensitivity, ['parameter','value','classifier_minus_inactivity','anomaly_minus_classifier'])}
+
+The classifier point advantage remains positive across the tested budget and effort settings, but these sweep differences have no uncertainty intervals and the default interval crosses zero. At cutoff 0.75 the common eligibility gate leaves all queues contacting the same 966 adverse cases; this is not evidence of ranking robustness. Alert shares 0.2 and 0.4 coincide because the alert-count cap binds. Anomaly differences remain between minus two and plus two cases across these sweeps; no tested setting establishes a reason to activate the reserve.
+
 ![Budget and effort sensitivity](../outputs/figures/final_sensitivity.png)
 
-Course GGG receives {ggg.staff_minutes/main.staff_minutes:.1%} of staff minutes while representing {ggg.n/main.n:.1%} of cases. It reaches {int(ggg.adverse_contact_n)} of {int(ggg.adverse_n)} adverse cases ({ggg.coverage:.1%}). The model therefore has not simply solved the earlier course failure: the allocation now concentrates resources there. Course calibration and queue composition make this visible. A coordinator should review course-specific workload and score reliability before using the global queue.
+Course GGG receives {ggg.staff_minutes/main.staff_minutes:.1%} of staff minutes while representing {ggg.n/main.n:.1%} of cases. It reaches {int(ggg.adverse_contact_n)} of {int(ggg.adverse_n)} adverse cases ({ggg.coverage:.1%}). This describes concentration in the current queue. Earlier course results used a different model and population and are not a matched before/after comparison. Course calibration and queue composition make this visible. A coordinator should review course-specific workload and score reliability before using the global queue.
 
-Overall female adverse coverage is {genders.loc['F','coverage']:.1%}, versus {genders.loc['M','coverage']:.1%} for males. This reverses the direction of the earlier submitted imbalance, but does not establish fairness. Course mix and differing observed outcome rates matter. Within-course comparisons retain denominators and conditional intervals; groups below 50 cases or ten adverse outcomes are marked unsuitable for interpretation. No protected-attribute quota is silently introduced.
+Overall female adverse coverage is {genders.loc['F','coverage']:.1%}, versus {genders.loc['M','coverage']:.1%} for males. Contact precision is {genders.loc['F','contact_precision']:.1%} for women and {genders.loc['M','contact_precision']:.1%} for men. Women account for {int(genders.loc['F','review_success_n'])} of {int(main.review_success_n)} later-successful reviewed cases. Within-course coverage gaps are smaller in CCC (30.5% versus 31.4%) and GGG (82.6% versus 84.6%). These patterns do not establish fairness or causally explain the aggregate gap through course mix. Within-course comparisons retain denominators and conditional intervals; groups below 50 cases or ten adverse outcomes are marked unsuitable for interpretation. No protected-attribute quota is silently introduced.
 
 ![Queue composition and resource concentration](../outputs/figures/final_queue_composition.png)
 
 ![Within-course gender comparisons](../outputs/figures/final_gender_by_course.png)
 
 Among contacted cases, mean predicted adverse risk is {calibration.mean_predicted:.1%}, while the observed adverse rate is {calibration.observed_rate:.1%}. The overstatement means displayed scores should support ranking, not be read as verified individual probabilities. Calibration would need training-only fitting followed by genuinely new evaluation; fitting a correction on this exposed evaluation cohort would not repair confirmation.
+
+{table(read('calibration').query("group.str.startswith('course_')", engine='python'), ['group','n','mean_predicted','observed_rate','brier'])}
 
 The workload stress test freezes membership before changing effort. Raising reviews from 30 to 45 minutes creates a {int(stress.shortfall_minutes):,}-minute shortfall. An explicit alerts-first contingency defers {int(stress.deferred_n)} original contacts and retains {stress.retained_coverage:.1%} adverse coverage. Replanning under the same stressed budget gives {stress.replanned_coverage:.1%}. Both are feasible; neither is asserted to maximize real intervention benefit. This exposes failure and an actionable fallback instead of hiding overspend through automatic reallocation.
 
@@ -193,7 +205,13 @@ These analyses sharpen the recommendation: keep the simple global queue as a tra
 
 ## 7. Insights and recommendations
 
-Coverage cannot identify the best intervention. Conditional preference scenarios therefore weight reviews and alerts separately, distinguish Fail and Withdrawn, penalize contacts to later Success cases, and subtract assumed effort. Weights are external scenario preferences applied to observed outcome counts, not to the score used for selection. This avoids the earlier circular evaluation. Break-even calculations show which assumed review value would favor a reserve, and paired fixed-action intervals show uncertainty. None estimates causal benefit, monetary ROI or the true cost of a false flag.
+**Staffing dominates the practical decision.** Increasing available time changes reach more than adding an anomaly reserve. Agree actual effort and available staff time before model refinements. If effort rises, compare a replanned queue with the explicit contingency; neither is optimal without real action values.
+
+**Model complexity has not established better outcomes.** Keep inactivity as a standing comparator. Treat classification as a provisional ranking and retain zero anomaly reserve. Specialists are exploratory rather than a selected deployment alternative.
+
+**A feasible queue still needs scrutiny.** Review GGG's concentrated workload and score reliability with course staff before outreach. Do not present uncalibrated scores as verified personal probabilities. A flag initiates investigation, not a diagnosis; coordinate multiple course cases belonging to one learner.
+
+Coverage cannot identify the best intervention. As an additional analysis, conditional preference scenarios weight reviews and alerts separately, distinguish Fail and Withdrawn, penalize contacts to later Success cases, and subtract assumed effort. Weights are external scenario preferences applied to observed outcome counts, not to the score used for selection. This avoids the earlier circular evaluation. Break-even calculations show which assumed review value would favor a reserve, and paired fixed-action intervals show uncertainty. None estimates causal benefit, monetary ROI or the true cost of a false flag.
 
 The action-value analysis is an additional decision-relevant deep dive. The table reports reserve-versus-risk-only preference differences under the declared default weights; intervals remain conditional and are not intervention-effect estimates.
 
@@ -201,11 +219,13 @@ The action-value analysis is an additional decision-relevant deep dive. The tabl
 
 ## 8. Limitations, failed approaches and risks
 
-The experiment history is explicit. Assessment-enabled models ranked better but depended on unverified release timing; assessment-free prediction replaces that dependence. Direct development-cohort model choice was replaced by training-only grouped selection, while acknowledging earlier exposure. Adding anomaly ranks did not establish incremental value; numerical probability/percentile blending was rejected. Equal-quota reconciliation and specialists were executed rather than advertised as guaranteed improvements. The complexity of the original package was reduced to one workbench, readable stages and numerical outputs; historical experiments are labeled separately.
+The experiment history is explicit. In the matched training-only audit, assessment-enabled prediction reaches {int(enabled.adverse_contact_n):,} adverse cases versus {int(selected.adverse_contact_n):,} assessment-free. The latter sacrifices targeting performance to remove that input dependence; it is not an accuracy improvement. Direct development-cohort model choice was replaced by training-only grouped selection, while acknowledging earlier exposure. Adding anomaly ranks did not establish incremental value; numerical probability/percentile blending was rejected. Equal-quota reconciliation and specialists were executed rather than advertised as guaranteed improvements. The complexity of the original package was reduced to one workbench, readable stages and numerical outputs; historical experiments are labeled separately.
 
 The app lets a user change capacity, effort, eligibility and route, then inspect actions and workload. A separate checker tests an edited plan without outcomes. Saved-setting comparison shows entering, leaving and changed-action cases. Individual input edits rescore a fitted model; they do not manufacture a future outcome or simulate the causal effect of changing behavior. Exports omit student IDs, protected attributes and outcomes. Multiple course cases for one learner still require coordination before real outreach.
 
 ## 9. Connection to the original problem, next steps and reproduction
+
+The coordinator receives a feasible, inspectable allocation and evidence of where it concentrates attention. This answers who could be contacted under declared constraints; it does not establish which support action prevents failure. Real workflow agreement and new outcomes are prerequisites for operational adoption.
 
 Use Python 3.14 with `uv` and `just`: `just install`, `just pipeline`, then `just app`. The CPU pipeline verifies pinned public data, fits models, generates all comparisons and this report, and runs meaningful tests for time eligibility, training-only selection, mutation invariance, budget arithmetic, deterministic allocation and app/output consistency. Runtime is measured in `outputs/runtime.csv`. Linux reproduction checks portability; no LLM or credentials are required to run the project.
 
