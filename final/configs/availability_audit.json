@@ -1,0 +1,12 @@
+{
+  "purpose": "Retrospective remediation audit; not independent confirmation",
+  "seed": 7101,
+  "folds": 3,
+  "selection": "mean inner-fold coverage, then AP, then fixed candidate order",
+  "candidates": ["logistic", "logistic_c01", "logistic_c10", "tree", "hgb_7_2", "hgb_15_10"],
+  "primary_remediation": "exclude every assessment-derived feature regardless of observed performance",
+  "training": "2013B only, learner-grouped folds",
+  "evaluation": "previously examined 2014B, retrospective temporal evaluation",
+  "excluded": "2014J never loaded by this audit",
+  "policy": "existing declared policy; no retuning"
+}
