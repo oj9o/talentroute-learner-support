@@ -211,6 +211,16 @@ These analyses sharpen the recommendation: keep the simple global queue as a tra
 
 **A feasible queue still needs scrutiny.** Review GGG's concentrated workload and score reliability with course staff before outreach. Do not present uncalibrated scores as verified personal probabilities. A flag initiates investigation, not a diagnosis; coordinate multiple course cases belonging to one learner.
 
+The decision rules have explicit limits:
+
+| Decision | Why this choice | When to reconsider |
+|---|---|---|
+| Assessment-free inputs | Avoid uncertain score availability | Verify input timestamps before adding assessment fields |
+| No anomaly reserve | Added targeting value is not established | Require new evidence before reserving scarce review places |
+| Review, alert or no action | Apply the declared ranking and staffing caps | Recheck costs and capacity when staffing changes |
+| No action for an eligible case | Capacity can run out | Do not interpret it as evidence the learner is safe |
+| Human approval before outreach | Feasibility does not establish intervention value | Review course concentration and repeated-learner contacts |
+
 Coverage cannot identify the best intervention. As an additional analysis, conditional preference scenarios weight reviews and alerts separately, distinguish Fail and Withdrawn, penalize contacts to later Success cases, and subtract assumed effort. Weights are external scenario preferences applied to observed outcome counts, not to the score used for selection. This avoids the earlier circular evaluation. Break-even calculations show which assumed review value would favor a reserve, and paired fixed-action intervals show uncertainty. None estimates causal benefit, monetary ROI or the true cost of a false flag.
 
 The action-value analysis is an additional decision-relevant deep dive. The table reports reserve-versus-risk-only preference differences under the declared default weights; intervals remain conditional and are not intervention-effect estimates.
@@ -219,7 +229,7 @@ The action-value analysis is an additional decision-relevant deep dive. The tabl
 
 ## 8. Limitations, failed approaches and risks
 
-The experiment history is explicit. In the matched training-only audit, assessment-enabled prediction reaches {int(enabled.adverse_contact_n):,} adverse cases versus {int(selected.adverse_contact_n):,} assessment-free. The latter sacrifices targeting performance to remove that input dependence; it is not an accuracy improvement. Direct development-cohort model choice was replaced by training-only grouped selection, while acknowledging earlier exposure. Adding anomaly ranks did not establish incremental value; numerical probability/percentile blending was rejected. Equal-quota reconciliation and specialists were executed rather than advertised as guaranteed improvements. The complexity of the original package was reduced to one workbench, readable stages and numerical outputs; historical experiments are labeled separately.
+The experiment history is explicit. In the matched training-only audit, assessment-enabled prediction reaches {int(enabled.adverse_contact_n):,} adverse cases versus {int(selected.adverse_contact_n):,} assessment-free. The latter sacrifices targeting performance to remove that input dependence; it is not an accuracy improvement. Direct development-cohort model choice was replaced by training-only grouped selection, while acknowledging earlier exposure. Adding anomaly ranks did not establish incremental value; numerical probability/percentile blending was rejected. Equal-quota reconciliation and specialists were executed rather than advertised as guaranteed improvements. The package uses one workbench and one final report generator. Unused historical plot code was removed; current and historical model choices have distinct names. Historical numerical experiments remain labeled for reproducibility.
 
 The app lets a user change capacity, effort, eligibility and route, then inspect actions and workload. A separate checker tests an edited plan without outcomes. Saved-setting comparison shows entering, leaving and changed-action cases. Individual input edits rescore a fitted model; they do not manufacture a future outcome or simulate the causal effect of changing behavior. Exports omit student IDs, protected attributes and outcomes. Multiple course cases for one learner still require coordination before real outreach.
 

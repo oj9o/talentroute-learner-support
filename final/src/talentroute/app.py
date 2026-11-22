@@ -24,14 +24,15 @@ PROTOCOLS = ['identity_disjoint', 'operational']
 ACTIONS = {0: 'No action', 1: 'Alert', 2: 'Review'}
 
 
-@lru_cache(maxsize=2)
-def selected_model():
+def default_model():
     if not (ROOT / 'outputs/assessment_free_operational.joblib').exists():
         raise FileNotFoundError('Run just pipeline to fit the final model')
     return 'assessment_free'
 
 
-def artifacts(protocol):
+@lru_cache(maxsize=2)
+def _load_artifacts(protocol, versions):
+    """Read-only fitted objects, cached until a source file changes."""
     if protocol not in PROTOCOLS:
         raise ValueError('Unknown population protocol')
     frame = pd.read_csv(ROOT / f'data/processed/predictions_{protocol}_7101.csv')
@@ -46,9 +47,26 @@ def artifacts(protocol):
     return frame, bundle
 
 
+def artifacts(protocol):
+    """Return an isolated frame; model objects are shared for prediction only.
+
+    File versions invalidate the cache after regeneration. Callers cannot mutate
+    the stored frame or its model-name mapping through a returned value.
+    """
+    if protocol not in PROTOCOLS:
+        raise ValueError('Unknown population protocol')
+    paths = [ROOT / f'data/processed/predictions_{protocol}_7101.csv',
+             ROOT / f'outputs/models_{protocol}.joblib',
+             ROOT / f'outputs/assessment_free_{protocol}.joblib']
+    versions = tuple((str(path), path.stat().st_mtime_ns, path.stat().st_size)
+                     if path.exists() else (str(path), None, None) for path in paths)
+    frame, bundle = _load_artifacts(protocol, versions)
+    return frame.copy(), {**bundle, 'models': dict(bundle['models'])}
+
+
 def settings(payload):
     protocol = payload.get('protocol', 'operational')
-    model = payload.get('model', selected_model())
+    model = payload.get('model', default_model())
     route = payload.get('route', 'classifier')
     if model not in [*CANDIDATES, 'assessment_free'] or route not in ROUTES:
         raise ValueError('Unknown model or route')
@@ -133,8 +151,8 @@ def compare_scenarios(payload, frame, actions, policy):
     old_actions, _ = frame_actions(old_frame, old_route, old_policy, model=old_model)
     return {**compare_actions(old_actions, actions, frame.code_module),
             'before_minutes': check_plan(old_frame[old_model], old_actions, old_policy)['used_minutes'],
-            'after_minutes': check_plan(frame[payload.get('model', selected_model())], actions, policy)['used_minutes'],
-            'before_model': old_model, 'after_model': payload.get('model', selected_model()),
+            'after_minutes': check_plan(frame[payload.get('model', default_model())], actions, policy)['used_minutes'],
+            'before_model': old_model, 'after_model': payload.get('model', default_model()),
             'before_policy': vars(old_policy), 'after_policy': vars(policy),
             'before_route': old_route, 'after_route': payload.get('route', 'classifier')}
 
@@ -277,7 +295,7 @@ class Handler(BaseHTTPRequestHandler):
         url = urlparse(self.path)
         if url.path == '/configuration':
             try:
-                self.reply({'selected_model': selected_model(), 'default_protocol': 'operational'})
+                self.reply({'selected_model': default_model(), 'default_protocol': 'operational'})
             except FileNotFoundError:
                 self.reply({'error': 'Model outputs are missing. Run just pipeline before opening the app.'}, 503)
             except (ValueError, KeyError) as error:

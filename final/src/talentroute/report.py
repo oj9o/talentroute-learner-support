@@ -2,7 +2,6 @@
 
 from dataclasses import asdict
 import os
-import re
 from .data import ROOT, config
 os.environ.setdefault('MPLCONFIGDIR', str(ROOT / '.cache/matplotlib'))
 import matplotlib
@@ -12,13 +11,6 @@ import numpy as np
 import pandas as pd
 from .decision import Policy
 from .models import FEATURES
-
-INK, REVIEW, ALERT = '#152f36', '#126c69', '#c77a35'
-
-
-def read(name):
-    return pd.read_csv(ROOT / f'outputs/{name}.csv')
-
 
 def table(frame, columns=None, digits=3):
     """Small Markdown table without another runtime dependency."""
@@ -62,32 +54,9 @@ def eda():
 
 
 
-def ablation_figure():
-    """Show paired route differences, including uncertainty, for the selected model."""
-    folder = ROOT / 'outputs/figures'
-    folder.mkdir(exist_ok=True)
-    scores = read('policy_comparison')
-    scores = scores[scores.protocol.eq('identity_disjoint') & scores.seed.eq(7101)]
-    intervals = read('policy_intervals')
-    data = scores.merge(intervals, on=['protocol', 'seed', 'model', 'route'])
-    reference = data.loc[data.route.eq('classifier'), 'coverage'].iloc[0]
-    data = data[~data.route.eq('classifier')]
-    delta = data.coverage - reference
-    fig, ax = plt.subplots(figsize=(8, 3.5))
-    ax.errorbar(delta * 100, data.route,
-                xerr=np.array([delta-data.difference_low, data.difference_high-delta]) * 100,
-                fmt='o', color='#355c9b', capsize=3)
-    ax.axvline(0, color=INK, linewidth=.8)
-    ax.set(xlabel='Coverage difference vs risk-only (percentage points)',
-           title='Does an alternative review reserve improve targeting?')
-    fig.tight_layout()
-    fig.savefig(folder / 'ablation.png', dpi=160, bbox_inches='tight')
-    plt.close(fig)
-
-
 def budget_figure():
     (ROOT / 'outputs/figures').mkdir(exist_ok=True)
-    data = read('sensitivity')
+    data = pd.read_csv(ROOT / 'outputs/sensitivity.csv')
     subset = data[(data.protocol == 'identity_disjoint') & (data.parameter == 'minutes_per_100')]
     fig, ax = plt.subplots(figsize=(8, 4))
     for route, color, style in [('classifier', '#355c9b', '-'), ('rule', '#6b788a', ':'), ('anomaly', '#8056a6', '--')]:
@@ -99,57 +68,6 @@ def budget_figure():
     fig.tight_layout()
     fig.savefig(ROOT / 'outputs/figures/budget_curve.png', dpi=160, bbox_inches='tight')
     plt.close(fig)
-
-
-def figures():
-    """One action palette, meaningful comparisons, labeled counts and denominators."""
-    folder = ROOT / 'outputs/figures'
-    folder.mkdir(exist_ok=True)
-    ablation_figure()
-    plt.rcParams.update({'font.size': 10, 'axes.spines.top': False, 'axes.spines.right': False,
-                         'axes.labelcolor': INK, 'text.color': INK, 'axes.titleweight': 'bold'})
-    def save(fig, name):
-        fig.tight_layout()
-        fig.savefig(folder / f'{name}.png', dpi=160, bbox_inches='tight')
-        plt.close(fig)
-    budget_figure()
-    composition = read('segments')
-    composition = composition[(composition.protocol == 'identity_disjoint') & (composition.route == 'classifier') & (composition.dimension == 'code_module')]
-    fig, ax = plt.subplots(figsize=(8, 4))
-    ax.barh(composition.segment, composition.review_n, color=REVIEW, label='Human review')
-    ax.barh(composition.segment, composition.alert_n, left=composition.review_n, color=ALERT, label='Alert')
-    ax.barh(composition.segment, composition.no_action_n, left=composition.contact_n, color='#e6ebe7', label='No action')
-    ax.set(title='Course composition of the selected-model queue', xlabel='Enrolment cases', ylabel='Course')
-    ax.legend(frameon=False, ncol=3)
-    save(fig, 'queue_composition')
-    gender = read('course_gender')
-    gender = gender[(gender.protocol == 'identity_disjoint') & (gender.route == 'classifier') & gender.interpretation_allowed]
-    fig, ax = plt.subplots(figsize=(8, 5))
-    modules = sorted(gender.module.unique())
-    for sex, marker, offset in [('F', 'o', -.12), ('M', 'D', .12)]:
-        rows = gender[gender.gender == sex].set_index('module').reindex(modules)
-        y = np.arange(len(modules)) + offset
-        errors = np.array([rows.coverage - rows.coverage_low, rows.coverage_high - rows.coverage]) * 100
-        ax.errorbar(rows.coverage * 100, y, xerr=errors, fmt=marker, color=INK, label=sex, capsize=2)
-        for level, row in zip(y, rows.itertuples()):
-            ax.annotate(f'n={row.n:g}; adverse={row.adverse_n:g}', (102, level), va='center', fontsize=8)
-    ax.set(yticks=range(len(modules)), yticklabels=modules, xlim=(0, 133),
-           xticks=range(0, 101, 20), xlabel='Adverse outcome coverage (%)', ylabel='Course',
-           title='Within-course gender audit: conditional bootstrap intervals')
-    ax.legend(frameon=False)
-    save(fig, 'gender_by_course')
-    curves = read('action_break_even')
-    curves = curves[(curves.protocol == 'identity_disjoint') & (curves.withdrawn_value == 1)]
-    fig, ax = plt.subplots(figsize=(8, 4))
-    x = np.linspace(0, 10, 101)
-    for route, color in [('anomaly', '#8056a6'), ('inactivity', '#617871'), ('course', '#6b788a')]:
-        row = curves[curves.route == route].iloc[0]
-        ax.plot(x, row.delta_intercept + row.delta_slope * x, label=route, color=color)
-    ax.axhline(0, color=INK, linewidth=.8)
-    ax.set(title='Conditional value difference against risk-only routing', xlabel='Assumed review targeting weight',
-           ylabel='Preference-unit difference (not causal benefit)')
-    ax.legend(frameon=False)
-    save(fig, 'preference_regions')
 
 
 def run():

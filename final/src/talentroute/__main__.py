@@ -28,11 +28,13 @@ STAGES = {
     'eda': report.eda,
     'fit-models': models.fit_development,
     'run-baseline': evaluation.baselines,
+    # Reproduce the labeled earlier experiments; not final-model selection.
     'historical-evaluate': evaluation.evaluate,
     'selection-stability': evaluation.selection_stability,
     'historical-sensitivity': evaluation.sensitivity,
     'calibration': evaluation.calibration_diagnostics,
     'historical-deep-dives': analyses.run,
+    # Current selection, evaluation and the single final report.
     'availability-audit': availability_audit.run,
     'final-analysis': final_analysis.run,
     'report': report.run,

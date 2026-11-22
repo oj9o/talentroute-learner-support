@@ -11,7 +11,7 @@ from .models import CANDIDATES, REFERENCE, classifier
 ROUTES = ['classifier', 'anomaly', 'inactivity', 'course', 'random']
 
 
-def selected_model():
+def historical_selected_model():
     """Read the single provisional choice produced by the recorded selection rule."""
     table = pd.read_csv(ROOT / 'outputs/development_selection.csv')
     chosen = table.loc[table.selected_development_candidate, 'model'].tolist()
@@ -21,7 +21,7 @@ def selected_model():
 
 
 def frame_actions(frame, route='classifier', policy=Policy(), seed=7101, model=None):
-    model = selected_model() if model is None else model
+    model = historical_selected_model() if model is None else model
     return allocate(frame[model], frame.rarity, frame.inactive_days, frame.code_module,
                     policy, route, seed)
 
@@ -45,7 +45,7 @@ def coverage_interval(frame, actions, reference=None, repetitions=300, seed=7101
 
 def evaluate():
     select_development_candidate()
-    chosen = selected_model()
+    chosen = historical_selected_model()
     comparisons, model_decisions, intervals, segments, composition, profiles = [], [], [], [], [], []
     ap_intervals, support_metrics = [], []
     for protocol in ['identity_disjoint', 'operational']:
@@ -270,7 +270,7 @@ def sensitivity():
                 policy = replace(Policy(), **{parameter: value})
                 # The rule has ordinal ranks, not calibrated risk. For cutoff sweeps,
                 # use the same classifier eligibility mask and compare ordering only.
-                eligible = (frame[selected_model()] >= policy.risk_threshold).to_numpy()
+                eligible = (frame[historical_selected_model()] >= policy.risk_threshold).to_numpy()
                 rule = rule_actions(frame, policy=policy, eligibility_mask=eligible)
                 rows.append({'protocol': protocol, 'model': 'score_inactivity_rule',
                              'parameter': parameter, 'value': value, 'route': 'rule',
@@ -278,7 +278,7 @@ def sensitivity():
                              **observed_metrics(frame.target, rule, policy)})
                 for route in ROUTES:
                     actions, _ = frame_actions(frame, route, policy)
-                    rows.append({'protocol': protocol, 'model': selected_model(), 'parameter': parameter, 'value': value,
+                    rows.append({'protocol': protocol, 'model': historical_selected_model(), 'parameter': parameter, 'value': value,
                                  'route': route, **observed_metrics(frame.target, actions, policy)})
     pd.DataFrame(rows).to_csv(ROOT / 'outputs/sensitivity.csv', index=False)
     from .report import budget_figure
@@ -291,7 +291,7 @@ def calibration_diagnostics():
     rows = []
     for protocol in ['identity_disjoint', 'operational']:
         frame = pd.read_csv(ROOT / f'data/processed/predictions_{protocol}_7101.csv')
-        model = selected_model()
+        model = historical_selected_model()
         actions = frame_actions(frame, model=model)[0]
         groups = {'all': np.ones(len(frame), dtype=bool),
                   'contacted': actions > 0,

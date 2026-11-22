@@ -7,7 +7,7 @@ from sklearn.metrics import average_precision_score
 
 from .data import ROOT, split_frames
 from .decision import Policy, allocate, capacity, observed_metrics, rank, retain_within_budget
-from .evaluation import frame_actions, selected_model
+from .evaluation import frame_actions, historical_selected_model
 from .models import FEATURES, classifier, risk_from
 
 
@@ -80,7 +80,7 @@ def reconciliation(frame, model=None):
     """Round-robin classifier/detector/inactivity lists at the SAME contact quota."""
     rng = np.random.default_rng(7101)
     tie = rng.random(len(frame))
-    orders = [rank(frame[name], tie) for name in [model or selected_model(), 'rarity', 'inactive_days']]
+    orders = [rank(frame[name], tie) for name in [model or historical_selected_model(), 'rarity', 'inactive_days']]
     reviews, alerts, _ = capacity(len(frame), Policy())
     chosen, seen = [], set()
     pointers = [0, 0, 0]
@@ -246,12 +246,12 @@ def run():
                     action_transitions=transitions, action_break_even=crossovers,
                     action_value_uncertainty=uncertainty,
                     workload_stress=[{'protocol': protocol, **row} for row in
-                                     workload_stress(frame, frame_actions(frame)[0], selected_model())])
+                                     workload_stress(frame, frame_actions(frame)[0], historical_selected_model())])
         for name, records in rows.items():
             results[name].extend(records)
     for name, rows in results.items():
         output = pd.DataFrame(rows)
-        output['routing_model'] = selected_model()
+        output['routing_model'] = historical_selected_model()
         output.to_csv(ROOT / f'outputs/{name}.csv', index=False)
     print('Executed reconciliation, specialists and conditional action-value analysis.')
 
