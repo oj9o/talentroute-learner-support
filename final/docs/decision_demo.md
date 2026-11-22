@@ -11,6 +11,6 @@ Optional Q&A: raise the model score cutoff to 95%, then request extra reviews fo
 
 ## What the checker means
 
-It independently calculates the declared caps from the number of course cases, time budget, initial alert reservation and action costs. It verifies whole, mutually exclusive actions, total minutes, review/alert counts and risk eligibility. It does not verify that a manual plan follows the recommender's risk ordering or reserve route, and does not claim that a feasible plan is best. Small arithmetic fixtures include an exactly full budget, an extra action and below-threshold selection; integration checks also cover the generated queue.
+It separately calculates the declared caps from the number of course cases, time budget, initial alert reservation and action costs. It verifies whole, mutually exclusive actions, total minutes, review/alert counts and risk eligibility. It does not verify that a manual plan follows the recommender's risk ordering or reserve route, and does not claim that a feasible plan is best. Small arithmetic fixtures include an exactly full budget, an extra action and below-threshold selection; integration checks also cover the generated queue.
 
 The two ML families remain classification and anomaly detection. These decision tools are not a third ML family. The detector's incremental gain remains unproven; its reserve is experimental. The comparison shows selected course cases, not deduplicated person-level outreach or monetary benefits. Manual edits stay separate from exports and historical targeting metrics.

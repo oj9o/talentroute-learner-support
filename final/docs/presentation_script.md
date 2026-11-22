@@ -1,7 +1,7 @@
 # Presentation narration
 
 TALENTROUTE — FINAL ASSESSMENT-FREE RECORDING SCRIPT
-Target duration: 09:44. 956 spoken words including transitions.
+Target duration: 09:44. 966 spoken words including transitions.
 Timing estimate uses the reported 120 words in 65 seconds; no audio recording was measured.
 Record a full rehearsal. Slides 1–12 are spoken; slides 13–15 are Q&A only.
 
@@ -19,7 +19,7 @@ Next, the data and timing.
 
 ## Slide 3: Early information, with explicit availability checks (01:15–02:04)
 
-OULAD records real learning activity and final outcomes. Evaluation covers six thousand five hundred and eight course cases. The final model uses activity through day twenty-eight and enrolment context, but no assessment-derived inputs, because actual score-release dates are missing. I select candidates using learner-grouped folds within 2013B. The main evaluation removes shared training identities; an operational companion keeps mature past enrolments. Previously examined 2014B provides retrospective evidence. Previously examined 2014J stays excluded; it is not a fresh test.
+OULAD records real learning activity and final outcomes. Evaluation covers six thousand five hundred and eight course cases. The final model uses activity through day twenty-eight and enrolment context, but conservatively excludes assessment inputs because score timing is unknown. Submission-only features were not tested. I select candidates using learner-grouped folds within 2013B. The main evaluation removes shared training identities; an operational companion keeps mature past enrolments. Previously examined 2014B provides retrospective evidence. Previously examined 2014J stays excluded; it is not a fresh test.
 
 Here is how the techniques connect.
 
@@ -43,13 +43,13 @@ I also investigated three deeper questions.
 
 ## Slide 7: Three analyses sharpen the recommendation (04:26–05:14)
 
-Three deeper analyses sharpen the decision. Interleaving the classifier, anomaly and inactivity lists gives thirty-nine point five percent coverage, below risk ranking. Course specialists give a small exploratory gain, but do not establish a better deployment policy. GGG receives thirty-six point two percent of time for twelve point two percent of cases, so course concentration needs review. Conditional action-value scenarios distinguish reviews, alerts and burdens. Their assumed preferences are not measured treatment effects; the anomaly comparison remains uncertain.
+Three deeper investigations test the recommendation. Interleaving three rankings reaches fewer adverse cases than risk ranking alone. Among flagged cases, about one in three later succeeded; most flagged failures had no early score. A flag starts an investigation, not a diagnosis. Course specialists reach fourteen more adverse cases, but this exploratory finding does not justify deployment. GGG receives thirty-six point two percent of staff time for twelve point two percent of cases. Review this concentration before outreach.
 
 Next, I tested the assumptions.
 
 ## Slide 8: Targeting changes with staffing assumptions (05:14–06:02)
 
-I vary five assumptions: available time, review effort, reserve share, score cutoff and alert share. Across the budget sweep, the classifier's observed advantage over inactivity ranges from about zero point one to two point eight percentage points. These sweep estimates do not have confidence intervals. Three seed checks reproduce the same classifier coverage; the anomaly result changes slightly. This is numerical stability on exposed data, not independent confirmation. Cutoff comparisons use the same eligibility gate for both queues.
+I vary five assumptions: available time, review effort, reserve share, score cutoff and alert share. Across the budget sweep, the classifier's observed advantage over inactivity ranges from about zero point one to two point eight percentage points. These sweep estimates do not have confidence intervals. The classifier is deterministic, so unchanged seed-check coverage is expected; the anomaly result varies slightly. This is numerical stability on exposed data, not independent confirmation. Cutoff comparisons use the same eligibility gate for both queues.
 
 What if reviews take longer?
 
@@ -73,7 +73,7 @@ What did the repairs change?
 
 ## Slide 11: Repairs apply to the entire final system (08:16–09:09)
 
-Two repairs now apply throughout the report, app and analyses. Removing all assessment-derived features eliminates dependence on unknown score-release dates. Selecting inside 2013B avoids directly choosing with evaluation outcomes. The matched audit reaches twelve hundred and fifty-eight adverse cases without assessments, versus thirteen hundred and fifty-seven with them. I accept this loss for availability, not better accuracy. Among contacted cases, predicted risk averages eighty-four percent, but observed adverse outcomes are sixty-seven point five percent. Scores support ranking, not verified individual probabilities. Earlier data exposure still prevents independent confirmation.
+Two repairs now apply throughout the report, app and analyses. Removing assessment features avoids uncertain score timing; removing submission features is a conservative choice. Selecting inside 2013B avoids directly choosing with evaluation outcomes. The matched audit reaches twelve hundred and fifty-eight adverse cases without assessments, versus thirteen hundred and fifty-seven with them. I accept this loss for availability, not better accuracy. Among contacted cases, predicted risk averages eighty-four percent, but observed adverse outcomes are sixty-seven point five percent. Scores support ranking, not verified individual probabilities. Earlier data exposure still prevents independent confirmation.
 
 This leads to my recommendation.
 
