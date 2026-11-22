@@ -50,6 +50,9 @@ deep-dives:
 availability-audit:
     uv run python -m talentroute availability-audit
 
+final-analysis:
+    uv run python -m talentroute final-analysis
+
 report:
     uv run python -m talentroute report
 

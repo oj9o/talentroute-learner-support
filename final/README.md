@@ -2,7 +2,7 @@
 
 An educational support coordinator can change staffing time and eligibility, inspect a review/alert queue, and see which course cases receive attention. A second experiment changes early-course inputs and scores them using fitted models.
 
-![Earlier interface preview of the operational development scenario](docs/app_preview.png)
+![Final assessment-free workbench](docs/final_app_preview.jpg)
 
 This is the **development revision after Intermediate feedback**, derived from the submitted project. It preserves classification plus outlier detection and the three promised analyses. It does not replace submitted archives or claim a new independent final test. The historical final cohort has already been examined and is not scored here. Final confirmation remains unresolved.
 
@@ -18,7 +18,7 @@ just app
 
 Open http://127.0.0.1:8800. To change the port: `just app 8801`. The pipeline verifies or downloads the pinned public dataset, prepares features, fits the bounded development grid, evaluates routes, runs sensitivity and the three deeper analyses, writes the report/figures, and runs tests. Each stage executes once. Actual timings are in `outputs/runtime.csv`; download time depends on the connection. The app reads fitted artifacts and never trains.
 
-For the original assessment-enabled experiment, the provisional choice was logistic regression with C=1 and the risk-ranked queue. The availability remediation below defines the assessment-free mode used when score-release timing is unverified. The bounded search, selection rule and limitations are documented in `docs/development_protocol.md`; selection evidence is in `outputs/development_selection.csv` and `outputs/proposed_system.csv`. This is post-feedback development selection, not independent final confirmation. Isolation Forest remains a connected, selectable review-reserve experiment; its additional targeting gain was not established.
+The final demonstration defaults to **assessment-free logistic regression**, selected by learner-grouped cross-validation within 2013B, with risk-only routing. Every current comparison, segment audit, sensitivity sweep and deeper analysis is in `outputs/final_*.csv`. Unprefixed assessment-enabled outputs record earlier experiments and are not the final recommendation. `availability_selection.csv` records the six-candidate training-only search. Isolation Forest remains a connected, selectable review-reserve experiment; incremental targeting gain is not established.
 
 - `docs/final_report.md`: concise results, reasoning and limitations.
 - `docs/project_definition.md`: retained commitments and changes.
@@ -26,7 +26,7 @@ For the original assessment-enabled experiment, the provisional choice was logis
 - `outputs/`: generated numerical evidence and figures.
 - `src/talentroute/`: data, models, policy, evaluation, analyses, report and one app.
 
-The app defaults to the operational companion and reads the selected model from the generated selection file. The operational training companion retains mature past enrolments; the identity-disjoint companion is a separate evaluation design. Both use the same evaluation cases. A review is a course-enrolment case; people with multiple enrolments require coordination before outreach. Queue export omits student identifiers, demographics and outcomes.
+The app defaults to the operational companion and uses the assessment-free model selected within the training cohort. The operational training companion retains mature past enrolments; the identity-disjoint companion is a separate evaluation design. Both use the same evaluation cases. A review is a course-enrolment case; people with multiple enrolments require coordination before outreach. Queue export omits student identifiers, demographics and outcomes.
 
 Costs and action values are assumptions. Predicted risk is not a measure of intervention benefit; an anomaly percentile is not an outcome probability. The single-case experiment is not a causal simulation. No clustering is used.
 
@@ -50,12 +50,16 @@ See [the short demo walkthrough](docs/decision_demo.md). These tools clarify a c
 
 [Independent confirmation status and future protocol](docs/final_confirmation_plan.md) explains the remaining evaluation gap. No fresh cohort is currently available.
 
-## Stage inputs
+## Stage inputs and evidence
 
-After `prepare-data`, `eda` writes descriptive CSVs and plots. `run-model` fits and evaluates. `run-baseline`, `sensitivity`, `calibration` and `deep-dives` require fitted predictions; sensitivity and deeper comparisons also require the selection file from `evaluate`. `evaluate` produces warning profiles. `deep-dives` produces reconciliation, specialists, action-value and workload stress analyses. `report` requires these outputs, the selection-stability results and `availability-audit`. Use `just pipeline` to execute the complete dependency order once.
+After data preparation, `run-model` fits the historical comparators, the training-selected assessment-free model and both connected components, then evaluates the final decision queues. `evaluate`, `ablation`, `sensitivity` and `deep-dives` regenerate the final-system analysis suite from fitted artifacts; ablation and sensitivity also regenerate final figures. These individual recipes share one implementation. The full pipeline runs each historical stage once, then the availability audit, final analyses, report and tests once. Use `just pipeline` for a clean dependency order.
 
-## Availability remediation
+The assessment-free variant excludes all five assessment-derived fields because score-release timing is unverified, regardless of predictive performance. Assessment edits cannot change its predictions. Matched feature-removal results are in `outputs/availability_audit.csv`. The same final model drives the report and default app; the original models remain explicitly labeled historical choices.
 
-`just availability-audit` uses three learner-grouped folds within 2013B to select each of two feature variants, refitting preprocessing within every fold. It then evaluates 2014B, which has previously been examined: this is retrospective evaluation, not a new independent test. The assessment-free variant excludes all five assessment-derived fields regardless of its measured performance. The app exposes it as a separate model; assessment edits do not change its predictions. Use this mode when score-release timing cannot be verified. The original model outputs remain visible for the historical comparison.
+Current runtime and verification results are recorded after a complete pipeline run. Independent final confirmation remains unavailable: both evaluation cohorts were previously examined. No current recipe scores 2014J. Do not interpret retrospective improvements, bootstrap intervals or seed checks as an independent test.
 
-The full local pipeline after this addition completed in 18.3 seconds with cached raw data; 48 tests passed, including assessment/outcome mutation invariance and rejection of evaluation-period rows in selection. The updated full Linux pipeline also passed 48 tests in 35.2 seconds, reusing the installed environment and cached verified raw data while regenerating models and outputs. See `outputs/availability_audit.csv` for the performance cost and uncertainty; no independent-validation or intervention-effect claim is made.
+## Verified reproduction
+
+On 22 November 2026, the complete updated pipeline passed 50 tests on macOS (Python 3.14.7; 21.8 seconds) and Linux amd64 (Python 3.14.2; 43.7 seconds). Both used cached, checksum-verified raw data and an installed environment; first download and installation add time. These are execution checks, not independent model validation.
+
+Cross-platform comparison reproduced the final decision counts, sensitivity and subgroup outputs. One operational Withdrawn AP differed by less than 0.000007; primary adverse AP and coverage were unchanged.
