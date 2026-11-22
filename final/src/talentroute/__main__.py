@@ -6,7 +6,7 @@ from time import perf_counter
 import subprocess
 import sys
 import pandas as pd
-from . import availability_audit, analyses, calendar_audit, data, evaluation, models, report
+from . import availability_audit, final_analysis, analyses, calendar_audit, data, evaluation, models, report
 
 
 def test():
@@ -28,12 +28,13 @@ STAGES = {
     'eda': report.eda,
     'fit-models': models.fit_development,
     'run-baseline': evaluation.baselines,
-    'evaluate': evaluation.evaluate,
+    'historical-evaluate': evaluation.evaluate,
     'selection-stability': evaluation.selection_stability,
-    'sensitivity': evaluation.sensitivity,
+    'historical-sensitivity': evaluation.sensitivity,
     'calibration': evaluation.calibration_diagnostics,
-    'deep-dives': analyses.run,
+    'historical-deep-dives': analyses.run,
     'availability-audit': availability_audit.run,
+    'final-analysis': final_analysis.run,
     'report': report.run,
     'test': test,
 }
@@ -41,7 +42,7 @@ STAGES = {
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=[*STAGES, 'run-model', 'pipeline', 'ablation', 'clean'])
+    parser.add_argument('command', choices=[*STAGES, 'run-model', 'evaluate', 'sensitivity', 'deep-dives', 'pipeline', 'ablation', 'clean'])
     command = parser.parse_args().command
     (data.ROOT / 'outputs').mkdir(exist_ok=True)
     if command == 'pipeline':
@@ -58,9 +59,12 @@ def main():
     elif command == 'run-model':
         models.fit_development()
         evaluation.evaluate()
-    elif command == 'ablation':
-        evaluation.evaluate()
-        report.ablation_figure()
+        availability_audit.run()
+        final_analysis.run()
+    elif command in ['evaluate', 'sensitivity', 'deep-dives', 'ablation']:
+        final_analysis.run()
+        from .final_report import figures
+        figures()
     else:
         STAGES[command]()
 

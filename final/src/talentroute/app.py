@@ -16,7 +16,7 @@ import pandas as pd
 from .analyses import Values, assumed_value, route_changes, workload_stress
 from .data import ROOT
 from .decision import Policy, capacity, observed_metrics
-from .evaluation import ROUTES, frame_actions, selected_model
+from .evaluation import ROUTES, frame_actions
 from .plan import apply_edits, check_plan, compare_actions
 from .models import CANDIDATES, ENG, risk_from
 
@@ -25,6 +25,12 @@ ACTIONS = {0: 'No action', 1: 'Alert', 2: 'Review'}
 
 
 @lru_cache(maxsize=2)
+def selected_model():
+    if not (ROOT / 'outputs/assessment_free_operational.joblib').exists():
+        raise FileNotFoundError('Run just pipeline to fit the final model')
+    return 'assessment_free'
+
+
 def artifacts(protocol):
     if protocol not in PROTOCOLS:
         raise ValueError('Unknown population protocol')

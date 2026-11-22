@@ -76,11 +76,11 @@ def route_changes(frame, reference, candidate, reasons):
     }
 
 
-def reconciliation(frame):
+def reconciliation(frame, model=None):
     """Round-robin classifier/detector/inactivity lists at the SAME contact quota."""
     rng = np.random.default_rng(7101)
     tie = rng.random(len(frame))
-    orders = [rank(frame[name], tie) for name in [selected_model(), 'rarity', 'inactive_days']]
+    orders = [rank(frame[name], tie) for name in [model or selected_model(), 'rarity', 'inactive_days']]
     reviews, alerts, _ = capacity(len(frame), Policy())
     chosen, seen = [], set()
     pointers = [0, 0, 0]
@@ -122,13 +122,13 @@ def value_difference_interval(frame, candidate, reference, values, repetitions=3
     return {'preference_difference': difference.sum(), 'difference_low': low, 'difference_high': high}
 
 
-def review_route_analysis(frame, protocol):
+def review_route_analysis(frame, protocol, model=None):
     """Separate action changes, crossover arithmetic and conditional uncertainty."""
     transition_rows, crossover_rows, uncertainty_rows = [], [], []
-    reference, _ = frame_actions(frame)
+    reference, _ = frame_actions(frame, model=model)
     reference_counts = observed_metrics(frame.target, reference)
     for route in ['classifier', 'anomaly', 'inactivity', 'course', 'random']:
-        actions, reasons = frame_actions(frame, route)
+        actions, reasons = frame_actions(frame, route, model=model)
         counts = observed_metrics(frame.target, actions)
         transition_rows.append({'protocol': protocol, 'route': route,
                                 **route_changes(frame, reference, actions, reasons), **counts})
@@ -142,11 +142,11 @@ def review_route_analysis(frame, protocol):
     return transition_rows, crossover_rows, uncertainty_rows
 
 
-def reconciliation_analysis(frame, protocol):
+def reconciliation_analysis(frame, protocol, model=None):
     """Compare equal contact quotas, overall and by course."""
     reconciliation_rows = []
-    reconciled = reconciliation(frame)
-    reference, _ = frame_actions(frame)
+    reconciled = reconciliation(frame, model)
+    reference, _ = frame_actions(frame, model=model)
     for name, actions in [('round_robin_layers', reconciled), ('classifier', reference)]:
         for module in ['ALL'] + sorted(frame.code_module.unique()):
             mask = np.ones(len(frame), dtype=bool) if module == 'ALL' else frame.code_module.eq(module).to_numpy()
@@ -184,13 +184,13 @@ def specialist_analysis(frame, train, protocol):
     return specialist_rows, eligibility
 
 
-def conditional_value_analysis(frame, protocol):
+def conditional_value_analysis(frame, protocol, model=None):
     """Sweep declared action preferences; do not fit causal treatment benefits."""
     value_rows = []
     for alert_share in [0, 0.05, 0.1, 0.2]:
         policy = Policy(alert_budget_fraction=alert_share)
         for route in ['classifier', 'anomaly', 'inactivity', 'course']:
-            actions, _ = frame_actions(frame, route, policy)
+            actions, _ = frame_actions(frame, route, policy, model=model)
             counts = observed_metrics(frame.target, actions, policy)
             for review_weight in [1, 3, 10]:
                 for withdrawn_value in [1, 2]:
