@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TalentRoute · Support decisions</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/">TalentRoute<span>Learning support</span></a>
+      <nav>
+        <a href="#workbench">Decision workbench</a
+        ><a href="#experiment">Try a case</a
+        ><a href="/report" target="_blank">Read the evidence ↗</a>
+      </nav>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">FROM EARLY SIGNALS TO A REVIEW QUEUE</p>
+          <h1>Who should the support team review first?</h1>
+          <p class="lead">
+            Use early course activity and assessment records to plan a limited
+            staff workload. Compare a risk-ranked queue with an alternative
+            review route, then inspect who receives each action.
+          </p>
+        </div>
+        <aside>
+          <strong>Development evidence</strong>
+          <p>OULAD · day 28 · 2013B → 2014B</p>
+          <p>
+            Previously examined development cohort. No new 2014J test. Model
+            scores estimate outcomes; they do not measure the benefit of
+            contacting someone.
+          </p>
+        </aside>
+      </section>
+      <section id="workbench" class="workbench">
+        <form id="controls">
+          <p class="eyebrow">01 / SET THE DECISION</p>
+          <h2>Your staffing scenario</h2>
+          <label
+            >Population protocol<select id="protocol">
+              <option value="identity_disjoint">
+                Identity-disjoint comparison
+              </option>
+              <option value="operational" selected>Past enrolments retained</option>
+            </select></label
+          >
+          <label
+            >Classifier<select id="model">
+              <option value="hgb_15_10">
+                Boosting 15/10 · fixed reference
+              </option>
+              <option value="assessment_free">Assessment-free · selected within 2013B</option>
+              <option value="logistic">Logistic regression · C=1</option>
+              <option value="logistic_c01">Logistic · stronger regularization (C=0.1)</option>
+              <option value="logistic_c10">Logistic · weaker regularization (C=10)</option>
+              <option value="tree">Decision tree</option>
+              <option value="hgb_7_2">Boosting 7/2</option>
+            </select></label
+          >
+          <label
+            >Review route<select id="route">
+              <option value="classifier">Risk ranking only</option>
+              <option value="anomaly">Reserve for unusual engagement</option>
+              <option value="inactivity">Reserve for inactivity</option>
+              <option value="course">Reserve across courses</option>
+              <option value="random">Random reserve comparator</option>
+            </select></label
+          >
+          <label
+            >Staff minutes per 100 cases <output id="budgetValue">300</output
+            ><input
+              id="budget"
+              type="range"
+              min="0"
+              max="900"
+              step="25"
+              value="300"
+          /></label>
+          <label
+            >Model score cutoff <output id="thresholdValue">0%</output
+            ><input
+              id="threshold"
+              type="range"
+              min="0"
+              max="1"
+              step=".05"
+              value="0"
+          /></label>
+          <label
+            >Review places reserved <output id="reserveValue">20%</output
+            ><input
+              id="reserve"
+              type="range"
+              min="0"
+              max=".3"
+              step=".05"
+              value=".2"
+          /></label>
+          <label
+            >Budget share reserved for alerts
+            <output id="shareValue">20%</output
+            ><input
+              id="share"
+              type="range"
+              min="0"
+              max=".4"
+              step=".05"
+              value=".2"
+          /></label>
+          <div class="pair">
+            <label
+              >Review minutes<input
+                id="reviewMinutes"
+                type="number"
+                min="1"
+                max="120"
+                value="30" /></label
+            ><label
+              >Alert minutes<input
+                id="alertMinutes"
+                type="number"
+                min=".1"
+                max="30"
+                step=".1"
+                value="2"
+            /></label>
+          </div>
+          <button type="submit">Update decisions →</button>
+          <p class="note">
+            Assessment-free mode ignores all assessment fields and selects its model within 2013B only. Other models retain the stated score-release assumption. All displayed evaluation is retrospective. The cutoff changes eligibility, not the model score. Scores are not established calibrated individual probabilities. Alert capacity is capped at 20% of enrolments. Unused
+            budget is allowed.
+          </p>
+        </form>
+        <div class="results">
+          <div class="section-top">
+            <div>
+              <p class="eyebrow">02 / SEE THE CONSEQUENCES</p>
+              <h2>Actions under this budget</h2>
+            </div>
+            <span id="status" role="status">Loading…</span>
+          </div>
+          <div id="error" role="alert"></div>
+          <div id="metrics" class="metrics"></div>
+          <p id="population" class="note"></p>
+          <details open class="decision-tools">
+            <summary>Why does this plan fit?</summary>
+            <p>Each course case receives one action. The support coordinator chooses the time budget and minimum risk. These are planning assumptions, not an observed university workflow.</p>
+            <div id="ruleChecks" aria-live="polite"></div>
+            <p id="reserveExplanation" class="note"></p>
+          </details>
+          <details class="decision-tools" id="planPanel">
+            <summary>Try your own plan</summary>
+            <p>Edit up to nine anonymous examples below. Every other case keeps its current action. Checking the plan does not change model scores, the main queue or the export.</p>
+            <div class="table-scroll"><table id="planCases"><thead><tr><th>Case / course</th><th>Model risk</th><th>Current decision explained</th><th>Your action</th></tr></thead><tbody></tbody></table></div>
+            <div class="tool-buttons"><button id="checkPlan">Check my plan</button><button id="resetPlan" class="secondary">Restore current plan</button><button id="overloadPlan" class="secondary">Try extra reviews</button></div>
+            <p class="note">A valid plan fits these constraints; it is not necessarily best. Risk ranking and alternative-route reservations explain the suggested queue but are not compulsory for your manual plan. Changing the settings resets edits.</p>
+            <div id="planResult" role="status"></div>
+          </details>
+          <details class="decision-tools" id="comparisonPanel">
+            <summary>What changed from my saved settings?</summary>
+            <button id="saveComparison" class="secondary">Save current settings as Before</button>
+            <p id="comparisonLabel" class="note">Save a starting point, then change the budget, threshold, model or route.</p>
+            <div id="comparisonResult" aria-live="polite"></div>
+            <p class="note">This compares decisions on the same development cohort, not intervention benefits. Course case counts do not equal unique people. Switching population protocol clears the comparison.</p>
+          </details>
+          <div id="actionCounts"></div>
+          <h3>Where the queue goes</h3>
+          <p class="note">
+            Cases by course; the same action colors are used throughout. Courses
+            marked * were absent from training.
+          </p>
+          <div class="legend">
+            <span class="review">Human review</span
+            ><span class="alert">Alert</span><span class="none">No action</span>
+          </div>
+          <div id="composition"></div>
+          <p id="changes" class="finding"></p>
+          <details>
+            <summary>What if this queue takes longer than planned?</summary>
+            <p>
+              Keep the current case list fixed and increase the assumed time
+              per action. A shortfall means that list cannot be completed within
+              the available minutes. Compare an explicit deferral rule with
+              planning a new queue at the higher cost.
+            </p>
+            <div id="workloadStress" class="table-scroll"></div>
+            <p class="note">
+              Deferral keeps the highest-risk original alerts first, then the
+              highest-risk original reviews that fit. Other cases are deferred;
+              action types are unchanged. Lower-risk alerts can be retained while
+              higher-risk reviews are deferred. This is an example contingency, not an
+              optimal or approved workflow. Coverage describes historical
+              outcomes reached, not outcomes prevented. Effort is per course case.
+            </p>
+          </details>
+          <details>
+            <summary>Conditional value of these actions</summary>
+            <p>
+              Preference units describe what a manager chooses to value. They
+              are assumptions, not measured intervention effects, prevented
+              failures or money. Historical Success does not prove that support
+              was unnecessary.
+            </p>
+            <div class="value-fields">
+              <label
+                >Fail targeting value<input
+                  id="failValue"
+                  type="number"
+                  min="0"
+                  value="1"
+                  step=".5" /></label
+              ><label
+                >Withdrawn targeting value<input
+                  id="withdrawnValue"
+                  type="number"
+                  min="0"
+                  value="1"
+                  step=".5" /></label
+              ><label
+                >Review weight<input
+                  id="reviewWeight"
+                  type="number"
+                  min="0"
+                  value="3"
+                  step=".5" /></label
+              ><label
+                >Alert weight<input
+                  id="alertWeight"
+                  type="number"
+                  min="0"
+                  value="1"
+                  step=".5" /></label
+              ><label
+                >Review burden for Success<input
+                  id="reviewBurden"
+                  type="number"
+                  min="0"
+                  value=".5"
+                  step=".05" /></label
+              ><label
+                >Alert burden for Success<input
+                  id="alertBurden"
+                  type="number"
+                  min="0"
+                  value=".05"
+                  step=".05" /></label
+              ><label
+                >Effort units per minute<input
+                  id="effortValue"
+                  type="number"
+                  min="0"
+                  value=".01"
+                  step=".01"
+              /></label>
+            </div>
+            <button id="valueUpdate" class="secondary">
+              Recalculate scenario
+            </button>
+            <p id="valueResult"></p>
+            <p class="note">
+              Weighted targeting − assumed burden on historically successful
+              cases − staff effort. Compare the break-even regions in the report
+              before choosing weights.
+            </p>
+          </details>
+          <div class="section-top">
+            <h3>Anonymous case queue</h3>
+            <button id="export" class="secondary">Export CSV</button>
+          </div>
+          <p class="note">
+            First 100 selected cases shown. Export includes the full queue, with
+            no student identifiers, demographics or outcomes.
+          </p>
+          <div class="table-scroll">
+            <table id="queue">
+              <thead>
+                <tr>
+                  <th>Case</th>
+                  <th>Course</th>
+                  <th>Model risk</th>
+                  <th>Action</th>
+                  <th>Route reason</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section id="experiment">
+        <p class="eyebrow">03 / UNDERSTAND THE MODEL</p>
+        <h2>Try a single case</h2>
+        <p>
+          Load observed early-course inputs, edit them, and score the record
+          using the selected fitted model. This is a model response experiment,
+          not evidence that changing activity causes an outcome. It does not
+          alter the observed cohort evaluation above.
+        </p>
+        <div class="case-load">
+          <label
+            >Anonymous case number<input
+              id="caseNumber"
+              type="number"
+              min="1"
+              max="6508"
+              value="1" /></label
+          ><button id="loadCase" class="secondary">Load observed inputs</button>
+        </div>
+        <form id="caseForm">
+          <div id="caseFields" class="case-fields"></div>
+          <button type="submit">Calculate model response →</button>
+        </form>
+        <div id="caseError" role="alert"></div>
+        <div id="prediction" class="prediction"></div>
+      </section>
+      <footer>
+        <strong>For a support coordinator, with human review.</strong>
+        <p>
+          The unit is a course-enrolment case. Coordinate duplicate learners
+          before outreach. All costs and queue rules are constructed scenarios;
+          OULAD contains no measured action benefits. Keep the historical test
+          separate from this development work.
+        </p>
+      </footer>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
