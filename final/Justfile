@@ -1,0 +1,66 @@
+set shell := ["bash", "-cu"]
+export OMP_NUM_THREADS := "2"
+export OPENBLAS_NUM_THREADS := "2"
+export MKL_NUM_THREADS := "2"
+export LOKY_MAX_CPU_COUNT := "2"
+
+default:
+    @just --list
+
+install:
+    uv sync --frozen
+
+download-data:
+    uv run python -m talentroute download-data
+
+calendar-audit:
+    uv run python -m talentroute calendar-audit
+
+prepare-data:
+    uv run python -m talentroute prepare-data
+
+eda:
+    uv run python -m talentroute eda
+
+run-baseline:
+    uv run python -m talentroute run-baseline
+
+run-model:
+    uv run python -m talentroute run-model
+
+evaluate:
+    uv run python -m talentroute evaluate
+
+selection-stability:
+    uv run python -m talentroute selection-stability
+
+# Matched removal/replacement of the review route is in the evaluation outputs.
+ablation:
+    uv run python -m talentroute ablation
+
+sensitivity:
+    uv run python -m talentroute sensitivity
+
+calibration:
+    uv run python -m talentroute calibration
+
+deep-dives:
+    uv run python -m talentroute deep-dives
+
+availability-audit:
+    uv run python -m talentroute availability-audit
+
+report:
+    uv run python -m talentroute report
+
+test:
+    uv run python -m talentroute test
+
+pipeline:
+    uv run python -m talentroute pipeline
+
+app port="8800":
+    uv run python -m talentroute.app --port {{port}}
+
+clean:
+    uv run python -m talentroute clean
