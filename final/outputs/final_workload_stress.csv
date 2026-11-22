@@ -1,0 +1,13 @@
+protocol,review_multiplier,alert_multiplier,review_minutes,alert_minutes,budget_minutes,frozen_required_minutes,shortfall_minutes,frozen_feasible,deferred_n,retained_coverage,retained_minutes,replanned_coverage,replanned_minutes,replanned_minus_retained,routing_model,evaluation_scope
+identity_disjoint,1.0,1.0,30.0,2.0,19524.0,19522.0,0.0,True,0,0.39923833703586165,19522.0,0.39923833703586165,19522.0,0.0,assessment_free,previously_examined_2014B_retrospective
+identity_disjoint,1.0,1.5,30.0,3.0,19524.0,20823.0,1299.0,False,44,0.38908283084735007,19503.0,0.39162170739447794,19503.0,0.0025388765471278663,assessment_free,previously_examined_2014B_retrospective
+identity_disjoint,1.5,1.0,45.0,2.0,19524.0,27982.0,8458.0,False,188,0.3529038400507775,19522.0,0.36972389717549986,19522.0,0.016820057124722343,assessment_free,previously_examined_2014B_retrospective
+identity_disjoint,1.5,1.5,45.0,3.0,19524.0,29283.0,9759.0,False,217,0.34528721040939386,19518.0,0.36274198667089813,19518.0,0.017454776261504268,assessment_free,previously_examined_2014B_retrospective
+identity_disjoint,2.0,1.0,60.0,2.0,19524.0,36442.0,16918.0,False,282,0.33037131069501746,19522.0,0.35004760393525863,19522.0,0.01967629324024117,assessment_free,previously_examined_2014B_retrospective
+identity_disjoint,2.0,1.5,60.0,3.0,19524.0,37743.0,18219.0,False,304,0.32497619803237066,19503.0,0.34528721040939386,19503.0,0.020311012377023208,assessment_free,previously_examined_2014B_retrospective
+operational,1.0,1.0,30.0,2.0,19524.0,19522.0,0.0,True,0,0.3989209774674706,19522.0,0.3989209774674706,19522.0,0.0,assessment_free,previously_examined_2014B_retrospective
+operational,1.0,1.5,30.0,3.0,19524.0,20823.0,1299.0,False,44,0.3884481117105681,19503.0,0.39320850523643286,19503.0,0.00476039352586477,assessment_free,previously_examined_2014B_retrospective
+operational,1.5,1.0,45.0,2.0,19524.0,27982.0,8458.0,False,188,0.3513170422088226,19522.0,0.3681370993335449,19522.0,0.016820057124722287,assessment_free,previously_examined_2014B_retrospective
+operational,1.5,1.5,45.0,3.0,19524.0,29283.0,9759.0,False,217,0.34433513170422086,19518.0,0.3617899079657252,19518.0,0.017454776261504323,assessment_free,previously_examined_2014B_retrospective
+operational,2.0,1.0,60.0,2.0,19524.0,36442.0,16918.0,False,282,0.32878451285306254,19522.0,0.3490955252300857,19522.0,0.020311012377023152,assessment_free,previously_examined_2014B_retrospective
+operational,2.0,1.5,60.0,3.0,19524.0,37743.0,18219.0,False,304,0.3240241193271977,19503.0,0.3456045699777848,19503.0,0.021580450650587113,assessment_free,previously_examined_2014B_retrospective
