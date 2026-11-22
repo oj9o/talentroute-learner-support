@@ -21,7 +21,7 @@
           <p class="eyebrow">FROM EARLY SIGNALS TO A REVIEW QUEUE</p>
           <h1>Who should the support team review first?</h1>
           <p class="lead">
-            Use early course activity and assessment records to plan a limited
+            Use early course activity and enrolment context to plan a limited
             staff workload. Compare a risk-ranked queue with an alternative
             review route, then inspect who receives each action.
           </p>
@@ -51,14 +51,14 @@
           <label
             >Classifier<select id="model">
               <option value="hgb_15_10">
-                Boosting 15/10 · fixed reference
+                Historical boosting 15/10
               </option>
-              <option value="assessment_free">Assessment-free · selected within 2013B</option>
-              <option value="logistic">Logistic regression · C=1</option>
-              <option value="logistic_c01">Logistic · stronger regularization (C=0.1)</option>
-              <option value="logistic_c10">Logistic · weaker regularization (C=10)</option>
-              <option value="tree">Decision tree</option>
-              <option value="hgb_7_2">Boosting 7/2</option>
+              <option value="assessment_free" selected>Assessment-free · selected within 2013B</option>
+              <option value="logistic">Historical logistic · C=1</option>
+              <option value="logistic_c01">Historical logistic · stronger regularization (C=0.1)</option>
+              <option value="logistic_c10">Historical logistic · weaker regularization (C=10)</option>
+              <option value="tree">Historical decision tree</option>
+              <option value="hgb_7_2">Historical boosting 7/2</option>
             </select></label
           >
           <label
