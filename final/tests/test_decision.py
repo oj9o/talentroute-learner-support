@@ -61,7 +61,7 @@ def test_invalid_values_are_rejected():
         allocate([0.2], [0.2], [1], ['A'], Policy(review_minutes=0))
 def test_default_route_uses_selected_model_instead_of_old_reference(monkeypatch):
     from talentroute import evaluation
-    monkeypatch.setattr(evaluation, 'selected_model', lambda: 'logistic')
+    monkeypatch.setattr(evaluation, 'historical_selected_model', lambda: 'logistic')
     frame = pd.DataFrame({'logistic': [.9, .1], 'hgb_15_10': [.1, .9],
                           'rarity': [0, 0], 'inactive_days': [0, 0], 'code_module': ['A', 'A']})
     policy = Policy(minutes_per_100=1500, alert_learner_cap=0)

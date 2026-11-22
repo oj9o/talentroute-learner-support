@@ -88,3 +88,42 @@ def test_checker_never_reads_outcomes(monkeypatch):
     # Deliberately remove evaluation outcomes from the checker input.
     monkeypatch.setattr(app, 'artifacts', lambda protocol: (frame.drop(columns='target'), bundle))
     assert app.check_edited_plan({'model':'logistic'})['feasible']
+
+
+def test_artifact_cache_reuses_files_and_isolates_returned_frames(monkeypatch):
+    from talentroute import app
+    app._load_artifacts.cache_clear()
+    original_load = app.joblib.load
+    loads = []
+    def counted(path):
+        loads.append(path)
+        return original_load(path)
+    monkeypatch.setattr(app.joblib, 'load', counted)
+    first, bundle = app.artifacts('operational')
+    expected = first.assessment_free.copy()
+    first['assessment_free'] = -1
+    bundle['models'].pop('assessment_free')
+    second, models = app.artifacts('operational')
+    pd.testing.assert_series_equal(second.assessment_free, expected)
+    assert 'assessment_free' in models['models']
+    assert len(loads) == 2
+    app._load_artifacts.cache_clear()
+
+
+def test_artifact_cache_invalidates_after_file_version_changes(monkeypatch):
+    from talentroute import app
+    from pathlib import Path
+    from types import SimpleNamespace
+    original_stat = Path.stat
+    app._load_artifacts.cache_clear()
+    app.artifacts('operational')
+    before = app._load_artifacts.cache_info().misses
+    def changed_stat(path, *args, **kwargs):
+        value = original_stat(path, *args, **kwargs)
+        if path.name == 'assessment_free_operational.joblib':
+            return SimpleNamespace(st_mtime_ns=value.st_mtime_ns + 1, st_size=value.st_size)
+        return value
+    monkeypatch.setattr(Path, 'stat', changed_stat)
+    app.artifacts('operational')
+    assert app._load_artifacts.cache_info().misses == before + 1
+    app._load_artifacts.cache_clear()

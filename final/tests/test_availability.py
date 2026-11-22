@@ -40,8 +40,8 @@ def test_selection_rejects_evaluation_rows_before_fitting():
 
 def test_default_app_and_final_outputs_use_identical_model_and_policy():
     from talentroute.data import ROOT
-    from talentroute.app import selected_model
-    assert selected_model() == 'assessment_free'
+    from talentroute.app import default_model
+    assert default_model() == 'assessment_free'
     outputs = pd.read_csv(ROOT / 'outputs/final_comparison.csv')
     for protocol in ['identity_disjoint', 'operational']:
         result = scenario({'protocol': protocol})

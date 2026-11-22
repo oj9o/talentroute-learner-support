@@ -80,7 +80,7 @@ def test_app_explains_missing_pipeline_outputs_instead_of_dropping_request(monke
     from talentroute import app
     def missing():
         raise FileNotFoundError('development_selection.csv')
-    monkeypatch.setattr(app, 'selected_model', missing)
+    monkeypatch.setattr(app, 'default_model', missing)
     responses = []
     request = SimpleNamespace(path='/configuration',
                               reply=lambda body, status=200: responses.append((status, body)))
