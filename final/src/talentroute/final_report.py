@@ -161,6 +161,8 @@ The operational companion contacts {int(operational.adverse_contact_n):,} advers
 
 ## 4. Ablation
 
+The intermediate success gate required a paired coverage-difference interval entirely above zero versus the model-free rule. The detector additionally required improvement over classifier-only with at most a two-percentage-point precision loss. Neither improvement gate is cleared here: both intervals cross zero. The detector satisfies the precision margin but not the improvement requirement. The current inactivity comparator, training population and assessment-free inputs differ from the intermediate setup; this is a disclosed revision, not a claim that the original experiment passed.
+
 The anomaly reserve contacts {int(anomaly.adverse_contact_n):,} adverse cases, only {int(anomaly.adverse_contact_n-main.adverse_contact_n)} more than classifier-only. Its paired coverage-difference interval is [{anomaly.difference_low*100:.2f}, {anomaly.difference_high*100:.2f}] percentage points. It changes {int(changes.changed_action_n)} actions, gains {int(changes.new_adverse_contact_n)} adverse contacts and loses {int(changes.lost_adverse_contact_n)}. This distinguishes changed action type from newly reached people. Detector outcome AP is {metrics.isolation_forest_outcome_ap:.3f}, below inactivity's {metrics.inactivity_outcome_ap:.3f}; outcome AP is only a relevance diagnostic because true anomaly labels do not exist. The default remains zero detector reserve.
 
 ## 5. Sensitivity, stability and concentrated failures
