@@ -54,7 +54,7 @@ See [the short demo walkthrough](docs/decision_demo.md). These tools clarify a c
 
 After data preparation, `run-model` fits the historical comparators, the training-selected assessment-free model and both connected components, then evaluates the final decision queues. `evaluate`, `ablation`, `sensitivity` and `deep-dives` regenerate the final-system analysis suite from fitted artifacts; ablation and sensitivity also regenerate final figures. These individual recipes share one implementation. The full pipeline runs each historical stage once, then the availability audit, final analyses, report and tests once. Use `just pipeline` for a clean dependency order.
 
-The assessment-free variant excludes all five assessment-derived fields because score-release timing is unverified, regardless of predictive performance. Assessment edits cannot change its predictions. Matched feature-removal results are in `outputs/availability_audit.csv`. The same final model drives the report and default app; the original models remain explicitly labeled historical choices.
+The assessment-free variant removes scores because release timing is unverified. Removing submission-derived fields too is conservative; a submission-only variant was not tested. Assessment edits cannot change its predictions. Matched feature-removal results are in `outputs/availability_audit.csv`. The same final model drives the report and default app; the original models remain explicitly labeled historical choices.
 
 Current runtime and verification results are recorded after a complete pipeline run. Independent final confirmation remains unavailable: both evaluation cohorts were previously examined. No current recipe scores 2014J. Do not interpret retrospective improvements, bootstrap intervals or seed checks as an independent test.
 
@@ -63,3 +63,13 @@ Current runtime and verification results are recorded after a complete pipeline 
 On 22 November 2026, the complete updated pipeline passed 50 tests on macOS (Python 3.14.7; 21.8 seconds) and Linux amd64 (Python 3.14.2; 43.7 seconds). Both used cached, checksum-verified raw data and an installed environment; first download and installation add time. These are execution checks, not independent model validation.
 
 Cross-platform comparison reproduced the final decision counts, sensitivity and subgroup outputs. One operational Withdrawn AP differed by less than 0.000007; primary adverse AP and coverage were unchanged.
+
+## Reading the code and interpreting decisions
+
+Start with `decision.py` for capacity and allocation, `plan.py` for the outcome-free checker, and `app.py` for explain/check/compare. `default_model()` is the final app choice; `historical_selected_model()` is used only by the labeled earlier analysis. `final_analysis.py` generates current evidence and `final_report.py` renders it. `report.py` now contains EDA, the historical budget plot, table formatting and the report entry point; unused historical plot functions were removed.
+
+The app caches fitted artifacts until their file versions change and returns a separate data frame to each request. It never fits models. Both historical and final numerical stages remain in the full pipeline to reproduce the experiment history, each once; they are not two competing final reports.
+
+No action can mean capacity ran out, not that a learner is safe. A higher budget changes assignments, not fitted predictions. Replanning can restore feasibility after effort changes, but is not proven optimal without actual intervention values. The report's decision table states when to reconsider each recommendation.
+
+After code simplification, the full macOS pipeline completed in 20.5 seconds with 52 tests passing. All 16 final aggregate CSVs were byte-identical to the preceding version. The extra tests check cached-data isolation and refresh after artifact changes.
