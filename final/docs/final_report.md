@@ -94,6 +94,8 @@ The operational companion contacts 1,257 adverse cases (39.9%). Similar aggregat
 
 ## 4. Ablation
 
+The intermediate success gate required a paired coverage-difference interval entirely above zero versus the model-free rule. The detector additionally required improvement over classifier-only with at most a two-percentage-point precision loss. Neither improvement gate is cleared here: both intervals cross zero. The detector satisfies the precision margin but not the improvement requirement. The current inactivity comparator, training population and assessment-free inputs differ from the intermediate setup; this is a disclosed revision, not a claim that the original experiment passed.
+
 The anomaly reserve contacts 1,260 adverse cases, only 2 more than classifier-only. Its paired coverage-difference interval is [-0.10, 0.22] percentage points. It changes 83 actions, gains 4 adverse contacts and loses 2. This distinguishes changed action type from newly reached people. Detector outcome AP is 0.595, below inactivity's 0.627; outcome AP is only a relevance diagnostic because true anomaly labels do not exist. The default remains zero detector reserve.
 
 ## 5. Sensitivity, stability and concentrated failures

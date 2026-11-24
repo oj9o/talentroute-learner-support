@@ -1,7 +1,7 @@
 # Presentation narration
 
 TALENTROUTE — FINAL ASSESSMENT-FREE RECORDING SCRIPT
-Target duration: 09:44. 967 spoken words including transitions.
+Target duration: 09:44. 972 spoken words including transitions.
 Timing estimate uses the reported 120 words in 65 seconds; no audio recording was measured.
 Record a full rehearsal. Slides 1–12 are spoken; slides 13–15 are Q&A only.
 
@@ -31,13 +31,13 @@ Did this improve the decision?
 
 ## Slide 5: A small observed gain, with uncertainty (02:52–03:38)
 
-The final assessment-free classifier reaches thirty-nine point nine percent of adverse cases, compared with thirty-eight point six percent for inactivity. That is forty-two additional cases at the same workload. Average precision is point six six one; contact precision is sixty-seven point five percent. The paired coverage-difference interval crosses zero, so I cannot claim established superiority. These conditional intervals hold predictions and actions fixed. They do not include earlier search or prove future performance.
+The final assessment-free classifier reaches thirty-nine point nine percent of adverse cases, compared with thirty-eight point six percent for inactivity. That is forty-two additional cases at the same workload. Average precision is point six six one; contact precision is sixty-seven point five percent. The paired interval crosses zero, so the original improvement gate is not met. These conditional intervals hold predictions and actions fixed. They do not include earlier search or prove future performance.
 
 What did the second technique add?
 
 ## Slide 6: The anomaly reserve adds two adverse contacts (03:38–04:26)
 
-The anomaly reserve changes eighty-three assignments. Five cases enter the contact list and five leave; four entering cases have adverse outcomes, while two adverse cases leave. The net gain is only two. Its paired interval crosses zero. Thirty-four alerts become reviews, which changes action type without necessarily reaching someone new. Isolation Forest also ranks adverse outcomes less well than inactivity. That is outcome relevance, not anomaly accuracy. I keep the failed acceptance result and recommend no reserve.
+The anomaly reserve changes eighty-three assignments. Five cases enter the contact list and five leave; four entering cases have adverse outcomes, while two adverse cases leave. The net gain is only two. Its paired interval crosses zero. Thirty-four alerts become reviews, which changes action type without necessarily reaching someone new. Isolation Forest also ranks adverse outcomes less well than inactivity. That is outcome relevance, not anomaly accuracy. The two-point precision margin passes, but the improvement gate fails. I recommend no reserve.
 
 I also investigated three deeper questions.
 
