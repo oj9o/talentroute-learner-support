@@ -7,7 +7,9 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE = "https://archive.ics.uci.edu/dataset/349/open+university+learning+analytics+dataset"
+SOURCE = (
+    "https://archive.ics.uci.edu/dataset/349/open+university+learning+analytics+dataset"
+)
 
 
 def presentation_bounds(code, length, cutoff=28):
@@ -41,6 +43,7 @@ def availability_status(training, decision, assumed_release_delay):
 
 
 def write_csv(path, records):
+    """Save calendar assumptions and audit results in the output directory."""
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(records[0]))
@@ -64,29 +67,39 @@ def run():
     # The 2014J pair audits metadata relevant to prior validation availability;
     # it neither reads 2014J student data nor evaluates the observed final cohort.
     for training_period, decision_period in [
-        ("2013B", "2014B"), ("2013J", "2014B"), ("2014B", "2014J")
+        ("2013B", "2014B"),
+        ("2013J", "2014B"),
+        ("2014B", "2014J"),
     ]:
-        training_rows = [r for r in calendar_rows if r["code_presentation"] == training_period]
-        decision_rows = [r for r in calendar_rows if r["code_presentation"] == decision_period]
+        training_rows = [
+            r for r in calendar_rows if r["code_presentation"] == training_period
+        ]
+        decision_rows = [
+            r for r in calendar_rows if r["code_presentation"] == decision_period
+        ]
         decision = {
             "decision_earliest": min(r["decision_earliest"] for r in decision_rows),
             "decision_latest": max(r["decision_latest"] for r in decision_rows),
         }
         for course in training_rows:
             for delay in [0, 30, 60]:
-                audit.append({
-                    "training_presentation": training_period,
-                    "training_module": course["code_module"],
-                    "decision_presentation": decision_period,
-                    "course_end_earliest": course["end_earliest"],
-                    "course_end_latest": course["end_latest"],
-                    **decision,
-                    "release_delay_days_assumed": delay,
-                    "status": availability_status(course, decision, delay),
-                    "actual_release_date_observed": False,
-                })
+                audit.append(
+                    {
+                        "training_presentation": training_period,
+                        "training_module": course["code_module"],
+                        "decision_presentation": decision_period,
+                        "course_end_earliest": course["end_earliest"],
+                        "course_end_latest": course["end_latest"],
+                        **decision,
+                        "release_delay_days_assumed": delay,
+                        "status": availability_status(course, decision, delay),
+                        "actual_release_date_observed": False,
+                    }
+                )
     write_csv(ROOT / "outputs/label_availability.csv", audit)
-    print("Calendar audit written from courses.csv only; exact label release dates remain unknown.")
+    print(
+        "Calendar audit written from courses.csv only; exact label release dates remain unknown."
+    )
     return audit
 
 
