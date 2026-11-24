@@ -1,7 +1,7 @@
 # Presentation narration
 
 TALENTROUTE — FINAL ASSESSMENT-FREE RECORDING SCRIPT
-Target duration: 09:44. 966 spoken words including transitions.
+Target duration: 09:44. 967 spoken words including transitions.
 Timing estimate uses the reported 120 words in 65 seconds; no audio recording was measured.
 Record a full rehearsal. Slides 1–12 are spoken; slides 13–15 are Q&A only.
 
@@ -67,7 +67,7 @@ The separate checker assesses a proposed plan. The original plan fits. Extra rev
 
 I restore the original plan, save these settings, and raise the budget from three hundred to six hundred. Thirteen hundred actions change; six hundred and fifty additional cases enter the list. Budget changes affect actions, not predictions.
 
-This is a feasible queue, not proof that support prevents failure.
+No action can mean no capacity. Human review is still needed before outreach.
 
 What did the repairs change?
 
@@ -79,7 +79,7 @@ This leads to my recommendation.
 
 ## Slide 12: Use verifiable inputs and report the cost (09:09–09:44)
 
-TalentRoute makes staffing trade-offs visible and produces a checkable queue. I recommend the assessment-free, risk-only version as a research demonstration. Its modest targeting gain is uncertain, so a simple inactivity comparator remains important. Before real outreach, agree actual effort, review course concentration, coordinate repeated learners and record support delivery. New independent outcomes and intervention evidence are still needed. Thank you.
+I recommend assessment-free inputs while score timing is unverified, and no anomaly reserve while its value remains unestablished. Keep inactivity as a comparator. If effort changes, recheck the plan. Before outreach, review course concentration and coordinate repeated learners. These are conditional decisions, not proof of prevented failure. New independent outcomes and measured intervention evidence are still needed. Thank you.
 
 
 
