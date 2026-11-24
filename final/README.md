@@ -60,7 +60,7 @@ Current runtime and verification results are recorded after a complete pipeline 
 
 ## Verified reproduction
 
-On 22 November 2026, the complete updated pipeline passed 50 tests on macOS (Python 3.14.7; 21.8 seconds) and Linux amd64 (Python 3.14.2; 43.7 seconds). Both used cached, checksum-verified raw data and an installed environment; first download and installation add time. These are execution checks, not independent model validation.
+Historical reproduction on 22 November 2026: that earlier pipeline passed 50 tests on macOS (Python 3.14.7; 21.8 seconds) and Linux amd64 (Python 3.14.2; 43.7 seconds). Both used cached, checksum-verified raw data and an installed environment; first download and installation add time. These are execution checks, not independent model validation.
 
 Cross-platform comparison reproduced the final decision counts, sensitivity and subgroup outputs. One operational Withdrawn AP differed by less than 0.000007; primary adverse AP and coverage were unchanged.
 
@@ -68,8 +68,20 @@ Cross-platform comparison reproduced the final decision counts, sensitivity and 
 
 Start with `decision.py` for capacity and allocation, `plan.py` for the outcome-free checker, and `app.py` for explain/check/compare. `default_model()` is the final app choice; `historical_selected_model()` is used only by the labeled earlier analysis. `final_analysis.py` generates current evidence and `final_report.py` renders it. `report.py` now contains EDA, the historical budget plot, table formatting and the report entry point; unused historical plot functions were removed.
 
+Read the final path in this order:
+
+1. `data.py`: build day-28 features and separate the two training-population designs.
+2. `models.py`: define unfitted classifiers and the engagement detector; keep preprocessing inside fitting.
+3. `availability_audit.py`: choose candidates within training folds and save the assessment-free model.
+4. `decision.py`: turn scores into review, alert or no-action assignments under the declared budget.
+5. `final_analysis.py`: run named stages for metrics, route comparisons, segment profiles, sensitivity, calibration, seed checks and deeper analyses; write `final_*.csv`.
+6. `final_report.py`: read those CSVs and create the report and figures.
+7. `plan.py` and `app.py`: check proposed plans and expose the workbench; neither trains a model.
+
+`__main__.py` shows the execution order. `evaluation.py` retains the historical assessment-enabled comparisons and shared metric helpers; `analyses.py` supplies the deeper-analysis helpers. Historical outputs remain labeled so the final recommendation is not confused with earlier experiments. Action codes are 0 = no action, 1 = alert and 2 = review. Every score and action array preserves the course-case row order.
+
 The app caches fitted artifacts until their file versions change and returns a separate data frame to each request. It never fits models. Both historical and final numerical stages remain in the full pipeline to reproduce the experiment history, each once; they are not two competing final reports.
 
 No action can mean capacity ran out, not that a learner is safe. A higher budget changes assignments, not fitted predictions. Replanning can restore feasibility after effort changes, but is not proven optimal without actual intervention values. The report's decision table states when to reconsider each recommendation.
 
-After code simplification, the full macOS pipeline completed in 20.5 seconds with 52 tests passing. All 16 final aggregate CSVs were byte-identical to the preceding version. The extra tests check cached-data isolation and refresh after artifact changes.
+On 24 November 2026, after splitting the final analysis into named stages and formatting the source, the full macOS pipeline completed in 21.4 seconds with 52 tests passing. Every numerical CSV except the timing log was byte-identical to the preceding version. The tests include cached-data isolation and refresh after artifact changes.
