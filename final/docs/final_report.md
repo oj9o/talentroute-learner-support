@@ -4,11 +4,11 @@ Mouza Aldarmaki · MAAI7101 · Final project
 
 ## Executive summary
 
-TalentRoute helps a learner-support coordinator decide which course cases to review or alert when staff time is limited. The final recommended demonstration uses an assessment-free classifier, selected using learner-grouped folds within 2013B, and a risk-ranked queue. It excludes assessment scores and submission-derived fields because their availability at the decision date cannot be fully established. Classification and a connected Isolation Forest review-reserve experiment implement two technique families; evidence does not justify activating that reserve by default.
+TalentRoute helps a learner-support coordinator decide which course cases to review or alert when staff time is limited. It ranks cases using early platform activity and enrolment information. Assessment scores are excluded because their release timing is unverified; submission-derived fields are also excluded as a conservative simplification, not because they are proven unavailable. A submission-only alternative was not tested.
 
-On previously examined 2014B, the identity-disjoint evaluation contacts 1,258 of 3,151 later adverse-outcome cases (39.9%), against 38.6% for inactivity ranking at identical staffing capacity. The paired difference interval is [-0.19, 2.78] percentage points. It crosses zero: superiority is not established. These are retrospective targeting results, not prevented failures, measured intervention effects or independent final-test evidence.
+In a previously examined cohort, the queue reaches 1,258 of 3,151 course cases with later failure or withdrawal (39.9%), versus 1,216 (38.6%) when ranking by inactivity alone at the same workload. The difference is too uncertain to establish superiority. An additional unusual-engagement detector does not establish enough extra targeting value to recommend reserving review places for it.
 
-The practical output is an adjustable queue with a separate feasibility checker. The strongest defensible conclusion is that staffing assumptions and course composition materially change who gets attention. The app makes these trade-offs inspectable. It is a research prototype, not a validated institutional policy.
+The practical output is an adjustable queue with a separate feasibility checker. Staffing assumptions and course composition materially change who gets attention. The recommendation is a research tool for inspecting these trade-offs, not a validated institutional policy. Historical targeting does not establish prevented failures or intervention benefits, and no untouched final test remains.
 
 ## 1. Who decides what, and why?
 
@@ -17,6 +17,8 @@ An educational consulting team may support universities as well as other learnin
 The business question is: **How should limited review and alert capacity be directed toward learners with later observed Fail or Withdrawn outcomes, and where does that allocation fail?** This makes the university population directly relevant to the consulting scenario. There is no assertion that university learners behave like corporate employees. Applying the system elsewhere would require local data, workflow agreement and validation.
 
 Four questions structure the evidence: Does classification outperform a simple comparator? Does an anomaly review reserve add targeting value? How do staffing assumptions and course or learner segments change the queue? Which attractive alternatives fail or remain uncertain? A valuable result can be a rejected method or a capacity constraint, rather than a higher headline score.
+
+Since the intermediate submission, the final recommendation uses assessment-free inputs and model selection within earlier training data. A separate review reserve replaces probability/percentile blending; the evidence supports leaving that reserve off. Segment and calibration audits now accompany separate identity-disjoint and operational training comparisons.
 
 ## 2. Proposed system
 
@@ -54,7 +56,7 @@ The primary ML metric is adverse-outcome average precision (AP), appropriate for
 
 The default scenario allocates 300 staff minutes per 100 enrolments, assumes 30 minutes per review and two per alert, reserves an initial alert budget share of 20%, and caps alerts at 20% of cases. Whole-action rounding and the remaining time determine capacity. These are explicit constructed assumptions, not observed university practice. For this cohort the queue has 564 reviews and 1,301 alerts, consuming 19,522 minutes. Its contact precision is 67.5%. Reviews reach 456 adverse cases versus 444 for inactivity, while 108 versus 120 reviewed cases later succeed. These counts distinguish action tiers without claiming support was unnecessary.
 
-Isolation Forest fits engagement features on training data only. Its training-reference anomaly percentile ranks a separately reserved portion of the existing review capacity. It is never added to the outcome probability: equal numeric ranges do not imply comparable meanings. Removing the reserve gives the default classifier-only queue. Inactivity, course round-robin and seeded-random reserves test whether the detector earns its complexity. A full inactivity-ranked queue is the transparent no-model comparator; it is distinct from reserving only some reviews for inactivity.
+Isolation Forest fits engagement features on training data only. Its training-reference anomaly percentile ranks a separately reserved portion of the existing review capacity. It is never added to the outcome probability: equal numeric ranges do not imply comparable meanings. Removing the reserve gives the default classifier-only queue. Inactivity, course round-robin and seeded-random reserves test whether the detector earns its complexity. A full inactivity-ranked queue is the transparent no-model comparator; it is distinct from reserving only some reviews for inactivity. It replaces the intermediate score-plus-inactivity rule to match the assessment-free input restriction.
 
 All route comparisons use the same capacity. Cutoff sweeps apply the classifier eligibility mask to the inactivity comparator too, so they compare ordering among the same eligible cases. Thresholds are model-score eligibility rules, not calibrated guarantees. No threshold or cost is selected for a favorable retrospective result.
 
@@ -88,7 +90,7 @@ All route comparisons use the same capacity. Cutoff sweeps apply the classifier 
 
 The difference interval columns compare each route with classifier-only. The separate inactivity comparison is reported in the executive summary and exported CSV. Intervals resample learners with all their enrolments together, holding predictions and assignments fixed. They describe conditional sampling uncertainty; they exclude refitting, earlier search and workflow uncertainty. They are not prospective confidence claims or treatment-effect intervals.
 
-The operational companion contacts 1,257 adverse cases (39.9%). Similar aggregate results across these designs do not prove generalization. Three seed checks refit the fixed selected candidate and vary tie-breaking and detector seeds; their spread is reported separately. Logistic fitting is deterministic here, so unchanged classifier coverage is expected; detector variation is the meaningful stochastic check. Seeds are not independent test populations.
+The operational companion contacts 1,257 adverse cases (39.9%). This training-population sensitivity check retains the same evaluation cases; it is not an independent test or evidence that all segments are stable. Three seed checks refit the fixed selected candidate and vary tie-breaking and detector seeds; their spread is reported separately. Logistic fitting is deterministic here, so unchanged classifier coverage is expected; detector variation is the meaningful stochastic check. Seeds are not independent test populations.
 
 ![Final route comparison](../outputs/figures/final_comparison.png)
 

@@ -4,7 +4,7 @@ The final system is assessment-free. Candidate selection uses three learner-grou
 
 ## Historical development procedure (superseded for final recommendation)
 
-# Development revision after Intermediate feedback
+### Archived development revision after Intermediate feedback
 
 This revision builds on TalentRoute's submitted data processing, three-class
 classification, engagement outlier detection and constrained support allocation.
