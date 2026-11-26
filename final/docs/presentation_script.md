@@ -1,7 +1,7 @@
 # Presentation narration
 
 TALENTROUTE — FINAL RECORDING SCRIPT
-Planned duration: 09:44. 956 spoken words including transitions.
+Planned duration: 09:44. 957 spoken words including transitions.
 This is a pacing plan, not a measured recording. Full rehearsal required.
 Slides 1–12 are spoken; slides 13–15 are backup only.
 
@@ -13,25 +13,25 @@ Let me start with the decision.
 
 ## Slide 2: The decision belongs to the support coordinator (00:26–01:15)
 
-The coordinator chooses which course cases receive a review, a shorter alert, or no action. OULAD does not record the university's actual support workflow, so the comparator is a transparent inactivity ranking. The scenario provides three hundred staff minutes per hundred cases. Reviews take thirty minutes and alerts two, as assumptions. Success means reaching later Fail or Withdrawn cases within this budget. I report action types and flags among successful cases separately. Contacting someone does not mean preventing failure.
+The coordinator cannot review everyone. The decision is who receives a review, a shorter alert, or no action. Adverse means later Fail or Withdrawn; coverage is the proportion of these cases selected. I compare against inactivity ranking, a simple alternative, not an observed university workflow. The scenario allows three hundred staff minutes per hundred cases, assuming thirty minutes per review and two per alert. Better targeting means reaching more adverse cases within the same budget, not proving prevented failures.
 
 Next, the data and timing.
 
 ## Slide 3: Early information, with explicit availability checks (01:15–02:04)
 
-OULAD records real activity and final outcomes. The model uses day twenty-eight activity and enrolment context, excluding assessments because score release is unverified. Submission-only features were not tested. Selection uses learner-grouped folds within 2013B. Previously examined 2014B provides retrospective evidence. The archived intermediate definition already disclosed that 2014J had been used. I preserve that boundary: the revised model does not rescore it or claim independent confirmation. An operational companion checks the effect of retaining eligible past enrolments.
+OULAD is the Open University Learning Analytics Dataset. The main comparison uses three thousand nine hundred and one training cases and six thousand five hundred and eight evaluation cases. A case is one course enrolment. Inputs stop at day twenty-eight; assessment scores are excluded because release timing is unverified. Selection stays within learner-grouped 2013B folds. Previously examined 2014B provides retrospective evidence. The archive disclosed prior 2014J use; this revision excludes it and cannot claim an untouched test.
 
 Here is how the techniques connect.
 
 ## Slide 4: Two techniques feed one constrained queue (02:04–02:52)
 
-Classification estimates Success, Fail and Withdrawn scores. I compare logistic regression, a constrained tree and boosting using training-only folds. Isolation Forest is the second technique: it ranks unusual engagement without invented anomaly labels. Its experimental route reserves existing review places; the classifier fills the remaining capacity. I keep anomaly percentiles separate from outcome scores. The default has no anomaly reserve because its added value is uncertain. Preprocessing fits training data only. Identities and demographics are excluded from prediction.
+Classification fits the recorded outcomes: Success, Fail and Withdrawn. Logistic regression provides a simple model; trees and boosting test nonlinear patterns. Isolation Forest looks for unusual engagement that outcome ranking might miss, without invented anomaly labels. Its experimental route takes existing review places; classification fills the remaining capacity. Anomaly ranks and outcome scores stay separate. Both techniques affect one queue, but the default reserve is off because benefit is unestablished. Preprocessing fits training data only; identities and demographics are excluded.
 
 Did this improve the decision?
 
 ## Slide 5: A small observed gain, with uncertainty (02:52–03:38)
 
-The final assessment-free classifier reaches thirty-nine point nine percent of adverse cases, compared with thirty-eight point six percent for inactivity. That is forty-two additional cases at the same workload. Average precision is point six six one; contact precision is sixty-seven point five percent. The paired interval crosses zero, so the original improvement gate is not met. These conditional intervals hold predictions and actions fixed. They do not include earlier search or prove future performance.
+The classifier selects thirty-nine point nine percent of adverse cases, versus thirty-eight point six percent for inactivity: forty-two additional cases at the same workload. Average precision measures ranking quality and is point six six one. Contact precision is sixty-seven point five percent: the proportion of selected cases with adverse outcomes. The paired interval crosses zero, so improvement is unconfirmed. These intervals hold predictions fixed; they exclude earlier search and do not prove future performance.
 
 What did the second technique add?
 
@@ -43,7 +43,7 @@ I also investigated three deeper questions.
 
 ## Slide 7: Three analyses sharpen the recommendation (04:26–05:14)
 
-Three deeper investigations test the recommendation. Interleaving three rankings reaches fewer adverse cases than risk ranking alone. Among flagged cases, about one in three later succeeded; most flagged failures had no early score. A flag starts an investigation, not a diagnosis. Course specialists reach fourteen more adverse cases, but this exploratory finding does not justify deployment. GGG receives thirty-six point two percent of staff time for twelve point two percent of cases. Review this concentration before outreach.
+First, cross-model reconciliation alternates between three rankings under one quota. It reaches fourteen fewer adverse cases, so I keep risk ranking. Second, challenge-set analysis examines flagged cases by actual outcome. About one in three later succeeded: a flag requires investigation, not a diagnosis. Third, segment analysis tests course-specific models and workloads. Specialists add fourteen adverse cases, but this exploratory gain does not justify replacement. GGG receives disproportionate staff time, so course concentration needs review before outreach.
 
 Next, I tested the assumptions.
 

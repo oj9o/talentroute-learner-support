@@ -43,7 +43,7 @@ per 100 cases
 
 20% alert case cap
 
-Measure adverse cases reached, action mix and flags among later-successful learners
+Adverse = Fail or Withdrawn. Coverage = share of adverse cases selected.
 
 Proposed workflow and effort assumptions. The baseline is a constructed inactivity ranking, not measured university practice.
 
@@ -94,13 +94,13 @@ No assessment inputs
 
 Classifier
 
-Outcome probabilities
-Logistic / tree / boosting
+Recorded outcome scores
+Simple vs nonlinear models
 
 Isolation Forest
 
-Unusual engagement rank
-Experimental review reserve
+Unusual engagement
+May reveal missed cases
 
 Capacity
 
@@ -168,12 +168,12 @@ Gate: positive paired gain and precision loss ≤2 points. Precision passes; gai
 
 Three analyses sharpen the recommendation
 
-The three intermediate commitments are executed; findings guide the choice
+Compare rankings, inspect flagged outcomes and test course-specific decisions
 
 Investigation	Finding on examined 2014B	Decision implication
 Cross-model reconciliation	1,244 adverse cases
 Risk queue: 1,258	Keep one risk queue
-Warning-positive profiles	607 / 1,865 later succeeded
+Challenge-set profiles	607 / 1,865 later succeeded
 Early score: 165 / 835 Fail cases	A flag starts investigation,
 not diagnosis
 Course specialists / segments	1,272 vs 1,258 adverse cases
