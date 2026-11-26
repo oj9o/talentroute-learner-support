@@ -50,6 +50,12 @@ deep-dives:
 availability-audit:
     uv run python -m talentroute availability-audit
 
+probability-audit:
+    uv run python -m talentroute probability-audit
+
+nested-audit:
+    uv run python -m talentroute nested-audit
+
 final-analysis:
     uv run python -m talentroute final-analysis
 

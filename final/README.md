@@ -52,7 +52,7 @@ See [the short demo walkthrough](docs/decision_demo.md). These tools clarify a c
 
 ## Stage inputs and evidence
 
-After data preparation, `run-model` fits the historical comparators, the training-selected assessment-free model and both connected components, then evaluates the final decision queues. `evaluate`, `ablation`, `sensitivity` and `deep-dives` regenerate the final-system analysis suite from fitted artifacts; ablation and sensitivity also regenerate final figures. These individual recipes share one implementation. The full pipeline runs each historical stage once, then the availability audit, final analyses, report and tests once. Use `just pipeline` for a clean dependency order.
+After data preparation, `run-model` fits the historical comparators, the training-selected assessment-free model and both connected components, then evaluates the final decision queues. `evaluate`, `ablation`, `sensitivity` and `deep-dives` regenerate the final-system analysis suite from fitted artifacts; ablation and sensitivity also regenerate final figures. These individual recipes share one implementation. The full pipeline runs each historical stage once, then the availability audit, final analyses, nested diagnostic, report and tests once. Use `just pipeline` for a clean dependency order.
 
 The assessment-free variant removes scores because release timing is unverified. Removing submission-derived fields too is conservative; a submission-only variant was not tested. Assessment edits cannot change its predictions. Matched feature-removal results are in `outputs/availability_audit.csv`. The same final model drives the report and default app; the original models remain explicitly labeled historical choices.
 
@@ -85,3 +85,17 @@ The app caches fitted artifacts until their file versions change and returns a s
 No action can mean capacity ran out, not that a learner is safe. A higher budget changes assignments, not fitted predictions. Replanning can restore feasibility after effort changes, but is not proven optimal without actual intervention values. The report's decision table states when to reconsider each recommendation.
 
 On 24 November 2026, after splitting the final analysis into named stages and formatting the source, the full macOS pipeline completed in 21.4 seconds with 52 tests passing. Every numerical CSV except the timing log was byte-identical to the preceding version. The tests include cached-data isolation and refresh after artifact changes.
+
+### Supplementary retrospective evaluation
+
+`just nested-audit` repeats model selection within three outer learner-grouped folds of 2013B. It writes `outputs/nested_results.csv` and `outputs/nested_inner_selection.csv`; the full pipeline also runs it. Report Appendix A distinguishes this diagnostic from the main 2014B evaluation. It does not provide a new independent test or change the final model.
+
+After adding the supplementary nested diagnostic on 24 November 2026, the full cached-data macOS pipeline completed in 26.3 seconds with 53 tests passing. All 51 pre-existing numerical CSVs (excluding runtime) remained byte-identical. The nested outputs reproduce the separate experiment exactly.
+
+### Probability correction tested, not adopted
+
+`just probability-audit` runs a development-only temperature-scaling diagnostic within 2013B, with separate model-fitting, calibration and outer-assessment learners. Appendix C reports all folds from `outputs/probability_audit.csv`. Mean log loss changes from 0.940850 to 0.940433, adverse Brier from 0.213608 to 0.213629, and adverse contacts from 876 to 874 at equal capacity. These tiny differences do not establish useful benefit. The default stays unchanged; later-cohort calibration and independent confirmation remain unresolved. The raw arm uses a smaller training sample than the application model.
+
+The supplementary nested diagnostic also refits Isolation Forest within each outer-training fold, retaining the existing fixed reserve setting. It reaches 878 adverse cases versus 876 for classifier-only: a negligible difference, with incremental benefit not established. Neither diagnostic changes the default or scores 2014J. Both run before report generation in `just pipeline`.
+
+On 26 November 2026, the complete cached-data macOS pipeline, including both diagnostics and report generation, completed in 31.6 seconds with 56 tests passing. This verifies execution; it is not independent model validation.
