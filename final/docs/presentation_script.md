@@ -1,9 +1,9 @@
 # Presentation narration
 
-TALENTROUTE — FINAL ASSESSMENT-FREE RECORDING SCRIPT
-Target duration: 09:44. 972 spoken words including transitions.
-Timing estimate uses the reported 120 words in 65 seconds; no audio recording was measured.
-Record a full rehearsal. Slides 1–12 are spoken; slides 13–15 are Q&A only.
+TALENTROUTE — FINAL RECORDING SCRIPT
+Planned duration: 09:44. 956 spoken words including transitions.
+This is a pacing plan, not a measured recording. Full rehearsal required.
+Slides 1–12 are spoken; slides 13–15 are backup only.
 
 ## Slide 1: TalentRoute (00:00–00:26)
 
@@ -19,7 +19,7 @@ Next, the data and timing.
 
 ## Slide 3: Early information, with explicit availability checks (01:15–02:04)
 
-OULAD records real learning activity and final outcomes. Evaluation covers six thousand five hundred and eight course cases. The final model uses activity through day twenty-eight and enrolment context, but conservatively excludes assessment inputs because score timing is unknown. Submission-only features were not tested. I select candidates using learner-grouped folds within 2013B. The main evaluation removes shared training identities; an operational companion keeps mature past enrolments. Previously examined 2014B provides retrospective evidence. Previously examined 2014J stays excluded; it is not a fresh test.
+OULAD records real activity and final outcomes. The model uses day twenty-eight activity and enrolment context, excluding assessments because score release is unverified. Submission-only features were not tested. Selection uses learner-grouped folds within 2013B. Previously examined 2014B provides retrospective evidence. The archived intermediate definition already disclosed that 2014J had been used. I preserve that boundary: the revised model does not rescore it or claim independent confirmation. An operational companion checks the effect of retaining eligible past enrolments.
 
 Here is how the techniques connect.
 
@@ -49,7 +49,7 @@ Next, I tested the assumptions.
 
 ## Slide 8: Targeting changes with staffing assumptions (05:14–06:02)
 
-I vary five assumptions: available time, review effort, reserve share, score cutoff and alert share. Across the budget sweep, the classifier's observed advantage over inactivity ranges from about zero point one to two point eight percentage points. These sweep estimates do not have confidence intervals. The classifier is deterministic, so unchanged seed-check coverage is expected; the anomaly result varies slightly. This is numerical stability on exposed data, not independent confirmation. Cutoff comparisons use the same eligibility gate for both queues.
+I vary five staffing and eligibility assumptions. Budget-sweep gains range from zero point one to two point eight percentage points, without sweep intervals. A supplementary nested check repeats selection within 2013B. Every fold chose logistic regression, with different penalties. Together, the queues reached eighty-one more adverse course cases than inactivity at equal capacity. This uses the same cohort and courses. It does not replace the weaker later-cohort result or provide independent confirmation. Full results are in the appendix.
 
 What if reviews take longer?
 
@@ -71,16 +71,14 @@ No action can mean no capacity. Human review is still needed before outreach.
 
 What did the repairs change?
 
-## Slide 11: Repairs apply to the entire final system (08:16–09:09)
+## Slide 11: What failed, what changed, and why (08:16–09:09)
 
-Two repairs now apply throughout the report, app and analyses. Removing assessment features avoids uncertain score timing; removing submission features is a conservative choice. Selecting inside 2013B avoids directly choosing with evaluation outcomes. The matched audit reaches twelve hundred and fifty-eight adverse cases without assessments, versus thirteen hundred and fifty-seven with them. I accept this loss for availability, not better accuracy. Among contacted cases, predicted risk averages eighty-four percent, but observed adverse outcomes are sixty-seven point five percent. Scores support ranking, not verified individual probabilities. Earlier data exposure still prevents independent confirmation.
+I removed assessment inputs because score timing is unverified, accepting lower targeting. Model selection now stays inside training folds. I also tested temperature scaling within 2013B, separating model training, calibration and assessment learners. The probability metrics barely changed, with two fewer adverse cases contacted. I kept the original model. This does not fix later course-level calibration gaps, so scores support ranking, not verified personal probabilities. The promised investigations remain, including unsuccessful alternatives. These changes do not restore an untouched test.
 
 This leads to my recommendation.
 
 ## Slide 12: Use verifiable inputs and report the cost (09:09–09:44)
 
-I recommend assessment-free inputs while score timing is unverified, and no anomaly reserve while its value remains unestablished. Keep inactivity as a comparator. If effort changes, recheck the plan. Before outreach, review course concentration and coordinate repeated learners. These are conditional decisions, not proof of prevented failure. New independent outcomes and measured intervention evidence are still needed. Thank you.
+My recommendation is an assessment-free queue for inspection, with no default anomaly reserve. Keep inactivity as a comparator. If effort changes, recheck and replan. Review course concentration and coordinate repeated learners before outreach. The promised experiments are documented, including unsuccessful alternatives and their reasons. Historical targeting does not prove prevented failures. Independent confirmation and measured intervention outcomes remain necessary before adoption. Thank you.
 
 
-
-Evidence: outputs/final_*.csv and outputs/availability_audit.csv. Presentation figures use the identity-disjoint comparison; the app demo uses the operational companion.
