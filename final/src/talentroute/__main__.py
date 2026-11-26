@@ -8,6 +8,8 @@ import sys
 import pandas as pd
 from . import (
     availability_audit,
+    nested_audit,
+    probability_audit,
     final_analysis,
     analyses,
     calendar_audit,
@@ -47,6 +49,8 @@ STAGES = {
     # Current selection, evaluation and the single final report.
     "availability-audit": availability_audit.run,
     "final-analysis": final_analysis.run,
+    "nested-audit": nested_audit.run,
+    "probability-audit": probability_audit.run,
     "report": report.run,
     "test": test,
 }
